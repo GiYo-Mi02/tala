@@ -1,0 +1,8 @@
+{
+  "fixture": "invalid-required", "guardian_name": "MARCELA TORRES", "raw": {
+    "school_year": "2024-2026", "grade_level": "", "lrn": "000123456789",
+    "learner_last_name": "REYES", "learner_first_name": "", "learner_middle_name": "ANNE", "birth_date": "02/30/2014"
+  },
+  "values": { "school_year": "2024-2026", "grade_level": "", "lrn": "000123456789", "learner_last_name": "REYES", "learner_first_name": "", "learner_middle_name": "ANNE", "birth_date": "2014-02-30" },
+  "errors": ["school_year", "grade_level", "learner_first_name", "birth_date"]
+}

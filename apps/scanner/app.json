@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "T.A.L.A. Pilot",
+    "slug": "tala-scanner",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["android"],
+    "newArchEnabled": true,
+    "android": {
+      "package": "ph.tala.scanner.pilot",
+      "versionCode": 1,
+      "allowBackup": false,
+      "permissions": ["android.permission.CAMERA"],
+      "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.READ_MEDIA_IMAGES", "android.permission.READ_MEDIA_VIDEO"]
+    },
+    "plugins": [["expo-camera", { "recordAudioAndroid": false, "barcodeScannerEnabled": false }], "expo-sqlite", "expo-asset", "./plugins/with-windows-cmake"],
+    "updates": { "enabled": false }
+  }
+}

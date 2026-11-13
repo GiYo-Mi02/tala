@@ -1,0 +1,26 @@
+{
+  "phase": 1,
+  "phaseStatus": "Awaiting physical-phone acceptance",
+  "app": { "package": "ph.tala.scanner.pilot", "version": "0.1.0", "versionCode": 1 },
+  "phone": { "model": "Samsung Galaxy A53 5G", "androidVersion": null, "androidBuildNumber": null },
+  "browser": null,
+  "apk": {
+    "path": "output/android/TALA-Phase1-0.1.0.apk",
+    "bytes": 64853070,
+    "sha256": "62965c2f32eab2e577b1fdde4451a09a9087ecfe280a2c241f665a8c81b4f5d0",
+    "build": "Pass",
+    "contentChecks": "Pass",
+    "signatureVerification": "Pass",
+    "evidence": ["docs/evidence/apk-inspection.json", "docs/evidence/apk-signature.txt", "docs/evidence/apk-badging.txt"]
+  },
+  "tests": [
+    { "id": "P1-01", "expected": "First standalone APK launch and bundled template work in airplane mode with Wi-Fi off and no server", "actual": "No physical phone connected", "status": "Not run", "evidence": [], "retest": "docs/phase-1-phone-tests.md#p1-01---first-launch-offline" },
+    { "id": "P1-02", "expected": "Camera denial recovery, both page captures, crop, accepted page replacement and order", "actual": "Implemented; physical camera interactions unverified", "status": "Not run", "evidence": ["apps/scanner/src/Capture.tsx", "packages/core/src/storage.test.ts"], "retest": "docs/phase-1-phone-tests.md#p1-02---permission-crop-and-retake" },
+    { "id": "P1-03", "expected": "Real bundled OCR matches the clean fixture offline and excludes parent names; page 2 viewable", "actual": "Source mapping and autolinking verified; actual phone OCR output unmeasured", "status": "Not run", "evidence": ["docs/evidence/mapping-overlay.png", "docs/evidence/android-autolinking.json"], "retest": "docs/phase-1-phone-tests.md#p1-03---actual-bundled-ocr" },
+    { "id": "P1-04", "expected": "Optional blanks, required errors, leading zeroes, correction updates, and blocked incomplete readiness", "actual": "Host validation checks pass; installed APK workflow unverified", "status": "Not run", "evidence": ["docs/evidence/unit-tests.json"], "retest": "docs/phase-1-phone-tests.md#p1-04---blanks-invalid-values-and-readiness" },
+    { "id": "P1-05", "expected": "Saved UUID, images/order, raw OCR, corrected values, and state survive force-stop and offline reopen", "actual": "No physical force-stop/reopen run", "status": "Not run", "evidence": ["packages/core/src/storage.test.ts"], "retest": "docs/phase-1-phone-tests.md#p1-05---force-stop-and-reopen" },
+    { "id": "P1-06", "expected": "Fixture mapping/validation and injected missing-image/copy/database faults reject unsafe saves", "actual": "60 host tests passed, including all fields, dates, guardian exclusion, readiness, and save faults", "status": "Pass", "evidence": ["docs/evidence/unit-tests.json"], "retest": "npm.cmd test", "limitation": "Port-level fault injection; native Android storage/UI execution remains in pending physical checks" }
+  ],
+  "phase2Started": false,
+  "approvalRequested": false
+}

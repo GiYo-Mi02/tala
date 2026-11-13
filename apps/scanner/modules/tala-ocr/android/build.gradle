@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+apply plugin: 'expo-module-gradle-plugin'
+
+group = 'expo.modules.talaocr'
+version = '0.1.0'
+
+android {
+  namespace 'expo.modules.talaocr'
+  defaultConfig { versionCode 1; versionName '0.1.0' }
+}
+
+dependencies {
+  // This artifact statically bundles the Latin model. Do not replace with play-services-mlkit.
+  implementation 'com.google.mlkit:text-recognition:16.0.1'
+}

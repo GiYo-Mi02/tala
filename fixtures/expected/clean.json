@@ -1,0 +1,8 @@
+{
+  "fixture": "clean", "guardian_name": "MARCELA TORRES", "raw": {
+    "school_year": "2024-2025", "grade_level": "7", "lrn": "001234567890",
+    "learner_last_name": "RIVERA", "learner_first_name": "ELENA", "learner_middle_name": "SANTOS", "birth_date": "02/29/2012"
+  },
+  "values": { "school_year": "2024-2025", "grade_level": "7", "lrn": "001234567890", "learner_last_name": "RIVERA", "learner_first_name": "ELENA", "learner_middle_name": "SANTOS", "birth_date": "2012-02-29" },
+  "errors": []
+}

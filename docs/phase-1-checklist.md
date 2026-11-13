@@ -1,0 +1,35 @@
+# Phase 1 acceptance checklist
+
+Phase 1 is **in progress**. Automated validation is separate from physical-phone acceptance. Phase 2 is not authorized and has not been started.
+
+Workspace began empty. Implemented deliverables: npm workspace and pinned lockfile; Android capture/crop/retake; two bundled BEEF reference pages; local Expo native ML Kit Latin module; seven mapped fields with validation and manual correction; raw OCR history; stable draft UUIDs; private accepted files and SQLite persistence; readiness checks; three labeled fictional fixture pairs; build and phone-test instructions.
+
+Environment: Windows PowerShell; Node 24.12.0; npm 11.6.2; JDK 21.0.7; Expo 54.0.38 / React Native 0.81.5. Android app package `ph.tala.scanner.pilot`, version `0.1.0`, version code `1`. Designated phone: **Samsung Galaxy A53 5G** (user supplied). Android version and Android build number: **Not recorded - pending phone acceptance**. Browser: no portal in Phase 1; browser tests are not part of this phase.
+
+## Mandatory checks
+
+- **P1-01 - Not run.** Expected: fresh installed standalone APK opens the BEEF template with airplane mode on, Wi-Fi off, and no laptop/server. Actual: no physical phone was connected. Evidence: initial `adb devices -l` returned an empty list. Retest: follow P1-01 in [phone tests](phase-1-phone-tests.md); record the phone details and first-launch evidence.
+- **P1-02 - Not run.** Expected: denial explains recovery without creating an image; granting permission allows capture, independent crop, page 2 retake, accepted versions, and correct order. Actual: camera/crop UI and private-file replacement protocol are implemented; camera hardware and UI acceptance have not been exercised on a physical phone. Evidence: code in `Capture.tsx` / `repository.ts`; replacement/rollback checks in `storage.test.ts`. Retest: follow P1-02 with the printed clean pair and record both accepted slots after the retake.
+- **P1-03 - Not run.** Expected: actual bundled OCR reads the clean printed pair offline; all seven mapped values match labels, no parent name fills a learner field, and page 2 remains viewable. Actual: region mapping and printed placement pass host tests, and native module autolinking is confirmed; real camera/ML Kit output has not been measured. Evidence: `evidence/mapping-overlay.png`, `evidence/android-autolinking.json`, `fixtures/expected/clean.json`. Retest: follow P1-03; record each pre-correction raw and normalized field. A host geometry fixture is not actual OCR evidence.
+- **P1-04 - Not run.** Expected: optional blanks remain blank, required invalid/missing fields are flagged, LRN zeroes survive, incomplete drafts cannot be ready, and corrections update validation. Actual: validation and readiness host tests pass, including invalid fixtures; installed APK interactions remain unverified. Evidence: `evidence/unit-tests.json`, `fields.test.ts`, `boxed-name.test.ts`, `storage.test.ts`. Retest: follow P1-04 with both other printed pairs.
+- **P1-05 - Not run.** Expected: after Save, force-stop and offline reopen recover the same UUID, both images/order, original OCR, corrections, and readiness. Actual: private-file/SQLite implementation and serialized save protocol are present; no real force-stop/reopen run has been performed. Evidence: persistence implementation and host snapshot test, not physical persistence proof. Retest: follow P1-05 without uninstalling or clearing storage.
+- **P1-06 - Pass (host tests).** Expected: fixture-based mapping/parsing/validation covers every field, invalid dates and learner-versus-guardian; a missing image or failed save prevents acknowledgment/readiness. Actual: **60 tests passed across four files**. Injected missing-image, copy-failure, and database-write faults reject the save; failed retakes retain the previous accepted file and clean the new copy. Evidence: [machine-readable test results](evidence/unit-tests.json), `packages/core/src/*.test.ts`. The injected port tests execute the shared save protocol used by the app; Android file/SQLite runtime and UI presentation are covered by the pending physical checks.
+
+## Supporting checks
+
+- TypeScript: **Pass** with `npm.cmd run typecheck`.
+- Expo compatibility: **Pass**; `expo install --check` reported dependencies up to date.
+- Android Hermes export: **Pass**; the release build embedded the current JavaScript and both local BEEF pages. The Windows release entry resolution fix is exercised by the successful release task.
+- Native module discovery: **Pass**; Android autolinking resolves `expo.modules.talaocr.TalaOcrModule`, camera, image manipulation, and SQLite.
+- Fictional fixture PDF review: **Pass**; all six pages rendered and visually inspected, typed values lie in their actual input boxes, the different guardian is outside mappings, and fictional labels do not cover printed fields. PDFs and JSON labels remain separate from runtime app code.
+- Standalone APK build: **Pass**; the complete documented build command exits 0, and `assembleRelease` completed successfully with Gradle 8.14.3, including Android release lint checks. The APK is `output/android/TALA-Phase1-0.1.0.apk` (64,853,070 bytes), SHA-256 `62965c2f32eab2e577b1fdde4451a09a9087ecfe280a2c241f665a8c81b4f5d0`. Evidence: [build result](evidence/build-result.json).
+- APK content inspection: **Pass**; embedded bundle, both exact BEEF PNG image payloads, bundled Latin model assets, local OCR module in DEX, and ARM64/ARMv7 libraries are present. Android renamed the images to `res/ZV.png` and `res/HQ.png`; the check compares image content rather than filenames. Evidence: [APK inspection](evidence/apk-inspection.json).
+- APK signing and metadata: **Pass**; `apksigner verify` succeeded with APK Signature Scheme v2. Package/version/minimum API/architectures match the intended pilot. It is a release build using the generated pilot debug signing identity. Evidence: [signature](evidence/apk-signature.txt) and [APK metadata](evidence/apk-badging.txt).
+
+The build recovered from a stalled Watchman capability check, Windows monorepo entry resolution, a changed generated Gradle wrapper, and Windows Ninja path length. Metro now uses filesystem scanning and the scanner root; the build script pins Gradle and its distribution checksum; the Expo plugin uses a shorter CMake staging path with object filename hashing. The subsequent release build passed. These build fixes do not establish physical-phone acceptance.
+
+## Handoff and gate
+
+Use [README](../README.md) for build/run commands and [phone tests](phase-1-phone-tests.md) for exact retests. The supplied BEEF source is unchanged at `references/beef-sy-2024-2025.pdf`; its SHA-256 and page placement are recorded in `evidence/source-pdf.json`.
+
+The earlier M01-M04 / SC01 source documents are unavailable, so independent traceability against them is not claimed. No actual OCR accuracy, real-device acceptance, or later-phase readiness is claimed. Request Phase 1 approval **only after all six mandatory checks pass**; then ask: "Do you approve Phase 1 and want me to start Phase 2?"

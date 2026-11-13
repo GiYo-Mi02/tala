@@ -1,0 +1,5 @@
+{
+  "gradle": "8.14.3",
+  "distributionSha256": "bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531",
+  "checksumSource": "https://services.gradle.org/distributions/gradle-8.14.3-bin.zip.sha256"
+}

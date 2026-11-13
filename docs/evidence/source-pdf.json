@@ -1,0 +1,75 @@
+{
+  "sha256": "7c5fc9abb53bbd29b3cf0bbf2ef62d0473269704d28d7a58435b8edbbc3c2a1e",
+  "pages": [
+    {
+      "page": 1,
+      "width": 1060,
+      "height": 1499,
+      "text": " \n \n \n",
+      "widgets": 0,
+      "image_placements": [
+        {
+          "number": 2,
+          "bbox": [
+            -11.95501708984375,
+            7.3599853515625,
+            599.7949829101562,
+            869.9500122070312
+          ],
+          "transform": [
+            0.0,
+            862.5900268554688,
+            -611.75,
+            -0.0,
+            599.7949829101562,
+            7.3599853515625
+          ],
+          "width": 1495,
+          "height": 1060,
+          "colorspace": 3,
+          "cs-name": "DeviceRGB",
+          "xres": 96,
+          "yres": 96,
+          "bpc": 8,
+          "size": 869928,
+          "has-mask": false
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "width": 1060,
+      "height": 1499,
+      "text": " \n \n \n",
+      "widgets": 0,
+      "image_placements": [
+        {
+          "number": 3,
+          "bbox": [
+            -11.39898681640625,
+            -19.82000732421875,
+            582.4509887695312,
+            841.0299682617188
+          ],
+          "transform": [
+            0.0,
+            860.8499755859375,
+            -593.8499755859375,
+            -0.0,
+            582.4509887695312,
+            -19.82000732421875
+          ],
+          "width": 1483,
+          "height": 1024,
+          "colorspace": 3,
+          "cs-name": "DeviceRGB",
+          "xres": 96,
+          "yres": 96,
+          "bpc": 8,
+          "size": 897945,
+          "has-mask": false
+        }
+      ]
+    }
+  ]
+}

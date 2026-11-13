@@ -1,0 +1,26 @@
+{
+  "name": "tala",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": { "node": ">=22.13.0 <25" },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p packages/core && tsc --noEmit -p apps/scanner",
+    "start:android": "npm run android -w @tala/scanner",
+    "prepare:android": "npm run prebuild -w @tala/scanner",
+    "build:android": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1",
+    "fixtures": "python scripts/create_fixtures.py"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "4.64.12"
+  },
+  "overrides": { "rollup": "4.64.12" }
+}

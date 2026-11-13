@@ -1,0 +1,17 @@
+node_modules/
+.cache/
+.tools/
+tmp/
+dist/
+coverage/
+.expo/
+apps/scanner/android/
+*.log
+.env*
+!.env.example
+*.keystore
+**/build/
+**/.cxx/
+**/.gradle/
+**/.kotlin/
+output/android/

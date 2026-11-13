@@ -1,0 +1,10 @@
+﻿{
+    "command":  "npm.cmd run build:android",
+    "exitCode":  0,
+    "status":  "Pass",
+    "gradle":  "8.14.3",
+    "appVersion":  "0.1.0",
+    "apkSha256":  "62965c2f32eab2e577b1fdde4451a09a9087ecfe280a2c241f665a8c81b4f5d0",
+    "physicalPhoneChecks":  "Not run",
+    "testPhone":  "Samsung Galaxy A53 5G"
+}
