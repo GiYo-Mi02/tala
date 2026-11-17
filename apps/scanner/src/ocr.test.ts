@@ -19,14 +19,16 @@ describe('Scanner extraction orchestration (mocked native recognition)', () => {
     await expect(recognizePage({ ...page, alignment: undefined }, () => {})).rejects.toThrow(/Align saved page/);
     expect(mocks.manipulate).not.toHaveBeenCalled();expect(mocks.recognize).not.toHaveBeenCalled();
   });
-  it('reads a complete image captured inside the camera guide', async () => {
+  it('blocks old full-camera guide photos before cropping or native recognition', async () => {
     const guided = {
       ...page,
       width: 3024,
       height: 4032,
       alignment: { method: 'guide-v1' as const, sourceWidth: 3024, sourceHeight: 4032 },
     };
-    await expect(recognizePage(guided, () => {})).resolves.toHaveProperty('run.pageImageId', page.imageId);
+    await expect(recognizePage(guided, () => {})).rejects.toThrow(/Align saved page/);
+    expect(mocks.manipulate).not.toHaveBeenCalled();
+    expect(mocks.recognize).not.toHaveBeenCalled();
   });
   it('saves exact rounded crop coordinates and reverses resized OCR coordinates correctly', async () => {
     mocks.recognize.mockResolvedValue({ text: 'RIVERA', elements: [{ text: 'RIVERA', x: 12, y: 20, width: 80, height: 30 }] });
@@ -39,6 +41,12 @@ describe('Scanner extraction orchestration (mocked native recognition)', () => {
     expect(run.fields.learner_last_name.elements[0].y).toBeCloseTo((crop.originY + 20 * crop.height / 128) / page.height);
     expect(mocks.manipulate.mock.calls[index][1][0].crop).toEqual(crop);
     expect(run.pageImageId).toBe(page.imageId);
+  });
+  it('requests larger date-cell preparation only for birth-date crops, preserving other field scales', async () => {
+    const { run } = await recognizePage(page, () => {});
+    const expected = fieldKeys.flatMap(key => beefTemplate.regions[key].map(() => key === 'birth_date'));
+    expect(mocks.recognize.mock.calls.map(call => call[1])).toEqual(expected);
+    expect(run.preprocessing).toBe('grid-lines-v2');
   });
   it('preserves raw labels, flags the field, and leaves proposed values blank', async () => {
     mocks.recognize.mockResolvedValue({ text: 'Last Name', elements: [] });

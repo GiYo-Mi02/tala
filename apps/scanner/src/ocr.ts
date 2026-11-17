@@ -41,7 +41,7 @@ export async function recognizePage(
         { format: SaveFormat.JPEG, compress: 1 },
       );
       try {
-        const result = await TalaOcr.recognize(image.uri);
+        const result = await TalaOcr.recognize(image.uri, key === 'birth_date');
         parts.push(result.text);
         readingParts.push(result.readingText ?? result.text);
         for (const e of result.elements)
@@ -85,7 +85,7 @@ export async function recognizePage(
       pageImageId: page.imageId,
       at: new Date().toISOString(),
       engine: "mlkit-bundled-latin-16.0.1",
-      preprocessing: 'grid-lines-v1',
+      preprocessing: 'grid-lines-v2',
       fields,
     },
   };

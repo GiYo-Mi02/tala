@@ -12,7 +12,7 @@ internal data class PreparedField(val bitmap: Bitmap, val sourceWidth: Int, val 
 
 /** Remove long printed rules, preserving shorter typed character strokes. Never edit OCR characters. */
 internal object FieldImage {
-  fun prepare(uri: String): PreparedField {
+  fun prepare(uri: String, dateCell: Boolean = false): PreparedField {
     val parsed = Uri.parse(uri)
     require(parsed.scheme == "file") { "OCR requires a local image." }
     val path = File(requireNotNull(parsed.path)).path
@@ -42,7 +42,10 @@ internal object FieldImage {
       for (y in 0 until h) for (x in 0 until w) if (horizontal[y] || vertical[x]) pixels[y * w + x] = Color.WHITE
       val cleaned = Bitmap.createBitmap(pixels, w, h, Bitmap.Config.ARGB_8888)
       try {
-        val scaled = Bitmap.createScaledBitmap(cleaned, (w * 52.0 / h).roundToInt().coerceAtLeast(1), 52, true)
+        // Split date cells need larger glyphs after camera perspective resampling.
+        // Preserve the established scale for other inputs, including single-digit grades.
+        val contentHeight = if (dateCell) 80 else 52
+        val scaled = Bitmap.createScaledBitmap(cleaned, (w * contentHeight.toDouble() / h).roundToInt().coerceAtLeast(1), contentHeight, true)
         try {
           // A white margin keeps the detector from treating this narrow strip as overlapping text blocks.
           val inset = 32

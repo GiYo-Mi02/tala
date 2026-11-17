@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="expo.modules.talaocr.PerspectiveTest" tests="5" failures="1" errors="0" skipped="0" time="19.88" timestamp="2026-11-17T15:25:02" hostname="localhost">
+  <properties>
+    <property name="device" value="TALA_OCR(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":tala-ocr" />
+  </properties>
+  <testcase name="invalidCornersDoNotCreateAnAlignedFile" classname="expo.modules.talaocr.PerspectiveTest" time="0.05" />
+  <testcase name="bundledMlKitReadsFictionalFixtureInputs" classname="expo.modules.talaocr.PerspectiveTest" time="17.913">
+    <failure>java.lang.AssertionError: Actual ML Kit mismatches (do not replace expected values):
+clean (camera margins: true) / birth_date expected &lt;02/29/2012&gt; but was &lt;2/29/2012&gt; [2 &#64; Rect(95, 44 - 115, 72) | 2 9 &#64; Rect(44, 43 - 113, 72) | 2 0 1 2 &#64; Rect(44, 34 - 220, 78)]
+at org.junit.Assert.fail(Assert.java:89)
+at org.junit.Assert.assertTrue(Assert.java:42)
+at expo.modules.talaocr.PerspectiveTest.bundledMlKitReadsFictionalFixtureInputs(PerspectiveTest.kt:150)
+</failure>
+  </testcase>
+  <testcase name="duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry" classname="expo.modules.talaocr.PerspectiveTest" time="0.02" />
+  <testcase name="perspectiveCorrectionPreservesKnownLandmarks" classname="expo.modules.talaocr.PerspectiveTest" time="0.351" />
+  <testcase name="preprocessingPreservesCharacterStrokesAndAddsEmptyMargins" classname="expo.modules.talaocr.PerspectiveTest" time="0.045" />
+</testsuite>

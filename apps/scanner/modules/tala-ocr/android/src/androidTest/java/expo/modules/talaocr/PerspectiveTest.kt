@@ -89,15 +89,29 @@ class PerspectiveTest {
     val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     val failures = mutableListOf<String>()
     try {
-      for (fixture in listOf("clean", "optional-blanks", "invalid-required")) {
+      for ((fixture, photograph) in listOf("clean" to false, "optional-blanks" to false,
+        "invalid-required" to false, "clean" to true)) {
         val expected = JSONObject(assets.open("$fixture.json").bufferedReader().use { it.readText() }).getJSONObject("raw")
         val image = assets.open("$fixture-page-1.png").use { BitmapFactory.decodeStream(it) }
-        val source = save(image)
+        // Regress the actual camera mismatch: a 3:4 photo includes background and an
+        // angled, offset paper. Field coordinates must be applied after rectification.
+        val photo = if (photograph) Bitmap.createBitmap(3024, 4032, Bitmap.Config.ARGB_8888) else null
+        val paperCorners = floatArrayOf(280f, 220f, 2740f, 380f, 2650f, 3820f, 180f, 3640f)
+        photo?.let {
+          val src = floatArrayOf(0f, 0f, (image.width - 1).toFloat(), 0f,
+            (image.width - 1).toFloat(), (image.height - 1).toFloat(), 0f, (image.height - 1).toFloat())
+          val transform = Matrix().apply { assertTrue(setPolyToPoly(src, 0, paperCorners, 0, 4)) }
+          Canvas(it).apply { drawColor(Color.DKGRAY); drawBitmap(image, transform, Paint(Paint.FILTER_BITMAP_FLAG)) }
+        }
+        val corners = if (photograph) (0..3).map { paperCorners[it * 2] / 3023.0 to paperCorners[it * 2 + 1] / 4031.0 } else full
+        val source = save(photo ?: image)
+        val diagnostic = if (photograph) File(context.getExternalFilesDir(null), "camera-regression").apply { mkdirs() } else null
         var aligned: File? = null
         try {
-          val result = Perspective.rectify(context, Uri.fromFile(source).toString(), full)
+          val result = Perspective.rectify(context, Uri.fromFile(source).toString(), corners)
           aligned = File(Uri.parse(result["uri"] as String).path!!)
           val page = BitmapFactory.decodeFile(aligned.path)
+          diagnostic?.let { directory -> File(directory, "aligned.jpg").outputStream().use { page.compress(Bitmap.CompressFormat.JPEG, 100, it) } }
           try {
             for (key in regions.keys()) {
               val parts = mutableListOf<String>()
@@ -113,8 +127,12 @@ class PerspectiveTest {
                 val enlarged = Bitmap.createScaledBitmap(crop, (width * 128.0 / height).roundToInt(), 128, true)
                 val cropFile = save(enlarged)
                 try {
-                  val prepared = FieldImage.prepare(Uri.fromFile(cropFile).toString())
+                  val prepared = FieldImage.prepare(Uri.fromFile(cropFile).toString(), key == "birth_date")
                   try {
+                    if (diagnostic != null && key == "birth_date") {
+                      File(diagnostic, "birth-$i-input.png").outputStream().use { enlarged.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                      File(diagnostic, "birth-$i-prepared.png").outputStream().use { prepared.bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                    }
                     val recognized = Tasks.await(recognizer.process(InputImage.fromBitmap(prepared.bitmap, 0)), 30, TimeUnit.SECONDS)
                     parts.add(ReadingResult.from(recognized, prepared).readingText.trim())
                     details.add(recognized.textBlocks.flatMap { it.lines }.joinToString("; ") { "${it.text} @ ${it.boundingBox}" })
@@ -124,10 +142,10 @@ class PerspectiveTest {
               val separator = if (key == "school_year") "-" else if (key == "birth_date") "/" else " "
               val actual = parts.joinToString(separator).replace(Regex("\\s+"), "").let { if (key.contains("_name")) it.uppercase(Locale.ROOT) else it }
               val wanted = expected.getString(key).replace(Regex("\\s+"), "")
-              if (wanted != actual) failures.add("$fixture / $key expected <$wanted> but was <$actual> [${details.joinToString(" | ")}]")
+              if (wanted != actual) failures.add("$fixture (camera margins: $photograph) / $key expected <$wanted> but was <$actual> [${details.joinToString(" | ")}]")
             }
           } finally { page.recycle() }
-        } finally { aligned?.delete(); source.delete(); image.recycle() }
+        } finally { aligned?.delete(); source.delete(); image.recycle(); photo?.recycle() }
       }
       assertTrue("Actual ML Kit mismatches (do not replace expected values):\n" + failures.joinToString("\n"), failures.isEmpty())
     } finally { recognizer.close() }

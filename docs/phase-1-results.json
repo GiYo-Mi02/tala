@@ -1,10 +1,10 @@
 {
   "phase": 1,
-  "phaseStatus": "Awaiting physical-phone acceptance",
+  "phaseStatus": "Camera/OCR correction built; awaiting physical-phone retest",
   "app": {
     "package": "ph.tala.scanner.pilot",
-    "version": "0.1.2",
-    "versionCode": 3
+    "version": "0.1.4",
+    "versionCode": 5
   },
   "phone": {
     "model": "Samsung Galaxy A53 5G",
@@ -13,9 +13,9 @@
   },
   "browser": null,
   "apk": {
-    "path": "output/android/TALA-Phase1-0.1.2.apk",
-    "bytes": 64865654,
-    "sha256": "154c3e3141eb796c06ca743fe62f7b0852c55082d39dd02b41b32a2955966b64",
+    "path": "output/android/TALA-Phase1-0.1.4.apk",
+    "bytes": 64866578,
+    "sha256": "60d1c5796791acfd4afbcde0aa5f8ec77ed41469a38ace3d6341926c00ee22ea",
     "build": "Pass",
     "contentChecks": "Pass",
     "signatureVerification": "Pass",
@@ -25,7 +25,7 @@
       "docs/evidence/apk-badging.txt"
     ],
     "upgradeSignatureMatches": true,
-    "sourceFingerprint": "5a95f29f407b349d1cc96a1e0dad6906c608355b99bdffca03884199e2426e31"
+    "sourceFingerprint": "7b4e4fd4f23bf7a2d57f7f3c9a6d2c7acf9103792abf4d67a445c21b2cc6503c"
   },
   "tests": [
     {
@@ -39,25 +39,28 @@
     {
       "id": "P1-02",
       "expected": "Camera denial recovery, both page captures, crop, accepted page replacement and order",
-      "actual": "Four-corner perspective alignment and preview implemented; physical camera acceptance pending",
-      "status": "Not run",
+      "actual": "User reported incorrect portrait camera framing, displaced reading areas, and poor OCR on the prior installed build. Version 0.1.4 corrects framing and requires paper alignment; updated physical-phone retest pending.",
+      "status": "Fail",
       "evidence": [
-        "apps/scanner/src/Capture.tsx",
-        "packages/core/src/storage.test.ts"
+        "docs/camera-alignment-fix.md",
+        "docs/evidence/release-0.1.4-native-tests.json",
+        "docs/evidence/release-0.1.4-tests.json"
       ],
-      "retest": "docs/phase-1-phone-tests.md#p1-02---permission-crop-and-retake"
+      "retest": "docs/phase-1-phone-tests.md#p1-02---permission-crop-and-retake",
+      "limitation": "Reported installed version and Android OS/build were not independently recorded; emulator success does not close the physical failure."
     },
     {
       "id": "P1-03",
       "expected": "Real bundled OCR matches the clean fixture offline and excludes parent names; page 2 viewable",
-      "actual": "User reported label extraction before this fix. Updated bundled ML Kit passes offline emulator fixture checks; physical-phone clean-fixture retest pending",
-      "status": "Not run",
+      "actual": "User reported incorrect portrait camera framing, displaced reading areas, and poor OCR on the prior installed build. Version 0.1.4 corrects framing and requires paper alignment; updated physical-phone retest pending.",
+      "status": "Fail",
       "evidence": [
-        "docs/evidence/mapping-overlay.png",
-        "docs/evidence/android-autolinking.json",
-        "docs/evidence/android-native-tests.json"
+        "docs/camera-alignment-fix.md",
+        "docs/evidence/release-0.1.4-native-tests.json",
+        "docs/evidence/release-0.1.4-tests.json"
       ],
-      "retest": "docs/phase-1-phone-tests.md#p1-03---actual-bundled-ocr"
+      "retest": "docs/phase-1-phone-tests.md#p1-03---actual-bundled-ocr",
+      "limitation": "Reported installed version and Android OS/build were not independently recorded; emulator success does not close the physical failure."
     },
     {
       "id": "P1-04",
@@ -82,11 +85,11 @@
     {
       "id": "P1-06",
       "expected": "Fixture mapping/validation and injected missing-image/copy/database faults reject unsafe saves",
-      "actual": "101 host tests passed across seven files; six additional release-version guard tests passed. Physical Android checks remain pending.",
+      "actual": "112 host tests passed across eight files; six additional release-version guard tests passed. Five offline native emulator tests passed, including 28 fixture-field comparisons. Physical retest pending.",
       "status": "Pass",
       "evidence": [
-        "docs/evidence/release-0.1.2-tests.json",
-        "docs/evidence/release-0.1.2-validation.json"
+        "docs/evidence/release-0.1.4-tests.json",
+        "docs/evidence/release-0.1.4-validation.json"
       ],
       "retest": "npm.cmd test",
       "limitation": "Port-level fault injection; native Android storage/UI execution remains in pending physical checks"
@@ -95,7 +98,7 @@
   "phase2Started": false,
   "approvalRequested": false,
   "supplementaryNativeTests": {
-    "date": "2026-11-14",
+    "date": "2026-11-17",
     "status": "Pass",
     "device": {
       "kind": "emulator",
@@ -108,6 +111,11 @@
     "wifiEnabled": false,
     "tests": 5,
     "failures": 0,
+    "preprocessing": {
+      "version": "grid-lines-v2",
+      "dateCellContentHeight": 80,
+      "otherFieldContentHeight": 52
+    },
     "cases": [
       "invalidCornersDoNotCreateAnAlignedFile",
       "bundledMlKitReadsFictionalFixtureInputs",
@@ -121,10 +129,20 @@
         "optional-blanks",
         "invalid-required"
       ],
-      "fieldComparisons": 21,
-      "normalization": "Remove OCR inter-character whitespace for character comparison; uppercase BEEF names. Full original OCR remains unchanged. Host tests separately verify intentional name spaces."
+      "fieldComparisons": 28,
+      "portraitPhotoRegression": {
+        "sourceWidth": 3024,
+        "sourceHeight": 4032,
+        "backgroundMargins": true,
+        "angledPaper": true,
+        "expectedFields": 7,
+        "matchedFields": 7,
+        "fixture": "clean"
+      },
+      "normalization": "Remove OCR inter-character whitespace for character comparison; uppercase BEEF names. Original OCR remains unchanged. Host tests separately verify intentional name spaces."
     },
-    "physicalPhoneAcceptance": "Not run - no physical phone connected",
-    "evidence": "android-native-tests.xml"
+    "testSourceSha256": "ace3df742965f7efa0c7cceeeef82552b0c81b05d56ec52e6286b6b71b8aa528",
+    "physicalPhoneAcceptance": "Updated APK not yet retested on Samsung Galaxy A53 5G; user reported reading-area/camera-ratio failure on prior installed build",
+    "evidence": "release-0.1.4-native-tests.xml"
   }
 }

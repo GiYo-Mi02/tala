@@ -29,9 +29,8 @@ export function alignmentProblem(points: readonly Point[], width: number, height
 
 export function isAligned(page: { width: number; height: number; alignment?: Alignment }): boolean {
   const a = page.alignment;
-  if (a?.method === 'guide-v1')
-    return page.width === a.sourceWidth && page.height === a.sourceHeight &&
-      page.width > 0 && page.height > 0;
+  // Older guide-v1 photos include camera margins. Keep them readable, but require
+  // actual paper alignment before applying the template's field coordinates.
   return !!a && a.method === 'four-corner-v1' && page.width === alignedSize.width && page.height === alignedSize.height &&
     !alignmentProblem(a.corners, a.sourceWidth, a.sourceHeight);
 }

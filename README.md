@@ -6,7 +6,9 @@ The Android app captures **both** BEEF pages, provides four-corner perspective a
 
 ## Install and test
 
-Use `output/android/TALA-Phase1-0.1.2.apk` (version code 3). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+Use `output/android/TALA-Phase1-0.1.4.apk` (version code 5). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+
+The camera uses a portrait 3:4 preview and a BEEF-proportioned guide. Every capture opens paper-corner alignment before acceptance or OCR. See [the camera alignment correction](docs/camera-alignment-fix.md).
 
 For an existing photo, open its draft and select **Align saved page 1**. Mark the four paper corners, select **Straighten & preview**, and check that the green regions cover the answer boxes below the labels. Accept the page and run OCR again. Previous raw OCR remains saved; realigning page 1 clears confirmations and readiness. Use **View area read** to inspect each result. Legacy results and replaced photos cannot show an exact reading area and explain why.
 
@@ -18,7 +20,7 @@ Print the three fictional pairs in `output/pdf/` at actual size on A4 paper. The
 
 ## Release version checks
 
-The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.1.2 / code 3**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
+The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.1.4 / code 5**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
 
 ## Development setup on Windows
 

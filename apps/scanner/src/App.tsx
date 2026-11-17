@@ -281,25 +281,13 @@ function Scanner() {
       ) : route.name === "capture" ? (
         <Capture
           page={route.page}
+          onWorkingChange={setBusy}
           onCancel={() => setRoute({ name: "editor" })}
           onPhoto={async (photo) => {
             if (!draft) throw new Error("No draft is open. Return to the editor and try again.");
-            setBusy(true);
             setError("");
             setNotice("");
-            try {
-              const saved = await persistPage(draft, {
-                ...photo,
-                page: route.page,
-                acceptedAt: new Date().toISOString(),
-                imageId: Crypto.randomUUID(),
-              });
-              remember(saved);
-              setRoute({ name: "editor" });
-              setNotice(`Page ${route.page} accepted and saved in private storage.`);
-            } finally {
-              setBusy(false);
-            }
+            setRoute({ name: "crop", page: route.page, photo });
           }}
         />
       ) : route.name === "crop" && draft ? (

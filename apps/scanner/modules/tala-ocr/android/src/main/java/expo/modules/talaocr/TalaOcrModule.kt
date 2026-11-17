@@ -21,7 +21,7 @@ class TalaOcrModule : Module() {
         promise.reject("E_ALIGNMENT", e.message ?: "This photo could not be aligned. Adjust the corners or retake it.", null)
       }
     }.runOnQueue(Queues.DEFAULT)
-    AsyncFunction("recognize") { uri: String, promise: Promise ->
+    AsyncFunction("recognize") { uri: String, dateCell: Boolean, promise: Promise ->
       val context = appContext.reactContext
       if (context == null) {
         promise.reject("E_CONTEXT", "OCR is not available. Reopen the app.", null)
@@ -34,7 +34,7 @@ class TalaOcrModule : Module() {
       val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
       var field: PreparedField? = null
       try {
-        val prepared = FieldImage.prepare(uri)
+        val prepared = FieldImage.prepare(uri, dateCell)
         field = prepared
         val image = InputImage.fromBitmap(prepared.bitmap, 0)
         recognizer.process(image)

@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-17",
+  "status": "Pass",
+  "device": {
+    "kind": "emulator",
+    "avd": "TALA_OCR",
+    "androidVersion": "16",
+    "androidBuild": "BP41.250916.009.A1",
+    "abi": "x86_64"
+  },
+  "airplaneMode": true,
+  "wifiEnabled": false,
+  "tests": 5,
+  "failures": 0,
+  "preprocessing": {
+    "version": "grid-lines-v2",
+    "dateCellContentHeight": 80,
+    "otherFieldContentHeight": 52
+  },
+  "cases": [
+    "invalidCornersDoNotCreateAnAlignedFile",
+    "bundledMlKitReadsFictionalFixtureInputs",
+    "duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry",
+    "perspectiveCorrectionPreservesKnownLandmarks",
+    "preprocessingPreservesCharacterStrokesAndAddsEmptyMargins"
+  ],
+  "fixtureComparison": {
+    "fixtures": [
+      "clean",
+      "optional-blanks",
+      "invalid-required"
+    ],
+    "fieldComparisons": 28,
+    "portraitPhotoRegression": {
+      "sourceWidth": 3024,
+      "sourceHeight": 4032,
+      "backgroundMargins": true,
+      "angledPaper": true,
+      "expectedFields": 7,
+      "matchedFields": 7,
+      "fixture": "clean"
+    },
+    "normalization": "Remove OCR inter-character whitespace for character comparison; uppercase BEEF names. Original OCR remains unchanged. Host tests separately verify intentional name spaces."
+  },
+  "testSourceSha256": "ace3df742965f7efa0c7cceeeef82552b0c81b05d56ec52e6286b6b71b8aa528",
+  "physicalPhoneAcceptance": "Updated APK not yet retested on Samsung Galaxy A53 5G; user reported reading-area/camera-ratio failure on prior installed build",
+  "evidence": "release-0.1.4-native-tests.xml"
+}

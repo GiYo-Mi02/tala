@@ -29,15 +29,14 @@ describe('Four-corner alignment validation', () => {
     expect(isAligned({ ...page, height: 1600 })).toBe(false);
     expect(isAligned({ ...page, alignment: { ...page.alignment, corners: [full[0], full[2], full[1], full[3]] } })).toBe(false);
   });
-  it('accepts a complete image captured inside the camera guide', () => {
+  it('requires paper alignment for old guide photos even when their dimensions match', () => {
     expect(isAligned({
       width: 3024,
       height: 4032,
       alignment: { method: 'guide-v1', sourceWidth: 3024, sourceHeight: 4032 },
-    })).toBe(true);
+    })).toBe(false);
     expect(isAligned({
-      width: 3024,
-      height: 4032,
+      ...alignedSize,
       alignment: { method: 'guide-v1', sourceWidth: 1600, sourceHeight: 2263 },
     })).toBe(false);
   });
