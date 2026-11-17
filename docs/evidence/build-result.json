@@ -1,14 +1,14 @@
 ﻿{
     "upgradeSignatureMatches":  true,
-    "apkSha256":  "60d1c5796791acfd4afbcde0aa5f8ec77ed41469a38ace3d6341926c00ee22ea",
+    "apkSha256":  "0a9254d38c6735641dfe05b857814c538d16387dcc5a69a581eee377a6d18041",
     "testPhone":  "Samsung Galaxy A53 5G",
-    "appVersion":  "0.1.4",
+    "appVersion":  "0.2.0",
     "physicalPhoneChecks":  "Not run",
     "command":  "npm.cmd run build:android",
-    "versionCode":  5,
+    "versionCode":  6,
     "signingCertificateSha256":  "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
     "gradle":  "8.14.3",
-    "sourceFingerprint":  "7b4e4fd4f23bf7a2d57f7f3c9a6d2c7acf9103792abf4d67a445c21b2cc6503c",
+    "sourceFingerprint":  "2b0802f84f8db14e625c8e289f77ac7709d722e68cf38ea9cb3f9f99a5a66043",
     "exitCode":  0,
     "status":  "Pass"
 }

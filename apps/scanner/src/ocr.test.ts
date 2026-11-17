@@ -15,6 +15,14 @@ beforeEach(() => {
   mocks.discard.mockResolvedValue(undefined);
 });
 describe('Scanner extraction orchestration (mocked native recognition)', () => {
+  it('does not apply portrait BEEF regions to a general landscape scan', async () => {
+    const landscape: Page = { ...page, width: 2400, height: 1500, alignment: {
+      method: 'opencv-manual-v1', sourceWidth: 2400, sourceHeight: 1500,
+      corners: [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}],
+    } };
+    await expect(recognizePage(landscape, () => {})).rejects.toThrow(/upright BEEF/);
+    expect(mocks.manipulate).not.toHaveBeenCalled(); expect(mocks.recognize).not.toHaveBeenCalled();
+  });
   it('blocks unaligned legacy pages before reading or modifying anything', async () => {
     await expect(recognizePage({ ...page, alignment: undefined }, () => {})).rejects.toThrow(/Align saved page/);
     expect(mocks.manipulate).not.toHaveBeenCalled();expect(mocks.recognize).not.toHaveBeenCalled();

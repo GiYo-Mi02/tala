@@ -21,6 +21,8 @@ export async function recognizePage(
 ): Promise<{ run: OcrRun; values: Values }> {
   if (page.page !== 1) throw new Error("Only page 1 has extraction mappings.");
   if (!isAligned(page)) throw new Error("Align saved page 1 before running OCR. Check that the highlighted areas cover the answer boxes.");
+  if (page.width / page.height < 0.56 || page.width / page.height > 0.85)
+    throw new Error("Automatic field extraction supports the upright BEEF layout. Rotate or retake this page; its full OCR text remains available.");
   const fields = {} as Record<FieldKey, RawField>;
   const values = {} as Values;
   for (const key of fieldKeys) {

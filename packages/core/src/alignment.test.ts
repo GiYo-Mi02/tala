@@ -2,6 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { alignedSize, alignmentProblem, isAligned, type Corners } from './alignment';
 const full: Corners = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }];
 describe('Four-corner alignment validation', () => {
+  it('accepts proportion-preserving OpenCV scans, including landscape, with trustworthy source geometry', () => {
+    const source = { sourceWidth: 2000, sourceHeight: 3000, corners: full };
+    expect(isAligned({ width: 1800, height: 2545, alignment: { ...source, method: 'opencv-auto-v1', confidence: 0.9 } })).toBe(true);
+    expect(isAligned({ width: 2400, height: 1500, alignment: { ...source, method: 'opencv-manual-v1' } })).toBe(true);
+    expect(isAligned({ width: 1800, height: 2545, alignment: { ...source, method: 'opencv-auto-v1', confidence: 0.5 } })).toBe(false);
+    expect(isAligned({ width: 1800, height: 2545, alignment: { ...source, method: 'opencv-auto-v1', confidence: NaN } })).toBe(false);
+    expect(isAligned({ width: 0, height: 2545, alignment: { ...source, method: 'opencv-manual-v1' } })).toBe(false);
+  });
   it('accepts full-page and perspective selections in clockwise order', () => {
     expect(alignmentProblem(full, 1060, 1499)).toBeUndefined();
     expect(alignmentProblem([{ x: 0.1, y: 0.1 }, { x: 0.8, y: 0.15 }, { x: 0.95, y: 0.9 }, { x: 0.05, y: 0.95 }], 2000, 3000)).toBeUndefined();

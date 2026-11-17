@@ -12,11 +12,23 @@ android {
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
   sourceSets.androidTest.assets.srcDirs += ['../../../../../fixtures/images', '../../../../../fixtures/expected']
+  packagingOptions {
+    jniLibs { pickFirsts += ['**/libc++_shared.so'] }
+  }
 }
 
 dependencies {
+  def cameraVersion = '1.5.3'
+  implementation "androidx.camera:camera-core:$cameraVersion"
+  implementation "androidx.camera:camera-camera2:$cameraVersion"
+  implementation "androidx.camera:camera-lifecycle:$cameraVersion"
+  implementation "androidx.camera:camera-view:$cameraVersion"
+  implementation 'androidx.activity:activity-ktx:1.10.1'
+  implementation 'androidx.exifinterface:exifinterface:1.4.2'
+  implementation 'org.opencv:opencv:4.12.0'
   // This artifact statically bundles the Latin model. Do not replace with play-services-mlkit.
   implementation 'com.google.mlkit:text-recognition:16.0.1'
   androidTestImplementation 'androidx.test:runner:1.6.2'
+  androidTestImplementation 'androidx.test:core:1.6.1'
   androidTestImplementation 'androidx.test.ext:junit:1.2.1'
 }

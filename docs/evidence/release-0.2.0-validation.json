@@ -1,0 +1,253 @@
+{
+  "appVersion": "0.2.0",
+  "versionCode": 6,
+  "previousVersion": "0.1.4",
+  "previousVersionCode": 5,
+  "typecheck": "PASS",
+  "hostTests": {
+    "passed": 115,
+    "files": 8,
+    "evidence": "release-0.2.0-tests.json"
+  },
+  "nativeTests": {
+    "date": "2026-11-18",
+    "status": "PASS",
+    "device": {
+      "kind": "emulator",
+      "avd": "TALA_OCR",
+      "model": "sdk_gphone64_x86_64",
+      "androidVersion": "16",
+      "androidBuild": "BP41.250916.009.A1",
+      "abi": "x86_64",
+      "camera": "virtualscene"
+    },
+    "airplaneMode": true,
+    "wifiEnabled": false,
+    "tests": 13,
+    "failures": 0,
+    "skipped": 0,
+    "executionTimeSeconds": 39.631,
+    "cases": [
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "perspectiveCorrectionPreservesLandscapeProportionsAndPrivateImageBounds"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "cameraOpensManualCaptureRemainsAvailableAndTheScannerCanReopen"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "openCvWarpKeepsTiltedContentLandmarksInTheirCorrectPositions"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "detectsExteriorPaperAcrossRepresentativeScenarios"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "uprightAnalysisPointsReturnToTheCorrectRawBufferCoordinates"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "stabilityRequiresSustainedQualityAndNeverCapturesTwice"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "refusesPartialLowContrastAndBlurryPagesWithoutInventingCorners"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentScannerTest",
+        "name": "automaticDetectionWarpAndBundledOcrReadTheUnchangedBeefFixture"
+      },
+      {
+        "class": "expo.modules.talaocr.PerspectiveTest",
+        "name": "invalidCornersDoNotCreateAnAlignedFile"
+      },
+      {
+        "class": "expo.modules.talaocr.PerspectiveTest",
+        "name": "bundledMlKitReadsFictionalFixtureInputs"
+      },
+      {
+        "class": "expo.modules.talaocr.PerspectiveTest",
+        "name": "duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry"
+      },
+      {
+        "class": "expo.modules.talaocr.PerspectiveTest",
+        "name": "perspectiveCorrectionPreservesKnownLandmarks"
+      },
+      {
+        "class": "expo.modules.talaocr.PerspectiveTest",
+        "name": "preprocessingPreservesCharacterStrokesAndAddsEmptyMargins"
+      }
+    ],
+    "cameraChecks": {
+      "previewStreamAndReopenCycles": 2,
+      "manualImageCapture": "PASS",
+      "liveDocumentAutoShutter": "NOT TESTED",
+      "physicalPhone": "NOT TESTED"
+    },
+    "fixtureComparison": {
+      "fieldComparisons": 35,
+      "existingPerspectiveFixtures": 28,
+      "newAutomaticDetectionWarpFixture": 7,
+      "normalization": "Remove OCR inter-character whitespace for comparison and uppercase names. Original OCR is retained; intentional spaces are tested separately on the host."
+    },
+    "scenarios": [
+      "flat",
+      "clockwise",
+      "counterclockwise",
+      "perspective",
+      "simple-clutter",
+      "light-shadow",
+      "uneven-light",
+      "partial-boundary-fallback",
+      "low-contrast-fallback",
+      "blur-fallback",
+      "movement-and-frame-gap-state",
+      "small-printed-BEEF-text-and-tables"
+    ],
+    "baseline": {
+      "sourceCommit": "a19c3fa8d0261849de6c8c9e8b2ca058580ac614",
+      "sourceFile": "fixtures/images/clean-page-1.png",
+      "testAsset": "apps/scanner/modules/tala-ocr/android/src/androidTest/assets/ocr-baseline-clean-page-1.png",
+      "sha256": "084192eca588e7be362c096a1923ab619d2a9dd3d05d54becd1a88b64d44a7ac",
+      "reason": "Preserve the user-modified working fixture; compare unchanged committed fictional text against its matching expected labels."
+    },
+    "physicalAcceptance": "Samsung Galaxy A53 5G not tested on this version; Android OS/build not recorded",
+    "evidence": "release-0.2.0-native-tests.xml"
+  },
+  "versionGuardTests": {
+    "passed": 6,
+    "command": "node --test scripts/check-android-version.test.cjs"
+  },
+  "build": "PASS",
+  "apkIdentity": "PASS",
+  "upgradeSignatureMatches": true,
+  "sourceFingerprint": "2b0802f84f8db14e625c8e289f77ac7709d722e68cf38ea9cb3f9f99a5a66043",
+  "apkSha256": "0a9254d38c6735641dfe05b857814c538d16387dcc5a69a581eee377a6d18041",
+  "dependencies": {
+    "CameraX": "1.5.3",
+    "OpenCV": "4.12.0",
+    "ActivityKtx": "1.10.1",
+    "ExifInterface": "1.4.2",
+    "bundledMlKitLatin": "16.0.1",
+    "removed": "expo-camera 17.0.10"
+  },
+  "cxxRuntimeExports": {
+    "arm64React": 2336,
+    "arm64OpenCv": 2336,
+    "symbolsOnlyInEither": 0
+  },
+  "criteria": [
+    {
+      "id": "SC-01",
+      "criterion": "Camera opens",
+      "status": "PASS",
+      "evidence": "Virtual camera reached STREAMING and opened/reopened twice; physical phone not tested"
+    },
+    {
+      "id": "SC-02",
+      "criterion": "Automatic document detection",
+      "status": "PASS",
+      "evidence": "Actual OpenCV detects native generated scenarios"
+    },
+    {
+      "id": "SC-03",
+      "criterion": "Corners without user input",
+      "status": "PASS",
+      "evidence": "Known-corner comparison and automatic BEEF pipeline"
+    },
+    {
+      "id": "SC-04",
+      "criterion": "Overlay tracking",
+      "status": "PARTIAL",
+      "evidence": "Coordinate transforms implemented; four inverse rotations tested; visual phone tracking pending"
+    },
+    {
+      "id": "SC-05",
+      "criterion": "Stable automatic capture",
+      "status": "PARTIAL",
+      "evidence": "Timing/motion/quality/latch tests pass; real auto shutter pending"
+    },
+    {
+      "id": "SC-06",
+      "criterion": "Manual capture",
+      "status": "PASS",
+      "evidence": "Actual CameraX image and staged private metadata on emulator"
+    },
+    {
+      "id": "SC-07",
+      "criterion": "Automatic crop",
+      "status": "PASS",
+      "evidence": "High-resolution re-detection and processing without supplied corners"
+    },
+    {
+      "id": "SC-08",
+      "criterion": "Perspective correction",
+      "status": "PASS",
+      "evidence": "OpenCV content landmarks and landscape proportions"
+    },
+    {
+      "id": "SC-09",
+      "criterion": "No required manual corner step",
+      "status": "PARTIAL",
+      "evidence": "Success route goes directly to OCR/review; installed React/native phone flow pending"
+    },
+    {
+      "id": "SC-10",
+      "criterion": "Optional crop adjustment",
+      "status": "PARTIAL",
+      "evidence": "Native warp and React integration compiled; physical touch flow pending"
+    },
+    {
+      "id": "SC-11",
+      "criterion": "Corrected image submitted to ML Kit",
+      "status": "PASS",
+      "evidence": "Actual automatic detection/warp/recognition fixture"
+    },
+    {
+      "id": "SC-12",
+      "criterion": "Offline text extraction",
+      "status": "PASS",
+      "evidence": "35 field comparisons, multiline blocks; emulator network disabled"
+    },
+    {
+      "id": "SC-13",
+      "criterion": "OCR review and correction",
+      "status": "PARTIAL",
+      "evidence": "Existing validation and overwrite-choice protection; phone interaction pending"
+    },
+    {
+      "id": "SC-14",
+      "criterion": "Offline storage",
+      "status": "PARTIAL",
+      "evidence": "Fault/serialization tests pass; phone SQLite force-stop test pending"
+    },
+    {
+      "id": "SC-15",
+      "criterion": "Synchronization",
+      "status": "NOT TESTED",
+      "evidence": "Not implemented in this Phase 1 checkout; no API/auth/backend changes"
+    },
+    {
+      "id": "SC-16",
+      "criterion": "Camera resource release",
+      "status": "PASS",
+      "evidence": "CameraX close/reopen; ImageProxy and Mat release paths; hardware profiling pending"
+    },
+    {
+      "id": "SC-17",
+      "criterion": "No duplicate capture/OCR",
+      "status": "PARTIAL",
+      "evidence": "Atomic native guard, stability latch and serial React processing; phone stress pending"
+    }
+  ],
+  "physicalPhone": "NOT TESTED - Samsung Galaxy A53 5G, Android version/build pending",
+  "phase2Started": false,
+  "initialRegression": "scanner-initial-regression.xml records an O/0 error on a differently proportioned synthetic BEEF projection; expected text was not changed",
+  "preservedWorkingFiles": {
+    "docs/evidence/unit-tests.json": "b10380b01549b0ab3b05ea9fb96b5803c2a6c8934aa7100bcfe19757e98983dc",
+    "fixtures/images/clean-page-1.png": "b8cdf353ce9ad2c9996473fa1bdbdc145601f3f17cfa01b3927ab308adbdc016"
+  }
+}

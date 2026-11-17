@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="expo.modules.talaocr.DocumentScannerTest" tests="13" failures="0" errors="0" skipped="0" time="39.631" timestamp="2026-11-17T16:38:03" hostname="localhost">
+  <properties>
+    <property name="device" value="TALA_OCR(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":tala-ocr" />
+  </properties>
+  <testcase name="perspectiveCorrectionPreservesLandscapeProportionsAndPrivateImageBounds" classname="expo.modules.talaocr.DocumentScannerTest" time="0.351" />
+  <testcase name="cameraOpensManualCaptureRemainsAvailableAndTheScannerCanReopen" classname="expo.modules.talaocr.DocumentScannerTest" time="20.634" />
+  <testcase name="openCvWarpKeepsTiltedContentLandmarksInTheirCorrectPositions" classname="expo.modules.talaocr.DocumentScannerTest" time="0.389" />
+  <testcase name="detectsExteriorPaperAcrossRepresentativeScenarios" classname="expo.modules.talaocr.DocumentScannerTest" time="1.211" />
+  <testcase name="uprightAnalysisPointsReturnToTheCorrectRawBufferCoordinates" classname="expo.modules.talaocr.DocumentScannerTest" time="0.007" />
+  <testcase name="stabilityRequiresSustainedQualityAndNeverCapturesTwice" classname="expo.modules.talaocr.DocumentScannerTest" time="0.006" />
+  <testcase name="refusesPartialLowContrastAndBlurryPagesWithoutInventingCorners" classname="expo.modules.talaocr.DocumentScannerTest" time="0.255" />
+  <testcase name="automaticDetectionWarpAndBundledOcrReadTheUnchangedBeefFixture" classname="expo.modules.talaocr.DocumentScannerTest" time="6.518" />
+  <testcase name="invalidCornersDoNotCreateAnAlignedFile" classname="expo.modules.talaocr.PerspectiveTest" time="0.042" />
+  <testcase name="bundledMlKitReadsFictionalFixtureInputs" classname="expo.modules.talaocr.PerspectiveTest" time="8.499" />
+  <testcase name="duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry" classname="expo.modules.talaocr.PerspectiveTest" time="0.006" />
+  <testcase name="perspectiveCorrectionPreservesKnownLandmarks" classname="expo.modules.talaocr.PerspectiveTest" time="0.282" />
+  <testcase name="preprocessingPreservesCharacterStrokesAndAddsEmptyMargins" classname="expo.modules.talaocr.PerspectiveTest" time="0.008" />
+</testsuite>

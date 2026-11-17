@@ -34,7 +34,12 @@ with zipfile.ZipFile(apk) as archive:
     preprocessing_class = any(b'expo/modules/talaocr/FieldImage' in archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n))
     dedup_class = any(b'expo/modules/talaocr/ReadingResult' in archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n))
     abis = sorted({n.split('/')[1] for n in names if n.startswith('lib/') and n.endswith('.so')})
+    dex_payloads=[archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n)]
+    scanner_class=any(b'DocumentScannerActivity' in payload and b'DocumentDetector' in payload for payload in dex_payloads)
+    opencv_abis=[abi for abi in abis if f'lib/{abi}/libopencv_java4.so' in names]
     checks = {'embedded_android_bundle':bool(bundle),'both_beef_pages':[p['page'] for p in pages]==[1,2],'bundled_latin_model_assets':bool(models),'local_ocr_module_in_dex':ocr_class,'perspective_module_in_dex':alignment_class,'field_preprocessing_in_dex':preprocessing_class,'geometry_dedup_in_dex':dedup_class,'arm64_native_libraries':'arm64-v8a' in abis,'no_instrumentation_fixtures':not any(n.endswith(('clean-page-1.png','clean.json','ocr-regions.json')) for n in names)}
+    checks.update(native_scanner_in_dex=scanner_class,bundled_opencv_all_abis=bool(abis) and opencv_abis==abis,
+                  arm_only_release=abis==['arm64-v8a','armeabi-v7a'])
     result = {'apk':str(apk.relative_to(root)), 'sha256':hashlib.sha256(apk.read_bytes()).hexdigest(), 'bytes':apk.stat().st_size,
               'checks':checks,'bundle':bundle,'template_images':pages,'latin_model_assets':models,'abis':abis,
               'physical_phone_acceptance':'Not run - Samsung Galaxy A53 5G designated; Android version and build pending'}

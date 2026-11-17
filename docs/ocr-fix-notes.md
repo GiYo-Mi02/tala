@@ -1,6 +1,8 @@
 # OCR field selection fix — 0.1.1
 
-This records the earlier OCR correction. For the current 0.1.4 APK and portrait-camera correction, use [camera alignment fix and retest instructions](camera-alignment-fix.md).
+Current release: **0.2.0** uses automatic CameraX/OpenCV detection; corner adjustment is optional. See [the intelligent scanner implementation](intelligent-scanner.md). This document records the earlier correction.
+
+The 0.1.1 OCR correction below is retained as historical evidence.
 
 The scanner now requires four-corner alignment before OCR. It straightens each page to 1600 × 2263, previews the mapped answer regions, rejects printed BEEF labels as proposed values, and lets the reviewer inspect the actual source regions used for a result. The supplied reference PDF and field mapping coordinates remain unchanged.
 

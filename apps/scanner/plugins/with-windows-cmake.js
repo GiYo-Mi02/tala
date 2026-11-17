@@ -19,6 +19,21 @@ module.exports = function withWindowsCmake(config) {
             }
         }`);
     }
+    if (!source.includes('// TALA packaged ABIs')) {
+      source = source.replace(/defaultConfig\s*\{/, `defaultConfig {
+        // TALA packaged ABIs: match every native library to the React Native build.
+        ndk {
+            abiFilters.clear()
+            abiFilters.addAll((findProperty('reactNativeArchitectures') ?: 'arm64-v8a,armeabi-v7a').split(','))
+        }`);
+    }
+    if (!source.includes('// TALA shared C++ runtime')) {
+      source = source.replace(/android\s*\{/, `android {
+    // TALA shared C++ runtime: React Native and OpenCV both provide this library.
+    packagingOptions {
+        jniLibs { pickFirsts += ['**/libc++_shared.so'] }
+    }`);
+    }
     config.modResults.contents = source;
     return config;
   });

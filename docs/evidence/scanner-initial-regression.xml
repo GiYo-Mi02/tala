@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="expo.modules.talaocr.DocumentScannerTest" tests="12" failures="1" errors="0" skipped="0" time="32.994" timestamp="2026-11-17T16:31:30" hostname="localhost">
+  <properties>
+    <property name="device" value="TALA_OCR(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":tala-ocr" />
+  </properties>
+  <testcase name="perspectiveCorrectionPreservesLandscapeProportionsAndPrivateImageBounds" classname="expo.modules.talaocr.DocumentScannerTest" time="0.41" />
+  <testcase name="cameraOpensManualCaptureRemainsAvailableAndTheScannerCanReopen" classname="expo.modules.talaocr.DocumentScannerTest" time="14.24" />
+  <testcase name="detectsExteriorPaperAcrossRepresentativeScenarios" classname="expo.modules.talaocr.DocumentScannerTest" time="1.345" />
+  <testcase name="uprightAnalysisPointsReturnToTheCorrectRawBufferCoordinates" classname="expo.modules.talaocr.DocumentScannerTest" time="0.006" />
+  <testcase name="stabilityRequiresSustainedQualityAndNeverCapturesTwice" classname="expo.modules.talaocr.DocumentScannerTest" time="0.006" />
+  <testcase name="refusesPartialLowContrastAndBlurryPagesWithoutInventingCorners" classname="expo.modules.talaocr.DocumentScannerTest" time="0.261" />
+  <testcase name="automaticDetectionWarpAndBundledOcrReadTheUnchangedBeefFixture" classname="expo.modules.talaocr.DocumentScannerTest" time="7.186">
+    <failure>org.junit.ComparisonFailure: Actual automatically cropped OCR: lrn expected:&lt;[0]01234567890&gt; but was:&lt;[O]01234567890&gt;
+at org.junit.Assert.assertEquals(Assert.java:117)
+at expo.modules.talaocr.DocumentScannerTest.automaticDetectionWarpAndBundledOcrReadTheUnchangedBeefFixture(DocumentScannerTest.kt:185)
+</failure>
+  </testcase>
+  <testcase name="invalidCornersDoNotCreateAnAlignedFile" classname="expo.modules.talaocr.PerspectiveTest" time="0.037" />
+  <testcase name="bundledMlKitReadsFictionalFixtureInputs" classname="expo.modules.talaocr.PerspectiveTest" time="7.374" />
+  <testcase name="duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry" classname="expo.modules.talaocr.PerspectiveTest" time="0.005" />
+  <testcase name="perspectiveCorrectionPreservesKnownLandmarks" classname="expo.modules.talaocr.PerspectiveTest" time="0.264" />
+  <testcase name="preprocessingPreservesCharacterStrokesAndAddsEmptyMargins" classname="expo.modules.talaocr.PerspectiveTest" time="0.043" />
+</testsuite>

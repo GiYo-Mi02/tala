@@ -1,56 +1,46 @@
-# Phase 1 physical-phone acceptance
+# Phase 1 physical-phone acceptance - intelligent scanner
 
-Record the phone manufacturer/model, Android version, Android build number, T.A.L.A. version (`0.1.4`, Android version code `5`), APK SHA-256, tester, and date. Physical-phone results are required. Emulator or host tests do not replace these checks. No browser is used in Phase 1.
+Install **0.2.0 / Android code 6** from `output/android/TALA-Phase1-0.2.0.apk` as an update to preserve drafts. SHA-256: `0a9254d38c6735641dfe05b857814c538d16387dcc5a69a581eee377a6d18041`. Record tester/date, Samsung Galaxy A53 5G model, Android version/build (Settings > About phone > Software information), installed app version and each result. An emulator result is not a phone pass.
 
-Designated phone: Samsung Galaxy A53 5G. Obtain its Android version and build number from Settings → About phone → Software information. The current APK SHA-256 is `60d1c5796791acfd4afbcde0aa5f8ec77ed41469a38ace3d6341926c00ee22ea`.
-
-Use fictional data only. Download/transfer `output/android/TALA-Phase1-0.1.4.apk` and print each two-page PDF from `output/pdf/` at **actual size on A4 paper**. Retain every paper edge while cropping. The clean learner is ELENA SANTOS RIVERA, LRN `001234567890`, grade `7`, school year `2024-2025`, birthdate `02/29/2012`. The legal guardian is MARCELA TORRES, deliberately different.
+Use fictional printed forms only. Print `output/pdf/` at actual size on A4 for the registered BEEF tests. Auto detection/cropping also supports other document proportions, but automatic structured fields are limited to BEEF. Other layouts expose full OCR text rather than inventing field mappings.
 
 ## P1-01 - first launch offline
 
-1. Install the APK. Finish installation with **Done**, not Open. If this app was used previously, use a designated disposable test installation; uninstalling removes its drafts.
-2. Enable airplane mode and separately switch Wi-Fi off. Leave the laptop/development server unavailable.
-3. Launch T.A.L.A. and open **View both blank reference pages**. Switch pages. Record whether both appear with no server or model download.
-4. Record Pass/Fail and evidence (for example a short video showing network settings and launch).
+1. Use a separate disposable test installation for the fresh first-launch check; do not uninstall the installation whose drafts you need. Finish installation with Done.
+2. Enable airplane mode and separately disable Wi-Fi before first launch. Keep the laptop/server unavailable.
+3. Open the app and both bundled blank reference pages. Record that no server/model download is required.
 
-## P1-02 - permission, crop, and retake
+## P1-02 - permission, automatic scan, optional crop and retake
 
-1. Create a new BEEF draft and record its UUID. Tap **Capture page 1** and deny permission. Confirm the recovery instructions appear and no image is accepted in the slot.
-2. Grant camera permission from the app or Android Settings → Apps → T.A.L.A. Pilot → Permissions → Camera. Return and capture the clean printed page 1. Confirm the camera preview is portrait (3:4), with no stretching, and the guide has the same proportions as the paper. Keep all edges visible. The app must open paper-corner alignment rather than accept the full camera photo.
-3. Rotate upright if needed. Choose **Top left**, **Top right**, **Bottom right**, and **Bottom left**, and tap the corresponding paper corners. Fine-tune with the arrow buttons. Select **Straighten & preview**. On page 1, confirm the green areas cover the answer boxes below printed labels; select **Adjust corners** if needed, then **Accept aligned page 1**. Crossed, reversed, outside, or insufficient-resolution selections must be refused. Repeat with a visibly angled photo to exercise perspective correction.
-4. Capture and accept page 2. View each numbered slot. Retake page 2 using a visibly different photograph, crop it, and accept it. Confirm page 1 is unchanged and slot 2 shows only the replacement. A discarded candidate must not replace either accepted slot.
-5. Save the unfinished draft. Record Pass/Fail and capture/page order evidence.
-6. Update an existing 0.1.0, 0.1.1, or 0.1.2 installation using the new APK without uninstalling. Confirm its drafts still open. On an old unaligned or guide-v1 draft, OCR must request alignment. Previously accepted four-corner images should remain usable. Select **Align saved page 1**, straighten and accept it; confirm raw OCR history and edited values remain, confirmations clear, and readiness returns to unfinished. Cancel another alignment and confirm the accepted photo remains unchanged.
+1. Create a draft and record its UUID. Deny camera permission. Check that the native recovery instructions create no accepted image. Allow permission or open Android app settings, then return.
+2. Open Capture page 1. Auto is on by default. Put the entire clean fictional form on a contrasting desk and hold steady. Check the live polygon follows the paper, the status changes from searching/adjusting to hold steady, and a stable readable page captures automatically after about one second.
+3. The app should correct the page and read it offline, then show **Continue / Retake / Adjust Crop**. It must not require corner taps. Check that no edges/text are removed or stretched. Continue and confirm the new image/OCR appear in the existing editor.
+4. Repeat with slightly clockwise/counterclockwise and angled paper. Check the polygon against the actual edges. Use Auto Off and Capture to test manual shutter. Toggle Light on/off on the A53 and check focus/exposure recovery.
+5. Exercise **Adjust Crop** once: the original source must remain available; rotate if necessary, mark/fine-tune corners, straighten, accept the corrected crop, and return to processed review/OCR. Cancelling adjustment must preserve the review candidate. Cancelling the scan must preserve the previous accepted page.
+6. Cover a paper edge or use an unreliable boundary. No silently accepted crop is allowed. Retake or choose optional adjustment. Capture page 2 and Continue. Retake page 2 with a visibly different photo; verify page 1 is unchanged and only the accepted page 2 is retained.
+7. Update an older installation without clearing data. Open an existing draft. When retaking page 1 with current values, Continue must offer Keep current values / Use new OCR / Cancel. Cancel must leave the accepted image and values unchanged; either acceptance choice requires fresh field confirmation. Raw structured history remains available.
 
-## P1-03 - actual bundled OCR
+## P1-03 - automatic bundled OCR and reading areas
 
-1. Keep airplane mode on and Wi-Fi off. Open the clean draft and tap **Run bundled OCR on page 1**.
-2. Open **View area read** for each field and confirm its highlighted regions and strips cover the corresponding answer, below the printed label. Repeat after an angled capture and alignment. Compare every original OCR and editable field with `fixtures/expected/clean.json`. Birthdate is entered as MM/DD/YYYY and stored as YYYY-MM-DD. Do not silently correct before recording the pre-correction result.
-3. Confirm no learner field contains MARCELA or TORRES from the guardian section. View page 2 as evidence and use its zoom controls.
-4. Record the actual text for all seven fields, whether each matched, any correction needed, and Pass/Fail. Incorrect OCR is a failure of the clean-fixture exact-match check; preserve the evidence for a mapping/OCR fix and retest.
-5. Open **View area read** for every field. Check that the strip contains the entered value and the highlighted areas exclude printed labels. School year and birthdate show their separate reading regions. After a retake or realignment, historical OCR must say its area is unavailable rather than overlaying the new photo.
-6. If a printed label is read, confirm its original OCR remains visible, the proposed value is blank, and a review warning appears. Required blanks must block readiness; an optional blank still requires deliberate confirmation. Do not treat label rejection alone as a clean-fixture accuracy pass.
+1. Keep airplane mode on and Wi-Fi off. Capture/Continue the clean BEEF page. OCR runs automatically before review. The editor's Run OCR action remains available for retries and legacy pages.
+2. Before correcting anything, record all seven raw/proposed values against `fixtures/expected/clean.json`. Expected: school year 2024-2025, grade 7, LRN 001234567890, learner RIVERA / ELENA / SANTOS, birthdate 02/29/2012 (stored as 2012-02-29). The different guardian is MARCELA TORRES and must not fill learner fields.
+3. Open **View area read** for each result: the strip and marked areas must contain its answer boxes, below labels. Repeat after an angled capture. Page 2 stays viewable. Full OCR text should remain available in page review/viewer as unverified multiline text.
+4. Compare results from all twelve scenarios: flat desk; clockwise; counterclockwise; angle; clutter; uneven light; light shadow; little background contrast; partial page; blur/movement; small print; tables/multiple fields. Record detection, overlay, shutter, crop and OCR separately. Low contrast/partial/blur may safely require Retake or Adjust Crop, without forcing adjustment when reliable detection succeeds.
 
-## P1-04 - blanks, invalid values, and readiness
+## P1-04 - blanks, invalid values and readiness
 
-1. Make a new draft using `beef-optional-blanks.pdf`. Accept both pages and run OCR offline. Check LRN and middle name remain blank; compare the other five values with its expected JSON. The learner surname is DELA CRUZ, not TORRES.
-2. Make another draft using `beef-invalid-required.pdf`. Accept both pages and run OCR. Check missing grade and first name, school year `2024-2026`, and impossible date `02/30/2014` are flagged. The LRN `000123456789` must retain all leading zeroes.
-3. Confirm an unfinished/invalid draft cannot be saved as ready. Save it unfinished and reopen it. Correct school year to `2024-2025`, grade to `7`, first name to `JULIAN`, and birthdate to `02/28/2014`. Confirm validation updates as fields change.
-4. Check all seven values against the page and confirm them. Save as ready only when both accepted files exist and all values are valid. Record Pass/Fail and screenshots.
+1. Scan the optional-blanks pair: LRN and middle name stay empty; required values match its labels. Confirm optional blanks explicitly.
+2. Scan the invalid-required pair. Missing/invalid required values must be flagged and cannot be ready. Leading zeroes remain strings. An OCR O in a numeric LRN must be flagged, not silently changed to zero.
+3. Save unfinished, reopen, correct required values, and check validation updates. Only both accepted images plus valid values and all seven confirmations allow readiness. No data is uploaded.
 
 ## P1-05 - force-stop and reopen
 
-1. On the clean draft, preserve its original OCR, correct one name to the typed page value if needed, confirm all seven fields, and save as ready. Record the UUID, values, page order, raw OCR, and state. The Save confirmation must be visible before force-stop.
-2. Android Settings → Apps → T.A.L.A. Pilot → **Force stop**. Do not clear storage or uninstall.
-3. Reopen offline with the laptop unavailable. Confirm the UUID, both accepted images, page order, raw output, corrected values, and readiness are unchanged. View both images.
-4. Repeat for the unfinished invalid draft before correcting it. Confirm it remains editable. Record Pass/Fail and evidence.
+1. Preserve original OCR, make a manual correction, confirm fields and save. Record UUID, page order/images, raw/full OCR, corrected values and state after the save acknowledgment.
+2. Force-stop through Android Settings, without clearing storage or uninstalling. Reopen offline and check all recorded data, including full OCR text and field areas on the matching image.
+3. Repeat with an unfinished draft. Check camera background/resume, Back during searching, capture cancellation and repeated captures: no duplicate accepted pages/OCR runs or stuck processing state.
 
 ## P1-06 - automated faults
 
-Run `npm.cmd test`. The mapping fixture supplies independent coordinates and a different guardian; it is not fabricated ML Kit output. Save tests inject a missing accepted image, failed persistent copy, and failed metadata commit. They require errors, prevent acknowledgment/readiness, retain the previous accepted page, and remove failed replacement files. Review `docs/evidence/unit-tests.json`.
+Run `npm.cmd test`; the current saved report is [release-0.2.0-tests.json](evidence/release-0.2.0-tests.json). Missing accepted files, failed copies and failed writes must not acknowledge a save or delete the previous accepted file. These host tests do not prove native SQLite persistence.
 
-These are host tests of the save protocol. They do not demonstrate camera behavior or actual SQLite/ML Kit execution on a phone; P1-01 through P1-05 establish those runtime results.
-
-## Report back
-
-Send the device details plus a Pass/Fail result for P1-01 through P1-05. For any failure, include the test step, what appeared, and the seven pre-correction OCR values when relevant. Do not send real learner forms. Keep this project in Phase 1 until failures are fixed, the affected checks are repeated, and all mandatory checks pass.
+Report Pass/Fail for P1-01 through P1-05, the twelve scenario results and phone OS/build. Include pre-correction values for reading failures and a fictional-form screenshot/video of a displaced overlay or crop. Keep Phase 1 active until failures are resolved and retested; no backend Phase 2 approval is being requested yet.

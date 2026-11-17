@@ -20,6 +20,14 @@ function memory() {
   return { port,files,get row(){return row;},set failWrite(v:boolean){failWrite=v;},set failCopy(v:boolean){failCopy=v;} };
 }
 describe('P1-06: local save faults and readiness', () => {
+  it('preserves multiline document OCR, block geometry and the accepted image identity on reload', async () => {
+    const mem=memory(), draft=fixtureDraft();
+    draft.pages[1]!.documentOcr={ text:'First line\nSecond line', at:now, engine:'mlkit-bundled-latin-16.0.1',
+      blocks:[{ text:'First line', region:{x:.1,y:.2,width:.3,height:.04}, lines:[{text:'First line',region:{x:.1,y:.2,width:.3,height:.04}}] }] };
+    await saveDraft(mem.port,draft,now);
+    expect(mem.row?.pages[1]?.documentOcr).toEqual(draft.pages[1]!.documentOcr);
+    expect(mem.row?.pages[1]?.imageId).toBe('image-1');
+  });
   it('persists a stable UUID, ordered images, corrections, raw OCR, and readiness',async () => {
     const mem=memory(), draft=fixtureDraft();
     const raw = { text:'R1VERA', crop:{x:0.1,y:0.3,width:0.5,height:0.02},elements:[] };

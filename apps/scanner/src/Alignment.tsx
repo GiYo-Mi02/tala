@@ -36,6 +36,10 @@ export function Crop({
   onCancel,
   onAccept,
   onWorkingChange,
+  retainSource = false,
+  transferAccepted = false,
+  suggestedCorners,
+  showReadingRegions = true,
 }: {
   photo: Candidate;
   page: PageNumber;
@@ -44,9 +48,13 @@ export function Crop({
   onCancel: () => void;
   onAccept: (photo: Candidate) => Promise<void>;
   onWorkingChange: (busy: boolean) => void;
+  retainSource?: boolean;
+  transferAccepted?: boolean;
+  suggestedCorners?: Corners;
+  showReadingRegions?: boolean;
 }) {
   const [image, setImage] = useState(photo);
-  const [corners, setCorners] = useState<Corners>(initialCorners);
+  const [corners, setCorners] = useState<Corners>(() => suggestedCorners ?? initialCorners());
   const [selected, setSelected] = useState<number[]>([]);
   const [active, setActive] = useState(0);
   const [preview, setPreview] = useState<Candidate | null>(null);
@@ -56,12 +64,13 @@ export function Crop({
   const [zoom, setZoom] = useState(1);
   const temporary = useRef(new Set([photo.uri]));
   const mounted = useRef(true);
+  const operation = useRef(false);
   useEffect(() => {
     const files = temporary.current;
     mounted.current = true;
     return () => {
       mounted.current = false;
-      for (const uri of files) void discardCache(uri).catch(() => {});
+      for (const uri of files) if (!(retainSource && uri === photo.uri)) void discardCache(uri).catch(() => {});
     };
   }, []);
   const window = useWindowDimensions();
@@ -73,18 +82,22 @@ export function Crop({
     h = image.height * factor;
   const blocked = busy || working;
   function start() {
+    if (operation.current) return false;
+    operation.current = true;
     setWorking(true);
     onWorkingChange(true);
     setError("");
+    return true;
   }
   function finish() {
+    operation.current = false;
+    onWorkingChange(false);
     if (mounted.current) {
       setWorking(false);
-      onWorkingChange(false);
     }
   }
   async function rotate() {
-    start();
+    if (!start()) return;
     try {
       const rotated = await manipulateAsync(image.uri, [{ rotate: 90 }], {
         compress: 1,
@@ -116,11 +129,11 @@ export function Crop({
     );
   }
   async function straighten() {
-    start();
+    if (!start()) return;
     try {
-      const problem = alignmentProblem(corners, image.width, image.height);
+      const problem = alignmentProblem(corners, image.width, image.height, 600);
       if (problem) throw new Error(problem);
-      const result = await TalaOcr.rectify(image.uri, corners);
+      const result = await TalaOcr.rectifyDocument(image.uri, corners);
       if (!mounted.current) {
         await discardCache(result.uri);
         return;
@@ -129,7 +142,7 @@ export function Crop({
       setPreview({
         ...result,
         alignment: {
-          method: "four-corner-v1",
+          method: "opencv-manual-v1",
           sourceWidth: image.width,
           sourceHeight: image.height,
           corners,
@@ -150,10 +163,12 @@ export function Crop({
   }
   async function accept() {
     if (!preview) return;
-    start();
+    if (!start()) return;
+    if (transferAccepted) temporary.current.delete(preview.uri);
     try {
       await onAccept(preview);
     } catch (e) {
+      if (transferAccepted) temporary.current.add(preview.uri);
       if (mounted.current)
         setError(
           e instanceof Error
@@ -174,7 +189,7 @@ export function Crop({
       </Text>
       <Text style={styles.body}>
         {preview
-          ? page === 1
+          ? page === 1 && showReadingRegions
             ? "The green areas must cover the answer boxes, below the printed labels. Adjust the corners if they do not. This pilot reads only the supplied BEEF layout."
             : "Check that the whole page is upright and no content is cut off."
           : "Rotate until upright. Choose each corner below, then tap that paper corner in the photo. Use the arrow buttons to fine-tune it. Keep the whole paper visible."}
@@ -204,7 +219,7 @@ export function Crop({
                 ((window.width - 40) * zoom * preview.height) / preview.width
               }
               regions={
-                page === 1 ? Object.values(beefTemplate.regions).flat() : []
+                page === 1 && showReadingRegions ? Object.values(beefTemplate.regions).flat() : []
               }
               onError={() => setImageFailed(true)}
             />

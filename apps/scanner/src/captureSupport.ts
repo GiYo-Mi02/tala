@@ -1,40 +1,25 @@
-import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
-import { beefTemplate, type Alignment } from "@tala/core";
-import { discardCache } from "./repository";
+import type { Alignment, Corners, DocumentOcr, Draft, OcrRun, PageNumber, Values } from '@tala/core';
 
-export type Candidate = { uri: string; width: number; height: number; alignment?: Alignment };
+export type Candidate = { uri: string; width: number; height: number; alignment?: Alignment; documentOcr?: DocumentOcr };
+export type PreparedScan = Candidate & { imageId: string; extraction?: { run: OcrRun; values: Values }; warning?: string };
+export type NativeScan = { source: Candidate; rawUri: string; processed?: Candidate; corners?: Corners;
+  suggestedCorners?: Corners; confidence?: number; reason?: string; warning?: string };
+export const scannerConfig = { stableMs: 1000, motionTolerance: 0.018, minSharpness: 45, minBrightness: 45, maxGlare: 0.20 };
 
-/** Fit the upright 4:3 sensor preview without stretching it into the remaining screen space. */
-export function portraitCameraFrame(availableWidth: number, availableHeight: number) {
-  if (![availableWidth, availableHeight].every(n => Number.isFinite(n) && n > 0)) return undefined;
-  const width = Math.min(availableWidth, availableHeight * 3 / 4);
-  const height = width * 4 / 3;
-  const paper = beefTemplate.pages[0];
-  const guideHeight = height * 0.9;
-  const guideWidth = guideHeight * paper.width / paper.height;
-  return { width, height, guide: { left: (width - guideWidth) / 2, top: (height - guideHeight) / 2,
-    width: guideWidth, height: guideHeight } };
+/** Template identification only; these labels never supply field values. */
+export function matchesBeefLayout(text: string, width: number, height: number) {
+  if (width / height < 0.56 || width / height > 0.85) return false;
+  const compact = text.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  return compact.includes('BASICEDUCATIONENROLLMENTFORM') ||
+    ['SCHOOLYEAR', 'LEARNER', 'BIRTHDATE', 'REFERENCE'].filter(label => compact.includes(label)).length >= 3;
 }
-
-/** The alignment screen owns the normalized cache file only after a successful handoff. */
-export async function captureForAlignment(
-  take: () => Promise<{ uri: string } | undefined>,
-  onPhoto: (photo: Candidate) => Promise<void>,
-) {
-  let sourceUri: string | undefined;
-  let normalizedUri: string | undefined;
-  let handedOff = false;
-  try {
-    const photo = await take();
-    if (!photo) throw new Error("Photo capture failed. Try again.");
-    sourceUri = photo.uri;
-    // Apply camera orientation to pixels. A framing guide is not proof of paper alignment.
-    const normalized = await manipulateAsync(photo.uri, [], { compress: 1, format: SaveFormat.JPEG });
-    normalizedUri = normalized.uri;
-    await onPhoto({ uri: normalized.uri, width: normalized.width, height: normalized.height });
-    handedOff = true;
-  } finally {
-    if (sourceUri && (sourceUri !== normalizedUri || !handedOff)) await discardCache(sourceUri).catch(() => {});
-    if (normalizedUri && normalizedUri !== sourceUri && !handedOff) await discardCache(normalizedUri).catch(() => {});
-  }
+export function stagedPage(scan: PreparedScan, page: PageNumber) {
+  return { uri: scan.uri, width: scan.width, height: scan.height, alignment: scan.alignment, documentOcr: scan.documentOcr,
+    imageId: scan.imageId, page, acceptedAt: new Date().toISOString() };
+}
+/** The caller chooses replacement after explicit review; persistence commits this with the image. */
+export function draftWithScan(draft: Draft, scan: PreparedScan, page: PageNumber, replaceValues: boolean): Draft {
+  if (page !== 1 || !scan.extraction) return draft;
+  return { ...draft, values: replaceValues ? scan.extraction.values : draft.values,
+    ocrHistory: [...draft.ocrHistory, scan.extraction.run], confirmed: {}, state: 'editing' };
 }

@@ -1,5 +1,7 @@
 # Portrait camera and reading-area correction - 0.1.4
 
+Current release: **0.2.0** uses automatic CameraX/OpenCV detection; corner adjustment is optional. See [the intelligent scanner implementation](intelligent-scanner.md). This document records the earlier correction.
+
 The reported reading-area offset came from treating a full camera photo as an aligned BEEF page. The inset paper guide left camera background in the saved image, and the flexible preview could have a different aspect ratio from the photo. Template field coordinates were then applied to that full photo, shifting and scaling the areas read.
 
 The camera now uses the Android 4:3 sensor setting inside a measured **portrait 3:4 preview**. The view fits the available screen space without stretching; its centered paper guide uses the supplied BEEF page proportions. The photo retains orientation processing and full resolution. The guide is a framing aid, not an OCR alignment transform. This follows the installed Expo Camera 17 source and its [SDK 54 ratio/orientation API](https://github.com/expo/expo/blob/sdk-54/packages/expo-camera/src/Camera.types.ts).

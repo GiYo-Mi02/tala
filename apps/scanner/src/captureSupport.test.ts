@@ -1,73 +1,44 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { beefTemplate } from "@tala/core";
-const mocks = vi.hoisted(() => ({ manipulate: vi.fn(), discard: vi.fn() }));
-vi.mock("expo-image-manipulator", () => ({ manipulateAsync: mocks.manipulate, SaveFormat: { JPEG: "jpeg" } }));
-vi.mock("./repository", () => ({ discardCache: mocks.discard }));
-import { captureForAlignment, portraitCameraFrame } from "./captureSupport";
+import { describe, expect, it } from 'vitest';
+import { newDraft, type OcrRun } from '@tala/core';
+import { draftWithScan, matchesBeefLayout, stagedPage, type PreparedScan } from './captureSupport';
 
-describe("Portrait camera and paper guide geometry", () => {
-  it.each([[320, 500], [371, 280], [680, 1100], [300, 800]])(
-    "keeps a portrait 3:4 preview and a centered BEEF guide within %i by %i available space",
-    (availableWidth, availableHeight) => {
-      const frame = portraitCameraFrame(availableWidth, availableHeight)!;
-      expect(frame.width).toBeLessThanOrEqual(availableWidth);
-      expect(frame.height).toBeLessThanOrEqual(availableHeight);
-      expect(frame.width / frame.height).toBeCloseTo(3 / 4);
-      expect(frame.height).toBeGreaterThan(frame.width);
-      const guide = frame.guide;
-      expect(guide.width / guide.height).toBeCloseTo(beefTemplate.pages[0].width / beefTemplate.pages[0].height);
-      expect(guide.left).toBeGreaterThan(0);
-      expect(guide.top).toBeGreaterThan(0);
-      expect(guide.left * 2 + guide.width).toBeCloseTo(frame.width);
-      expect(guide.top * 2 + guide.height).toBeCloseTo(frame.height);
-    },
-  );
-  it("waits for a valid measured area instead of mounting a zero-sized camera", () => {
-    for (const value of [0, -1, NaN, Infinity]) {
-      expect(portraitCameraFrame(value, 400)).toBeUndefined();
-      expect(portraitCameraFrame(300, value)).toBeUndefined();
-    }
-  });
-});
+const run = { id: 'new-ocr', pageImageId: 'new-image', fields: {}, engine: 'mlkit-bundled-latin-16.0.1', at: 'now' } as OcrRun;
+const scan: PreparedScan = { uri: 'file:///cache/processed.jpg', imageId: 'new-image', width: 1800, height: 2545,
+  extraction: { run, values: { ...newDraft('x', 'now').values, learner_first_name: 'ELENA' } },
+  documentOcr: { text: 'First line\nSecond line', at: 'now', engine: 'mlkit-bundled-latin-16.0.1', blocks: [] } };
 
-beforeEach(() => {
-  vi.resetAllMocks();
-  mocks.manipulate.mockResolvedValue({ uri: "file:///normalized.jpg", width: 3024, height: 4032 });
-  mocks.discard.mockResolvedValue(undefined);
-});
-describe("Camera photo handoff to paper alignment", () => {
-  const take = async () => ({ uri: "file:///camera.jpg" });
-  it("keeps the orientation-normalized source alive for corner selection without declaring it aligned", async () => {
-    const onPhoto = vi.fn(async photo => {
-      expect(photo).toEqual({ uri: "file:///normalized.jpg", width: 3024, height: 4032 });
-      expect(mocks.discard).not.toHaveBeenCalledWith(photo.uri);
-    });
-    await captureForAlignment(take, onPhoto);
-    expect(onPhoto).toHaveBeenCalledOnce();
-    expect(mocks.manipulate).toHaveBeenCalledWith("file:///camera.jpg", [], { compress: 1, format: "jpeg" });
-    expect(mocks.discard).toHaveBeenCalledExactlyOnceWith("file:///camera.jpg");
+describe('Automatic scan review and template boundary', () => {
+  it.each(['Basic Education Enrollment Form', 'SCHOOL YEAR\nLearner information\nBirthdate'])('identifies BEEF from labels, never from expected learner values (%s)', text => {
+    expect(matchesBeefLayout(text, 1800, 2545)).toBe(true);
   });
-  it("cleans both candidates when the next screen cannot take ownership", async () => {
-    await expect(captureForAlignment(take, async () => { throw new Error("No draft is open"); })).rejects.toThrow("No draft");
-    expect(mocks.discard.mock.calls).toEqual([["file:///camera.jpg"], ["file:///normalized.jpg"]]);
+  it.each(['Random government certificate', 'ELENA SANTOS RIVERA 001234567890', 'School year'])('keeps other documents outside seven-field extraction (%s)', text => {
+    expect(matchesBeefLayout(text, 1800, 2545)).toBe(false);
   });
-  it("cleans the original when orientation normalization fails and does not accept an image", async () => {
-    mocks.manipulate.mockRejectedValue(new Error("Image processing failed"));
-    const onPhoto = vi.fn();
-    await expect(captureForAlignment(take, onPhoto)).rejects.toThrow("Image processing failed");
-    expect(onPhoto).not.toHaveBeenCalled();
-    expect(mocks.discard).toHaveBeenCalledExactlyOnceWith("file:///camera.jpg");
+  it('does not apply upright BEEF fields to a landscape or very narrow document', () => {
+    for (const [width, height] of [[2500, 1500], [700, 3000]]) expect(matchesBeefLayout('Basic Education Enrollment Form', width, height)).toBe(false);
   });
-  it("does not delete the handed-off image if normalization reuses the same URI", async () => {
-    mocks.manipulate.mockResolvedValue({ uri: "file:///camera.jpg", width: 3024, height: 4032 });
-    await captureForAlignment(take, async () => {});
-    expect(mocks.discard).not.toHaveBeenCalled();
+  it('preserves the candidate image identity and multiline full OCR for atomic acceptance', () => {
+    const page = stagedPage(scan, 1);
+    expect(page.imageId).toBe(run.pageImageId);
+    expect(page.documentOcr?.text).toBe('First line\nSecond line');
+    expect(page.uri).toBe(scan.uri);
   });
-  it("does not open alignment when capture returns no image", async () => {
-    const onPhoto = vi.fn();
-    await expect(captureForAlignment(async () => undefined, onPhoto)).rejects.toThrow("Photo capture failed");
-    expect(onPhoto).not.toHaveBeenCalled();
-    expect(mocks.manipulate).not.toHaveBeenCalled();
-    expect(mocks.discard).not.toHaveBeenCalled();
+  it('keeps existing editable values when the reviewer chooses to retain them and preserves both raw runs', () => {
+    const existing = newDraft('same-uuid', 'now');
+    existing.values.learner_first_name = 'CORRECTED'; existing.confirmed.learner_first_name = true; existing.ocrHistory = [{ ...run, id: 'old' }];
+    const next = draftWithScan(existing, scan, 1, false);
+    expect(next.id).toBe(existing.id); expect(next.values.learner_first_name).toBe('CORRECTED');
+    expect(next.ocrHistory.map(item => item.id)).toEqual(['old', 'new-ocr']);
+    expect(next.confirmed).toEqual({}); expect(next.state).toBe('editing');
+    expect(existing.confirmed.learner_first_name).toBe(true);
+  });
+  it('uses new proposals only when replacement is authorized, without confirming them', () => {
+    const next = draftWithScan(newDraft('same-uuid', 'now'), scan, 1, true);
+    expect(next.values.learner_first_name).toBe('ELENA'); expect(next.confirmed).toEqual({});
+  });
+  it('leaves learner values untouched for page 2 or a scan with unreadable/unregistered text', () => {
+    const draft = newDraft('id', 'now'); draft.values.learner_first_name = 'KEPT';
+    expect(draftWithScan(draft, scan, 2, true)).toBe(draft);
+    expect(draftWithScan(draft, { ...scan, extraction: undefined }, 1, true)).toBe(draft);
   });
 });

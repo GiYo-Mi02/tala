@@ -4,7 +4,8 @@ import type { Region } from './template';
 
 export const TEST_PROFILE = 'fictional-local-profile-v1' as const;
 export type PageNumber = 1 | 2;
-export type Page = { page: PageNumber; uri: string; width: number; height: number; acceptedAt: string; imageId: string; alignment?: Alignment };
+export type DocumentOcr = { text: string; at: string; engine: 'mlkit-bundled-latin-16.0.1'; blocks: { text: string; region: Region; lines: { text: string; region: Region }[] }[] };
+export type Page = { page: PageNumber; uri: string; width: number; height: number; acceptedAt: string; imageId: string; alignment?: Alignment; documentOcr?: DocumentOcr };
 export type RawField = { text: string; readingText?: string; crop: Region; regions?: Region[]; warning?: 'label_detected'; elements: (Region & { text: string })[] };
 export type OcrRun = { id: string; pageImageId: string; at: string; engine: 'mlkit-bundled-latin-16.0.1'; preprocessing?: 'grid-lines-v1' | 'grid-lines-v2'; fields: Record<FieldKey, RawField> };
 export type Draft = {

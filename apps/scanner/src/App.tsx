@@ -35,6 +35,7 @@ import {
   type PageNumber,
 } from "@tala/core";
 import { Capture, Crop, type Candidate } from "./Capture";
+import { draftWithScan, stagedPage, type PreparedScan } from './captureSupport';
 import {
   initializeRepository,
   listDrafts,
@@ -257,6 +258,25 @@ function Scanner() {
       setBusy(false);
     }
   }
+  async function acceptScan(scan: PreparedScan, page: PageNumber) {
+    if (!draft) throw new Error('No draft is open. Return to the editor.');
+    let replace = true;
+    if (page === 1 && scan.extraction && (draft.ocrHistory.length || fieldKeys.some(key => draft.values[key] || draft.confirmed[key]))) {
+      const choice = await new Promise<'keep' | 'replace' | 'cancel'>(resolve => Alert.alert(
+        'Use the new OCR values?',
+        'This draft already has field values. The new scan and original OCR will be saved; choose which editable values to keep. All fields need review again.',
+        [{ text: 'Cancel', style: 'cancel', onPress: () => resolve('cancel') },
+          { text: 'Keep current values', onPress: () => resolve('keep') },
+          { text: 'Use new OCR', onPress: () => resolve('replace') }],
+        { cancelable: false },
+      ));
+      if (choice === 'cancel') throw new Error('Scan not accepted. Your draft is unchanged.');
+      replace = choice === 'replace';
+    }
+    const saved = await persistPage(draftWithScan(draft, scan, page, replace), stagedPage(scan, page));
+    remember(saved); setRoute({ name: 'editor' }); setError('');
+    setNotice(scan.extraction ? 'Scan and OCR saved locally. Compare, correct and confirm every field.' : 'Scan saved locally. Review the page and enter any missing BEEF fields.');
+  }
   const problems = draft ? readinessProblems(draft) : [];
   const errors = draft ? validateValues(draft.values) : {};
   const missing = draft ? (integrity[draft.id] ?? []) : [];
@@ -267,12 +287,12 @@ function Scanner() {
   return (
     <SafeAreaView style={styles.screen}>
       <StatusBar style="dark" />
-      <View style={styles.header}>
+      {route.name !== 'capture' && <View style={styles.header}>
         <Text style={styles.brand}>T.A.L.A.</Text>
         <View style={styles.pill}>
           <Text style={styles.pillText}>ON THIS PHONE</Text>
         </View>
-      </View>
+      </View>}
       {loading ? (
         <View style={styles.content}>
           <ActivityIndicator color={colors.teal} />
@@ -283,12 +303,7 @@ function Scanner() {
           page={route.page}
           onWorkingChange={setBusy}
           onCancel={() => setRoute({ name: "editor" })}
-          onPhoto={async (photo) => {
-            if (!draft) throw new Error("No draft is open. Return to the editor and try again.");
-            setError("");
-            setNotice("");
-            setRoute({ name: "crop", page: route.page, photo });
-          }}
+          onPhoto={scan => acceptScan(scan, route.page)}
         />
       ) : route.name === "crop" && draft ? (
         <Crop
@@ -844,6 +859,10 @@ function PageViewer({
               </Text>
             )}
           </ScrollView>
+          {!reference && draft?.pages[page]?.documentOcr && <View style={styles.content}>
+            <Text style={styles.heading}>Full OCR text · unverified</Text>
+            <Text selectable style={styles.body}>{draft.pages[page]!.documentOcr!.text || 'No readable text found.'}</Text>
+          </View>}
         </ScrollView>
       </SafeAreaView>
     </Modal>

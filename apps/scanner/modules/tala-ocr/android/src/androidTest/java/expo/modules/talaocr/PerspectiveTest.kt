@@ -92,7 +92,7 @@ class PerspectiveTest {
       for ((fixture, photograph) in listOf("clean" to false, "optional-blanks" to false,
         "invalid-required" to false, "clean" to true)) {
         val expected = JSONObject(assets.open("$fixture.json").bufferedReader().use { it.readText() }).getJSONObject("raw")
-        val image = assets.open("$fixture-page-1.png").use { BitmapFactory.decodeStream(it) }
+        val image = assets.open(if (fixture == "clean") "ocr-baseline-clean-page-1.png" else "$fixture-page-1.png").use { BitmapFactory.decodeStream(it) }
         // Regress the actual camera mismatch: a 3:4 photo includes background and an
         // angled, offset paper. Field coordinates must be applied after rectification.
         val photo = if (photograph) Bitmap.createBitmap(3024, 4032, Bitmap.Config.ARGB_8888) else null
