@@ -9,9 +9,11 @@ const scan: PreparedScan = { uri: 'file:///cache/processed.jpg', imageId: 'new-i
 
 describe('Automatic scan review and template boundary', () => {
   it('blocks empty, missing and noise-only OCR instead of accepting a warning as success', () => {
-    const aligned: PreparedScan = { ...scan, alignment: { method: 'opencv-manual-v1', sourceWidth: 2000, sourceHeight: 3000,
+    const aligned: PreparedScan = { ...scan, extraction: undefined, alignment: { method: 'opencv-manual-v1', sourceWidth: 2000, sourceHeight: 3000,
       corners: [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}] } };
     expect(scanAcceptanceProblem(aligned)).toBeUndefined();
+    expect(scanAcceptanceProblem({ ...aligned, documentOcr: undefined, extraction: scan.extraction })).toBeUndefined();
+    expect(scanAcceptanceProblem({ ...aligned, documentOcr: undefined, extraction: { run, values: newDraft('empty', 'now').values } })).toMatch(/did not finish/);
     expect(scanAcceptanceProblem({ ...aligned, documentOcr: undefined })).toMatch(/did not finish/);
     for (const text of ['', '  \n ', '...', 'I']) {
       expect(scanAcceptanceProblem({ ...aligned, documentOcr: { ...aligned.documentOcr!, text }, warning: 'OCR finished' })).toMatch(/No readable/);

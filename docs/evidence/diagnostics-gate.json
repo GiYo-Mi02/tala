@@ -1,0 +1,12 @@
+{
+  "appVersion": "0.2.2",
+  "versionCode": 8,
+  "matchingSourceFingerprint": true,
+  "matchingSigningCertificate": true,
+  "releaseDiagnosticsEnabled": false,
+  "developmentDiagnosticsEnabled": true,
+  "releaseEmbeddedBundle": true,
+  "developmentEmbeddedBundle": true,
+  "releaseLibraryDebugFlagIsFalse": true,
+  "developmentLibraryDebugFlagIsTrue": true
+}

@@ -40,3 +40,17 @@ describe('P1-06: BEEF field parsing and validation', () => {
   });
   it.each(['123','1234567890123','12345678901A'])('refuses malformed LRN %s', lrn => expect(validateValues({ ...clean.values, lrn }).lrn).toBeDefined());
 });
+
+// Identity values are never repaired by exchanging visually similar characters.
+describe('Identity OCR safeguards', () => {
+  it('rejects OCR pipes and digits in names, preserving accented and punctuated names', () => {
+    expect(validateValues({ ...clean.values, learner_last_name: 'RvER|A' }).learner_last_name).toBeTruthy();
+    expect(validateValues({ ...clean.values, learner_first_name: 'EL3NA' }).learner_first_name).toBeTruthy();
+    expect(validateValues({ ...clean.values, learner_last_name: "DE LA CRUZ-O\u2019NEILL", learner_first_name: '\u00c9LENA' })).toEqual({});
+  });
+  it('does not turn o into zero or guess a missing birth-date separator', () => {
+    expect(normalizeOcr('lrn', 'oo12|B4567|89o')).toBe('oo12|B4567|89o');
+    expect(validateValues({ ...clean.values, lrn: normalizeOcr('lrn', 'oo12|B4567|89o') }).lrn).toBeTruthy();
+    expect(validateValues({ ...clean.values, birth_date: normalizeOcr('birth_date', 'o229202|2') }).birth_date).toBeTruthy();
+  });
+});

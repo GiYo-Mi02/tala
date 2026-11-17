@@ -1,0 +1,23 @@
+{
+  "testBuild": "test-only x86_64 diagnostic build; ARM phone APKs are separately inspected",
+  "androidEmulator": "API 36, x86_64",
+  "airplaneMode": true,
+  "wifiEnabled": false,
+  "embeddedJsBundle": true,
+  "appColdLaunch": "Pass",
+  "homeVisible": true,
+  "existingFictionalDraftRetained": true,
+  "nativeDebugDiagnosticControlVisible": true,
+  "physicalA53Acceptance": "Not run",
+  "armTranslationAttempt": "ARM APK installed on x86_64 emulator but React Native SoLoader selected x86_64 libraries; cannot use that translation run as phone acceptance.",
+  "savedPageDiagnosticOcrCompletedOffline": true,
+  "savedEditableSchoolYearBefore": "-",
+  "savedEditableSchoolYearAfter": "-",
+  "diagnosticImagesRendered": true,
+  "fieldCoordinatesAndRawResultsVisible": true,
+  "missingConfidenceShownAsUnavailable": true,
+  "temporaryDiagnosticImagesBeforeLeaving": 40,
+  "temporaryDiagnosticImagesAfterLeaving": 0,
+  "temporaryImagesCleanedOnLeaving": true,
+  "savedPageFixture": "Existing legacy geometry-test draft containing black landmarks; no enrollment accuracy score is assigned to this UI smoke test."
+}

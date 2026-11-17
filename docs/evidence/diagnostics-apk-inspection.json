@@ -1,0 +1,51 @@
+{
+  "apk": "output\\android\\TALA-Phase1-0.2.2-diagnostics.apk",
+  "sha256": "1e283799270281bf1163a6932a4419fa39bf3c3ee025dc0573a6e140f58f73c6",
+  "bytes": 121764786,
+  "checks": {
+    "embedded_android_bundle": true,
+    "both_beef_pages": true,
+    "bundled_latin_model_assets": true,
+    "local_ocr_module_in_dex": true,
+    "perspective_module_in_dex": true,
+    "field_preprocessing_in_dex": true,
+    "native_roi_in_dex": true,
+    "geometry_dedup_in_dex": true,
+    "arm64_native_libraries": true,
+    "no_instrumentation_fixtures": true,
+    "native_scanner_in_dex": true,
+    "bundled_opencv_all_abis": true,
+    "arm_only_release": true
+  },
+  "bundle": [
+    "assets/index.android.bundle"
+  ],
+  "template_images": [
+    {
+      "page": 1,
+      "resource": "res/drawable-mdpi-v4/assets_beefpage1.png",
+      "image_content_sha256": "6423df07bcdda58af00b24bcfe00e51f1c9c1751e3f000792c924d47d2a8664c"
+    },
+    {
+      "page": 2,
+      "resource": "res/drawable-mdpi-v4/assets_beefpage2.png",
+      "image_content_sha256": "b237b7e282d2d4ca8552ec89a8a746a499bb1b4a90245f9b14341831f64f7229"
+    }
+  ],
+  "latin_model_assets": [
+    "assets/mlkit-google-ocr-models/gocr/gocr_models/line_recognition_legacy_mobile/Latn_ctc/optical/assets.extra/LabelMap.pb",
+    "assets/mlkit-google-ocr-models/gocr/gocr_models/line_recognition_legacy_mobile/Latn_ctc/optical/conv_model.fb",
+    "assets/mlkit-google-ocr-models/gocr/gocr_models/line_recognition_legacy_mobile/Latn_ctc/optical/lstm_model.fb",
+    "assets/mlkit-google-ocr-models/gocr/gocr_models/line_recognition_legacy_mobile/Latn_ctc_cpu.binarypb",
+    "assets/mlkit-google-ocr-models/taser_tflite_gocrlatin_mbv2_scriptid_aksara_layout_gcn_mobile_engine.binarypb",
+    "assets/mlkit-google-ocr-models/taser_tflite_gocrlatin_mbv2_scriptid_aksara_layout_gcn_mobile_engine_ti.binarypb",
+    "assets/mlkit-google-ocr-models/taser_tflite_gocrlatin_mbv2_scriptid_aksara_layout_gcn_mobile_recognizer.binarypb",
+    "assets/mlkit-google-ocr-models/taser_tflite_gocrlatin_mbv2_scriptid_aksara_layout_gcn_mobile_runner.binarypb",
+    "assets/mlkit-google-ocr-models/taser_tflite_gocrlatin_mbv2_scriptid_aksara_layout_gcn_mobile_runner_ti.binarypb"
+  ],
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a"
+  ],
+  "physical_phone_acceptance": "Not run - Samsung Galaxy A53 5G designated; Android version and build pending"
+}

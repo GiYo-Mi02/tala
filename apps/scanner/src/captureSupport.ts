@@ -1,8 +1,8 @@
 import type { Alignment, Corners, DocumentOcr, Draft, OcrRun, PageNumber, Values } from '@tala/core';
-import { isAligned } from '@tala/core';
+import { fieldKeys, isAligned, validateValues } from '@tala/core';
 
 export type Candidate = { uri: string; width: number; height: number; alignment?: Alignment; documentOcr?: DocumentOcr };
-export type PreparedScan = Candidate & { imageId: string; extraction?: { run: OcrRun; values: Values }; warning?: string };
+export type PreparedScan = Candidate & { imageId: string; extraction?: import('./ocr').Extraction; warning?: string };
 export type NativeScan = { source: Candidate; rawUri: string; processed?: Candidate; corners?: Corners;
   suggestedCorners?: Corners; confidence?: number; reason?: string; warning?: string; allowManual?: boolean;
   diagnostic?: { code: string; stage: string; sourceWidth?: number; sourceHeight?: number; workingWidth?: number; workingHeight?: number } };
@@ -11,6 +11,10 @@ export const scannerConfig = { stableMs: 1000, motionTolerance: 0.018, minSharpn
 /** A warning does not turn an empty/failed OCR result into an acceptable scan. */
 export function scanAcceptanceProblem(scan: PreparedScan): string | undefined {
   if (!isAligned(scan)) return 'This photo has no reliable document crop. Retake it or adjust the crop.';
+  if (scan.extraction) {
+    const errors = validateValues(scan.extraction.values);
+    if (fieldKeys.some(key => !errors[key] && (scan.extraction!.values[key].match(/[\p{L}\p{N}]/gu) ?? []).length >= 4)) return;
+  }
   if (!scan.documentOcr) return 'Text reading did not finish. Retry reading or retake a clear photo.';
   if ((scan.documentOcr.text.match(/[A-Za-z0-9]/g) ?? []).length < 4)
     return 'No readable document text was found. Retake with the whole page visible and enough light.';

@@ -1,0 +1,1738 @@
+[
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "school_year",
+    "expected": "2024-2025",
+    "oldParts": [
+      "202 4",
+      "20 25"
+    ],
+    "parts": [
+      {
+        "fieldId": "school_year",
+        "part": 0,
+        "original": {
+          "text": "2\u013co|2|4",
+          "readingText": "2\u013co|2|4",
+          "elements": [
+            {
+              "text": "2\u013co|2|4",
+              "x": 5.187165775401069,
+              "y": 0,
+              "width": 87.14438502673796,
+              "height": 27.000000000000004
+            }
+          ],
+          "confidence": 0.5139508843421936
+        },
+        "processed": {
+          "text": "20 2 4",
+          "readingText": "20 2 4",
+          "elements": [
+            {
+              "text": "20",
+              "x": 5.187165775401069,
+              "y": 4.153846153846154,
+              "width": 45.1283422459893,
+              "height": 20.76923076923077
+            },
+            {
+              "text": "2",
+              "x": 64.32085561497325,
+              "y": 4.153846153846154,
+              "width": 6.224598930481283,
+              "height": 20.76923076923077
+            },
+            {
+              "text": "4",
+              "x": 81.43850267379679,
+              "y": 4.153846153846154,
+              "width": 10.893048128342246,
+              "height": 20.76923076923077
+            }
+          ],
+          "confidence": 0.837890625
+        },
+        "x": 199,
+        "y": 238,
+        "sourceWidth": 97,
+        "sourceHeight": 27,
+        "inputWidth": 251,
+        "inputHeight": 116,
+        "verticalLines": [
+          24,
+          49,
+          73
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "removedInkFraction": 0.33629893238434166,
+        "diagnostics": {}
+      },
+      {
+        "fieldId": "school_year",
+        "part": 1,
+        "original": {
+          "text": "2|o|2|5",
+          "readingText": "2|o|2|5",
+          "elements": [
+            {
+              "text": "2|o|2|5",
+              "x": 4.151351351351352,
+              "y": -1.557692307692308,
+              "width": 86.65945945945947,
+              "height": 28.55769230769231
+            }
+          ],
+          "confidence": 0.50390625
+        },
+        "processed": {
+          "text": "2025",
+          "readingText": "2025",
+          "elements": [
+            {
+              "text": "2025",
+              "x": 4.151351351351352,
+              "y": 5.711538461538462,
+              "width": 88.21621621621622,
+              "height": 16.096153846153847
+            }
+          ],
+          "confidence": 0.8388671875
+        },
+        "x": 332,
+        "y": 238,
+        "sourceWidth": 96,
+        "sourceHeight": 27,
+        "inputWidth": 249,
+        "inputHeight": 116,
+        "verticalLines": [
+          22,
+          47,
+          72
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "removedInkFraction": 0.3068181818181818,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "grade_level",
+    "expected": "7",
+    "oldParts": [
+      "7"
+    ],
+    "parts": [
+      {
+        "fieldId": "grade_level",
+        "part": 0,
+        "original": {
+          "text": "7",
+          "readingText": "7",
+          "elements": [
+            {
+              "text": "7",
+              "x": 4.5,
+              "y": 4.5,
+              "width": 9.5,
+              "height": 16
+            }
+          ],
+          "confidence": 0.75390625
+        },
+        "processed": {
+          "text": "7",
+          "readingText": "7",
+          "elements": [
+            {
+              "text": "7",
+              "x": 4.5,
+              "y": 4.5,
+              "width": 9.5,
+              "height": 16
+            }
+          ],
+          "confidence": 0.75390625
+        },
+        "x": 332,
+        "y": 309,
+        "sourceWidth": 45,
+        "sourceHeight": 26,
+        "inputWidth": 154,
+        "inputHeight": 116,
+        "verticalLines": [],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0
+        ],
+        "removedInkFraction": 0,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "lrn",
+    "expected": "001234567890",
+    "oldParts": [
+      "0 01 2 3 4567 89 0"
+    ],
+    "parts": [
+      {
+        "fieldId": "lrn",
+        "part": 0,
+        "original": {
+          "text": "o\u013co|1|2|3|4|s\\ 6|7 |8|9\u013co",
+          "readingText": "o\u013co|1|2|3|4|s\\ 6|7 |8|9\u013co",
+          "elements": [
+            {
+              "text": "o\u013co|1|2|3|4|s\\",
+              "x": 6,
+              "y": -3,
+              "width": 170,
+              "height": 32
+            },
+            {
+              "text": "6|7",
+              "x": 189,
+              "y": -3,
+              "width": 29.5,
+              "height": 32
+            },
+            {
+              "text": "|8|9\u013co",
+              "x": 226,
+              "y": -3,
+              "width": 74,
+              "height": 32
+            }
+          ],
+          "confidence": 0.4971478184064229
+        },
+        "processed": {
+          "text": "001 2 3 4 5 6 7 8 9 0",
+          "readingText": "001 2 3 4 5 6 7 8 9 0",
+          "elements": [
+            {
+              "text": "001",
+              "x": 6,
+              "y": 1,
+              "width": 61,
+              "height": 23
+            },
+            {
+              "text": "2",
+              "x": 81,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            },
+            {
+              "text": "3",
+              "x": 117,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "4",
+              "x": 132,
+              "y": 1,
+              "width": 10,
+              "height": 23
+            },
+            {
+              "text": "5",
+              "x": 157,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            },
+            {
+              "text": "6",
+              "x": 190,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "7",
+              "x": 217,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "8",
+              "x": 243,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "9",
+              "x": 258,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            },
+            {
+              "text": "0",
+              "x": 283,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            }
+          ],
+          "confidence": 0.8213541686534882
+        },
+        "x": 614,
+        "y": 273,
+        "sourceWidth": 297,
+        "sourceHeight": 26,
+        "inputWidth": 658,
+        "inputHeight": 116,
+        "verticalLines": [
+          23,
+          49,
+          74,
+          99,
+          124,
+          149,
+          174,
+          199,
+          225,
+          250,
+          275
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "removedInkFraction": 0.39314750290360045,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "learner_last_name",
+    "expected": "RIVERA",
+    "oldParts": [
+      "RI V ERA"
+    ],
+    "parts": [
+      {
+        "fieldId": "learner_last_name",
+        "part": 0,
+        "original": {
+          "text": "R|I|v|E|R|a| | ||I|W|||I",
+          "readingText": "R|I|v|E|R|a| | ||I|W|||I",
+          "elements": [
+            {
+              "text": "R|I|v|E|R|a|",
+              "x": 15.064485981308412,
+              "y": -2.7884615384615383,
+              "width": 177.42616822429906,
+              "height": 36.80769230769231
+            },
+            {
+              "text": "|",
+              "x": 217.5981308411215,
+              "y": -2.7884615384615383,
+              "width": 10.600934579439253,
+              "height": 36.80769230769231
+            },
+            {
+              "text": "||I|W|||I",
+              "x": 240.47383177570094,
+              "y": -2.7884615384615383,
+              "width": 352.62056074766355,
+              "height": 36.80769230769231
+            }
+          ],
+          "confidence": 0.5046296318372091
+        },
+        "processed": {
+          "text": "RIV ERA",
+          "readingText": "RIV ERA",
+          "elements": [
+            {
+              "text": "RIV",
+              "x": 7.253271028037384,
+              "y": 3.3461538461538463,
+              "width": 86.48130841121495,
+              "height": 21.75
+            },
+            {
+              "text": "ERA",
+              "x": 95.96635514018692,
+              "y": 3.3461538461538463,
+              "width": 82.57570093457944,
+              "height": 21.75
+            }
+          ],
+          "confidence": 0.8151041865348816
+        },
+        "x": 65,
+        "y": 498,
+        "sourceWidth": 597,
+        "sourceHeight": 29,
+        "inputWidth": 1134,
+        "inputHeight": 116,
+        "verticalLines": [
+          27,
+          57,
+          88,
+          118,
+          148,
+          178,
+          208,
+          239,
+          269,
+          299,
+          328,
+          358,
+          388,
+          419,
+          449,
+          479,
+          509,
+          540,
+          570
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "removedInkFraction": 0.6508972267536705,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "learner_first_name",
+    "expected": "ELENA",
+    "oldParts": [
+      "ELE NA"
+    ],
+    "parts": [
+      {
+        "fieldId": "learner_first_name",
+        "part": 0,
+        "original": {
+          "text": "E|L|E|N|a| ||||I|I|||W",
+          "readingText": "E|L|E|N|a| ||||I|I|||W",
+          "elements": [
+            {
+              "text": "E|L|E|N|a|",
+              "x": 15.064485981308412,
+              "y": -2.7884615384615383,
+              "width": 141.7177570093458,
+              "height": 36.25
+            },
+            {
+              "text": "||||I|I|||W",
+              "x": 174.0785046728972,
+              "y": -2.7884615384615383,
+              "width": 420.1317757009346,
+              "height": 36.25
+            }
+          ],
+          "confidence": 0.28293679654598236
+        },
+        "processed": {
+          "text": "E LE NA",
+          "readingText": "E LE NA",
+          "elements": [
+            {
+              "text": "E",
+              "x": 6.695327102803739,
+              "y": 7.807692307692308,
+              "width": 13.390654205607477,
+              "height": 15.057692307692308
+            },
+            {
+              "text": "LE",
+              "x": 36.82429906542056,
+              "y": 7.807692307692308,
+              "width": 42.40373831775701,
+              "height": 15.057692307692308
+            },
+            {
+              "text": "NA",
+              "x": 95.96635514018692,
+              "y": 7.807692307692308,
+              "width": 44.635514018691595,
+              "height": 15.057692307692308
+            }
+          ],
+          "confidence": 0.6822916666666666
+        },
+        "x": 65,
+        "y": 569,
+        "sourceWidth": 597,
+        "sourceHeight": 29,
+        "inputWidth": 1134,
+        "inputHeight": 116,
+        "verticalLines": [
+          26,
+          57,
+          87,
+          117,
+          147,
+          177,
+          207,
+          238,
+          268,
+          298,
+          328,
+          358,
+          388,
+          418,
+          449,
+          478,
+          509,
+          539,
+          569
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "removedInkFraction": 0.6955337690631809,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "learner_middle_name",
+    "expected": "SANTOS",
+    "oldParts": [
+      "sANTOS"
+    ],
+    "parts": [
+      {
+        "fieldId": "learner_middle_name",
+        "part": 0,
+        "original": {
+          "text": "s|a|x|r|ol s| ||||T||W",
+          "readingText": "s|a|x|r|ol s| ||||T||W",
+          "elements": [
+            {
+              "text": "s|a|x|r|ol",
+              "x": 15.57391304347826,
+              "y": -2.884615384615384,
+              "width": 141.31884057971013,
+              "height": 37.5
+            },
+            {
+              "text": "s|",
+              "x": 164.968115942029,
+              "y": -2.884615384615384,
+              "width": 22.495652173913044,
+              "height": 37.5
+            },
+            {
+              "text": "||||T||W",
+              "x": 205.34492753623186,
+              "y": -2.884615384615384,
+              "width": 393.9623188405797,
+              "height": 37.5
+            }
+          ],
+          "confidence": 0.389062503973643
+        },
+        "processed": {
+          "text": "SA N TOS",
+          "readingText": "SA N TOS",
+          "elements": [
+            {
+              "text": "SA",
+              "x": 8.652173913043478,
+              "y": 4.038461538461538,
+              "width": 48.452173913043474,
+              "height": 21.92307692307692
+            },
+            {
+              "text": "N",
+              "x": 79.6,
+              "y": 4.038461538461538,
+              "width": 6.344927536231884,
+              "height": 21.92307692307692
+            },
+            {
+              "text": "TOS",
+              "x": 98.05797101449275,
+              "y": 4.038461538461538,
+              "width": 71.52463768115942,
+              "height": 21.92307692307692
+            }
+          ],
+          "confidence": 0.7022569378217062
+        },
+        "x": 65,
+        "y": 641,
+        "sourceWidth": 597,
+        "sourceHeight": 30,
+        "inputWidth": 1099,
+        "inputHeight": 116,
+        "verticalLines": [
+          26,
+          57,
+          87,
+          117,
+          147,
+          177,
+          207,
+          238,
+          268,
+          298,
+          328,
+          358,
+          388,
+          418,
+          449,
+          479,
+          509,
+          539,
+          569
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "removedInkFraction": 0.6893048128342246,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "ocr-baseline-clean-page-1.png",
+    "fieldId": "birth_date",
+    "expected": "02/29/2012",
+    "oldParts": [
+      "0 2",
+      "2 9",
+      "2 0 1 2"
+    ],
+    "parts": [
+      {
+        "fieldId": "birth_date",
+        "part": 0,
+        "original": {
+          "text": "o|2",
+          "readingText": "o|2",
+          "elements": [
+            {
+              "text": "o|2",
+              "x": 7.272727272727273,
+              "y": 0,
+              "width": 39.27272727272727,
+              "height": 29
+            }
+          ],
+          "confidence": 0.37109375
+        },
+        "processed": {
+          "text": "0 2",
+          "readingText": "0 2",
+          "elements": [
+            {
+              "text": "0",
+              "x": 6.909090909090909,
+              "y": 5.075,
+              "width": 10.90909090909091,
+              "height": 15.95
+            },
+            {
+              "text": "2",
+              "x": 34.90909090909091,
+              "y": 5.4375,
+              "width": 11.636363636363637,
+              "height": 15.95
+            }
+          ],
+          "confidence": 0.6015625
+        },
+        "x": 708,
+        "y": 498,
+        "sourceWidth": 52,
+        "sourceHeight": 29,
+        "inputWidth": 207,
+        "inputHeight": 144,
+        "verticalLines": [
+          26
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1
+        ],
+        "removedInkFraction": 0.23868312757201646,
+        "diagnostics": {}
+      },
+      {
+        "fieldId": "birth_date",
+        "part": 1,
+        "original": {
+          "text": "2\n9",
+          "readingText": "2 9",
+          "elements": [
+            {
+              "text": "2",
+              "x": 6.909090909090909,
+              "y": 5.8,
+              "width": 11.272727272727273,
+              "height": 15.95
+            },
+            {
+              "text": "9",
+              "x": 35.63636363636364,
+              "y": 5.075,
+              "width": 12.727272727272728,
+              "height": 16.675
+            }
+          ],
+          "confidence": 0.669921875
+        },
+        "processed": {
+          "text": "2 9",
+          "readingText": "2 9",
+          "elements": [
+            {
+              "text": "2",
+              "x": 6.545454545454546,
+              "y": 5.8,
+              "width": 11.272727272727273,
+              "height": 15.95
+            },
+            {
+              "text": "9",
+              "x": 36.72727272727273,
+              "y": 5.8,
+              "width": 10.181818181818182,
+              "height": 15.95
+            }
+          ],
+          "confidence": 0.759765625
+        },
+        "x": 794,
+        "y": 498,
+        "sourceWidth": 52,
+        "sourceHeight": 29,
+        "inputWidth": 207,
+        "inputHeight": 144,
+        "verticalLines": [
+          26
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1
+        ],
+        "removedInkFraction": 0.23868312757201646,
+        "diagnostics": {}
+      },
+      {
+        "fieldId": "birth_date",
+        "part": 2,
+        "original": {
+          "text": "2\\0|1|2",
+          "readingText": "2\\0|1|2",
+          "elements": [
+            {
+              "text": "2\\0|1|2",
+              "x": 7.2425249169435215,
+              "y": 0,
+              "width": 97.04983388704319,
+              "height": 29
+            }
+          ],
+          "confidence": 0.4475446343421936
+        },
+        "processed": {
+          "text": "2 0 12",
+          "readingText": "2 0 12",
+          "elements": [
+            {
+              "text": "2",
+              "x": 7.2425249169435215,
+              "y": 2.9,
+              "width": 10.863787375415281,
+              "height": 21.75
+            },
+            {
+              "text": "0",
+              "x": 46.714285714285715,
+              "y": 2.9,
+              "width": 6.518272425249169,
+              "height": 21.75
+            },
+            {
+              "text": "12",
+              "x": 65.1827242524917,
+              "y": 2.9,
+              "width": 39.10963455149501,
+              "height": 21.75
+            }
+          ],
+          "confidence": 0.7376302083333334
+        },
+        "x": 880,
+        "y": 498,
+        "sourceWidth": 109,
+        "sourceHeight": 29,
+        "inputWidth": 365,
+        "inputHeight": 144,
+        "verticalLines": [
+          27,
+          56,
+          85
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "removedInkFraction": 0.38301886792452833,
+        "diagnostics": {}
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "school_year",
+    "expected": "2024-2025",
+    "oldParts": [
+      "202 4",
+      "20 25"
+    ],
+    "parts": [
+      {
+        "fieldId": "school_year",
+        "part": 0,
+        "original": {
+          "text": "2\u013co|2|4",
+          "readingText": "2\u013co|2|4",
+          "elements": [
+            {
+              "text": "2\u013co|2|4",
+              "x": 5.187165775401069,
+              "y": 0,
+              "width": 87.14438502673796,
+              "height": 27.000000000000004
+            }
+          ],
+          "confidence": 0.5139508843421936
+        },
+        "processed": {
+          "text": "20 2 4",
+          "readingText": "20 2 4",
+          "elements": [
+            {
+              "text": "20",
+              "x": 5.187165775401069,
+              "y": 4.153846153846154,
+              "width": 45.1283422459893,
+              "height": 20.76923076923077
+            },
+            {
+              "text": "2",
+              "x": 64.32085561497325,
+              "y": 4.153846153846154,
+              "width": 6.224598930481283,
+              "height": 20.76923076923077
+            },
+            {
+              "text": "4",
+              "x": 81.43850267379679,
+              "y": 4.153846153846154,
+              "width": 10.893048128342246,
+              "height": 20.76923076923077
+            }
+          ],
+          "confidence": 0.837890625
+        },
+        "x": 199,
+        "y": 238,
+        "sourceWidth": 97,
+        "sourceHeight": 27,
+        "inputWidth": 251,
+        "inputHeight": 116,
+        "verticalLines": [
+          24,
+          49,
+          73
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "removedInkFraction": 0.33629893238434166,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-school_year-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-school_year-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-school_year-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-school_year-0-processedInput.png"
+        }
+      },
+      {
+        "fieldId": "school_year",
+        "part": 1,
+        "original": {
+          "text": "2|o|2|5",
+          "readingText": "2|o|2|5",
+          "elements": [
+            {
+              "text": "2|o|2|5",
+              "x": 4.151351351351352,
+              "y": -1.557692307692308,
+              "width": 86.65945945945947,
+              "height": 28.55769230769231
+            }
+          ],
+          "confidence": 0.50390625
+        },
+        "processed": {
+          "text": "2025",
+          "readingText": "2025",
+          "elements": [
+            {
+              "text": "2025",
+              "x": 4.151351351351352,
+              "y": 5.711538461538462,
+              "width": 88.21621621621622,
+              "height": 16.096153846153847
+            }
+          ],
+          "confidence": 0.8388671875
+        },
+        "x": 332,
+        "y": 238,
+        "sourceWidth": 96,
+        "sourceHeight": 27,
+        "inputWidth": 249,
+        "inputHeight": 116,
+        "verticalLines": [
+          22,
+          47,
+          72
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "removedInkFraction": 0.3068181818181818,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-school_year-1-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-school_year-1-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-school_year-1-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-school_year-1-processedInput.png"
+        }
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "grade_level",
+    "expected": "7",
+    "oldParts": [
+      "7"
+    ],
+    "parts": [
+      {
+        "fieldId": "grade_level",
+        "part": 0,
+        "original": {
+          "text": "7",
+          "readingText": "7",
+          "elements": [
+            {
+              "text": "7",
+              "x": 4.5,
+              "y": 4.5,
+              "width": 9.5,
+              "height": 16
+            }
+          ],
+          "confidence": 0.75390625
+        },
+        "processed": {
+          "text": "7",
+          "readingText": "7",
+          "elements": [
+            {
+              "text": "7",
+              "x": 4.5,
+              "y": 4.5,
+              "width": 9.5,
+              "height": 16
+            }
+          ],
+          "confidence": 0.75390625
+        },
+        "x": 332,
+        "y": 309,
+        "sourceWidth": 45,
+        "sourceHeight": 26,
+        "inputWidth": 154,
+        "inputHeight": 116,
+        "verticalLines": [],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0
+        ],
+        "removedInkFraction": 0,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-grade_level-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-grade_level-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-grade_level-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-grade_level-0-processedInput.png"
+        }
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "lrn",
+    "expected": "001234567890",
+    "oldParts": [
+      "0 01 2 3 4567 89 0"
+    ],
+    "parts": [
+      {
+        "fieldId": "lrn",
+        "part": 0,
+        "original": {
+          "text": "o\u013co|1|2|3|4|s\\ 6|7 |8|9\u013co",
+          "readingText": "o\u013co|1|2|3|4|s\\ 6|7 |8|9\u013co",
+          "elements": [
+            {
+              "text": "o\u013co|1|2|3|4|s\\",
+              "x": 6,
+              "y": -3,
+              "width": 170,
+              "height": 32
+            },
+            {
+              "text": "6|7",
+              "x": 189,
+              "y": -3,
+              "width": 29.5,
+              "height": 32
+            },
+            {
+              "text": "|8|9\u013co",
+              "x": 226,
+              "y": -3,
+              "width": 74,
+              "height": 32
+            }
+          ],
+          "confidence": 0.4971478184064229
+        },
+        "processed": {
+          "text": "001 2 3 4 5 6 7 8 9 0",
+          "readingText": "001 2 3 4 5 6 7 8 9 0",
+          "elements": [
+            {
+              "text": "001",
+              "x": 6,
+              "y": 1,
+              "width": 61,
+              "height": 23
+            },
+            {
+              "text": "2",
+              "x": 81,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            },
+            {
+              "text": "3",
+              "x": 117,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "4",
+              "x": 132,
+              "y": 1,
+              "width": 10,
+              "height": 23
+            },
+            {
+              "text": "5",
+              "x": 157,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            },
+            {
+              "text": "6",
+              "x": 190,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "7",
+              "x": 217,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "8",
+              "x": 243,
+              "y": 1,
+              "width": 6.5,
+              "height": 23
+            },
+            {
+              "text": "9",
+              "x": 258,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            },
+            {
+              "text": "0",
+              "x": 283,
+              "y": 1,
+              "width": 11,
+              "height": 23
+            }
+          ],
+          "confidence": 0.8213541686534882
+        },
+        "x": 614,
+        "y": 273,
+        "sourceWidth": 297,
+        "sourceHeight": 26,
+        "inputWidth": 658,
+        "inputHeight": 116,
+        "verticalLines": [
+          23,
+          49,
+          74,
+          99,
+          124,
+          149,
+          174,
+          199,
+          225,
+          250,
+          275
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "removedInkFraction": 0.39314750290360045,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-lrn-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-lrn-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-lrn-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-lrn-0-processedInput.png"
+        }
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "learner_last_name",
+    "expected": "RIVERA",
+    "oldParts": [
+      "RI V ERA"
+    ],
+    "parts": [
+      {
+        "fieldId": "learner_last_name",
+        "part": 0,
+        "original": {
+          "text": "R|I|v|E|R|a| | ||I|W|||I",
+          "readingText": "R|I|v|E|R|a| | ||I|W|||I",
+          "elements": [
+            {
+              "text": "R|I|v|E|R|a|",
+              "x": 15.064485981308412,
+              "y": -2.7884615384615383,
+              "width": 177.42616822429906,
+              "height": 36.80769230769231
+            },
+            {
+              "text": "|",
+              "x": 217.5981308411215,
+              "y": -2.7884615384615383,
+              "width": 10.600934579439253,
+              "height": 36.80769230769231
+            },
+            {
+              "text": "||I|W|||I",
+              "x": 240.47383177570094,
+              "y": -2.7884615384615383,
+              "width": 352.62056074766355,
+              "height": 36.80769230769231
+            }
+          ],
+          "confidence": 0.5046296318372091
+        },
+        "processed": {
+          "text": "RIV ERA",
+          "readingText": "RIV ERA",
+          "elements": [
+            {
+              "text": "RIV",
+              "x": 7.253271028037384,
+              "y": 3.3461538461538463,
+              "width": 86.48130841121495,
+              "height": 21.75
+            },
+            {
+              "text": "ERA",
+              "x": 95.96635514018692,
+              "y": 3.3461538461538463,
+              "width": 82.57570093457944,
+              "height": 21.75
+            }
+          ],
+          "confidence": 0.8151041865348816
+        },
+        "x": 65,
+        "y": 498,
+        "sourceWidth": 597,
+        "sourceHeight": 29,
+        "inputWidth": 1134,
+        "inputHeight": 116,
+        "verticalLines": [
+          27,
+          57,
+          88,
+          118,
+          148,
+          178,
+          208,
+          239,
+          269,
+          299,
+          328,
+          358,
+          388,
+          419,
+          449,
+          479,
+          509,
+          540,
+          570
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "removedInkFraction": 0.6508972267536705,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-learner_last_name-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-learner_last_name-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-learner_last_name-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-learner_last_name-0-processedInput.png"
+        }
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "learner_first_name",
+    "expected": "ELENA",
+    "oldParts": [
+      "ELE NA"
+    ],
+    "parts": [
+      {
+        "fieldId": "learner_first_name",
+        "part": 0,
+        "original": {
+          "text": "E|L|E|N|a| ||||I|I|||W",
+          "readingText": "E|L|E|N|a| ||||I|I|||W",
+          "elements": [
+            {
+              "text": "E|L|E|N|a|",
+              "x": 15.064485981308412,
+              "y": -2.7884615384615383,
+              "width": 141.7177570093458,
+              "height": 36.25
+            },
+            {
+              "text": "||||I|I|||W",
+              "x": 174.0785046728972,
+              "y": -2.7884615384615383,
+              "width": 420.1317757009346,
+              "height": 36.25
+            }
+          ],
+          "confidence": 0.28293679654598236
+        },
+        "processed": {
+          "text": "E LE NA",
+          "readingText": "E LE NA",
+          "elements": [
+            {
+              "text": "E",
+              "x": 6.695327102803739,
+              "y": 7.807692307692308,
+              "width": 13.390654205607477,
+              "height": 15.057692307692308
+            },
+            {
+              "text": "LE",
+              "x": 36.82429906542056,
+              "y": 7.807692307692308,
+              "width": 42.40373831775701,
+              "height": 15.057692307692308
+            },
+            {
+              "text": "NA",
+              "x": 95.96635514018692,
+              "y": 7.807692307692308,
+              "width": 44.635514018691595,
+              "height": 15.057692307692308
+            }
+          ],
+          "confidence": 0.6822916666666666
+        },
+        "x": 65,
+        "y": 569,
+        "sourceWidth": 597,
+        "sourceHeight": 29,
+        "inputWidth": 1134,
+        "inputHeight": 116,
+        "verticalLines": [
+          26,
+          57,
+          87,
+          117,
+          147,
+          177,
+          207,
+          238,
+          268,
+          298,
+          328,
+          358,
+          388,
+          418,
+          449,
+          478,
+          509,
+          539,
+          569
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "removedInkFraction": 0.6955337690631809,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-learner_first_name-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-learner_first_name-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-learner_first_name-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-learner_first_name-0-processedInput.png"
+        }
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "learner_middle_name",
+    "expected": "SANTOS",
+    "oldParts": [
+      "sANTOS"
+    ],
+    "parts": [
+      {
+        "fieldId": "learner_middle_name",
+        "part": 0,
+        "original": {
+          "text": "s|a|x|r|ol s| ||||T||W",
+          "readingText": "s|a|x|r|ol s| ||||T||W",
+          "elements": [
+            {
+              "text": "s|a|x|r|ol",
+              "x": 15.57391304347826,
+              "y": -2.884615384615384,
+              "width": 141.31884057971013,
+              "height": 37.5
+            },
+            {
+              "text": "s|",
+              "x": 164.968115942029,
+              "y": -2.884615384615384,
+              "width": 22.495652173913044,
+              "height": 37.5
+            },
+            {
+              "text": "||||T||W",
+              "x": 205.34492753623186,
+              "y": -2.884615384615384,
+              "width": 393.9623188405797,
+              "height": 37.5
+            }
+          ],
+          "confidence": 0.389062503973643
+        },
+        "processed": {
+          "text": "SA N TOS",
+          "readingText": "SA N TOS",
+          "elements": [
+            {
+              "text": "SA",
+              "x": 8.652173913043478,
+              "y": 4.038461538461538,
+              "width": 48.452173913043474,
+              "height": 21.92307692307692
+            },
+            {
+              "text": "N",
+              "x": 79.6,
+              "y": 4.038461538461538,
+              "width": 6.344927536231884,
+              "height": 21.92307692307692
+            },
+            {
+              "text": "TOS",
+              "x": 98.05797101449275,
+              "y": 4.038461538461538,
+              "width": 71.52463768115942,
+              "height": 21.92307692307692
+            }
+          ],
+          "confidence": 0.7022569378217062
+        },
+        "x": 65,
+        "y": 641,
+        "sourceWidth": 597,
+        "sourceHeight": 30,
+        "inputWidth": 1099,
+        "inputHeight": 116,
+        "verticalLines": [
+          26,
+          57,
+          87,
+          117,
+          147,
+          177,
+          207,
+          238,
+          268,
+          298,
+          328,
+          358,
+          388,
+          418,
+          449,
+          479,
+          509,
+          539,
+          569
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "removedInkFraction": 0.6893048128342246,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-learner_middle_name-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-learner_middle_name-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-learner_middle_name-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-learner_middle_name-0-processedInput.png"
+        }
+      }
+    ]
+  },
+  {
+    "asset": "roi-user-clean-page-1.png",
+    "fieldId": "birth_date",
+    "expected": "02/29/2012",
+    "oldParts": [
+      "0 2",
+      "2 9",
+      "2 0 1 2"
+    ],
+    "parts": [
+      {
+        "fieldId": "birth_date",
+        "part": 0,
+        "original": {
+          "text": "o|2",
+          "readingText": "o|2",
+          "elements": [
+            {
+              "text": "o|2",
+              "x": 7.272727272727273,
+              "y": 0,
+              "width": 39.27272727272727,
+              "height": 29
+            }
+          ],
+          "confidence": 0.37109375
+        },
+        "processed": {
+          "text": "0 2",
+          "readingText": "0 2",
+          "elements": [
+            {
+              "text": "0",
+              "x": 6.909090909090909,
+              "y": 5.075,
+              "width": 10.90909090909091,
+              "height": 15.95
+            },
+            {
+              "text": "2",
+              "x": 34.90909090909091,
+              "y": 5.4375,
+              "width": 11.636363636363637,
+              "height": 15.95
+            }
+          ],
+          "confidence": 0.6015625
+        },
+        "x": 708,
+        "y": 498,
+        "sourceWidth": 52,
+        "sourceHeight": 29,
+        "inputWidth": 207,
+        "inputHeight": 144,
+        "verticalLines": [
+          26
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1
+        ],
+        "removedInkFraction": 0.23868312757201646,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-birth_date-0-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-birth_date-0-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-birth_date-0-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-birth_date-0-processedInput.png"
+        }
+      },
+      {
+        "fieldId": "birth_date",
+        "part": 1,
+        "original": {
+          "text": "2\n9",
+          "readingText": "2 9",
+          "elements": [
+            {
+              "text": "2",
+              "x": 6.909090909090909,
+              "y": 5.8,
+              "width": 11.272727272727273,
+              "height": 15.95
+            },
+            {
+              "text": "9",
+              "x": 35.63636363636364,
+              "y": 5.075,
+              "width": 12.727272727272728,
+              "height": 16.675
+            }
+          ],
+          "confidence": 0.669921875
+        },
+        "processed": {
+          "text": "2 9",
+          "readingText": "2 9",
+          "elements": [
+            {
+              "text": "2",
+              "x": 6.545454545454546,
+              "y": 5.8,
+              "width": 11.272727272727273,
+              "height": 15.95
+            },
+            {
+              "text": "9",
+              "x": 36.72727272727273,
+              "y": 5.8,
+              "width": 10.181818181818182,
+              "height": 15.95
+            }
+          ],
+          "confidence": 0.759765625
+        },
+        "x": 794,
+        "y": 498,
+        "sourceWidth": 52,
+        "sourceHeight": 29,
+        "inputWidth": 207,
+        "inputHeight": 144,
+        "verticalLines": [
+          26
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1
+        ],
+        "removedInkFraction": 0.23868312757201646,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-birth_date-1-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-birth_date-1-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-birth_date-1-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-birth_date-1-processedInput.png"
+        }
+      },
+      {
+        "fieldId": "birth_date",
+        "part": 2,
+        "original": {
+          "text": "2\\0|1|2",
+          "readingText": "2\\0|1|2",
+          "elements": [
+            {
+              "text": "2\\0|1|2",
+              "x": 7.2425249169435215,
+              "y": 0,
+              "width": 97.04983388704319,
+              "height": 29
+            }
+          ],
+          "confidence": 0.4475446343421936
+        },
+        "processed": {
+          "text": "2 0 12",
+          "readingText": "2 0 12",
+          "elements": [
+            {
+              "text": "2",
+              "x": 7.2425249169435215,
+              "y": 2.9,
+              "width": 10.863787375415281,
+              "height": 21.75
+            },
+            {
+              "text": "0",
+              "x": 46.714285714285715,
+              "y": 2.9,
+              "width": 6.518272425249169,
+              "height": 21.75
+            },
+            {
+              "text": "12",
+              "x": 65.1827242524917,
+              "y": 2.9,
+              "width": 39.10963455149501,
+              "height": 21.75
+            }
+          ],
+          "confidence": 0.7376302083333334
+        },
+        "x": 880,
+        "y": 498,
+        "sourceWidth": 109,
+        "sourceHeight": 29,
+        "inputWidth": 365,
+        "inputHeight": 144,
+        "verticalLines": [
+          27,
+          56,
+          85
+        ],
+        "horizontalLines": [],
+        "occupiedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "removedInkFraction": 0.38301886792452833,
+        "diagnostics": {
+          "originalCrop": "roi-crops/roi-user-clean-page-1-birth_date-2-originalCrop.png",
+          "processedCrop": "roi-crops/roi-user-clean-page-1-birth_date-2-processedCrop.png",
+          "originalInput": "roi-crops/roi-user-clean-page-1-birth_date-2-originalInput.png",
+          "processedInput": "roi-crops/roi-user-clean-page-1-birth_date-2-processedInput.png"
+        }
+      }
+    ]
+  }
+]

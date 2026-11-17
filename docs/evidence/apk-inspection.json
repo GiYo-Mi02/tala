@@ -1,7 +1,7 @@
 {
-  "apk": "output\\android\\TALA-Phase1-0.2.1.apk",
-  "sha256": "010779fa35323e3c2c2072a63da8b1a0fda2fd2c9017162e75d13ed035b6b4f6",
-  "bytes": 94767753,
+  "apk": "output\\android\\TALA-Phase1-0.2.2.apk",
+  "sha256": "daba01ba1ee9f90a5eec31c5f9c812d51baa3e9ab2e6585424106dc1834214b0",
+  "bytes": 94826605,
   "checks": {
     "embedded_android_bundle": true,
     "both_beef_pages": true,
@@ -9,6 +9,7 @@
     "local_ocr_module_in_dex": true,
     "perspective_module_in_dex": true,
     "field_preprocessing_in_dex": true,
+    "native_roi_in_dex": true,
     "geometry_dedup_in_dex": true,
     "arm64_native_libraries": true,
     "no_instrumentation_fixtures": true,

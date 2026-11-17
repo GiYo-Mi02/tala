@@ -34,6 +34,11 @@ module.exports = function withWindowsCmake(config) {
         jniLibs { pickFirsts += ['**/libc++_shared.so'] }
     }`);
     }
+    if (!source.includes('// TALA offline diagnostics')) {
+      source = source.replace(/react\s*\{/, `react {
+    // TALA offline diagnostics: native DEBUG enables diagnostics; embed JS for offline testing.
+    if (findProperty('talaOfflineDebug') == 'true') { debuggableVariants = [] }`);
+    }
     config.modResults.contents = source;
     return config;
   });

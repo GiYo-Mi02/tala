@@ -5,6 +5,7 @@ group = 'expo.modules.talaocr'
 version = '0.1.1'
 
 android {
+  buildFeatures { buildConfig true }
   namespace 'expo.modules.talaocr'
   defaultConfig {
     versionCode 2

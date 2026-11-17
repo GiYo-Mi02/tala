@@ -22,6 +22,8 @@ export const beefTemplate = {
     learner_middle_name: [relative(84, 612, 582, 30)],
     birth_date: [relative(710, 472, 51, 29), relative(794, 472, 51, 29), relative(878, 472, 107, 29)],
   } satisfies Record<FieldKey, Region[]>,
+  cells: { school_year: [4, 4], grade_level: [1], lrn: [12], learner_last_name: [20],
+    learner_first_name: [20], learner_middle_name: [20], birth_date: [2, 2, 4] } satisfies Record<FieldKey, number[]>,
 } as const;
 export function pixelRegion(region: Region, width: number, height: number) {
   const originX = Math.max(0, Math.floor(region.x * width));

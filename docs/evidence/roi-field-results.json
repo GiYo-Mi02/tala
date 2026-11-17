@@ -1,0 +1,354 @@
+{
+  "scope": "Two immutable digital images of the same fictional enrollment form, upright orientation. Not the phone screenshot or a physical camera accuracy test.",
+  "engine": "Bundled ML Kit Latin 16.0.1",
+  "comparisons": [
+    {
+      "asset": "ocr-baseline-clean-page-1.png",
+      "sha256": "084192eca588e7be362c096a1923ab619d2a9dd3d05d54becd1a88b64d44a7ac",
+      "fields": [
+        {
+          "fieldId": "school_year",
+          "expected": "2024-2025",
+          "original": "2ļo|2|4-2|o|2|5",
+          "processed": "2024-2025",
+          "proposed": "2024-2025",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "202 4",
+            "20 25"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.1877358490566038,
+              "y": 0.15877251501000667,
+              "width": 0.09150943396226414,
+              "height": 0.01801200800533689
+            },
+            {
+              "x": 0.3132075471698113,
+              "y": 0.15877251501000667,
+              "width": 0.09056603773584905,
+              "height": 0.01801200800533689
+            }
+          ]
+        },
+        {
+          "fieldId": "grade_level",
+          "expected": "7",
+          "original": "7",
+          "processed": "7",
+          "proposed": "7",
+          "status": "correct",
+          "warning": null,
+          "validation": null,
+          "oldNativeParts": [
+            "7"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.3132075471698113,
+              "y": 0.20613742494996665,
+              "width": 0.04245283018867924,
+              "height": 0.01734489659773182
+            }
+          ]
+        },
+        {
+          "fieldId": "lrn",
+          "expected": "001234567890",
+          "original": "oļo|1|2|3|4|s\\6|7|8|9ļo",
+          "processed": "001234567890",
+          "proposed": "001234567890",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "0 01 2 3 4567 89 0"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.5792452830188679,
+              "y": 0.1821214142761841,
+              "width": 0.280188679245283,
+              "height": 0.01734489659773182
+            }
+          ]
+        },
+        {
+          "fieldId": "learner_last_name",
+          "expected": "RIVERA",
+          "original": "R|I|V|E|R|A||||I|W|||I",
+          "processed": "RIVERA",
+          "proposed": "RIVERA",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "RI V ERA"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.06132075471698113,
+              "y": 0.3322214809873249,
+              "width": 0.5632075471698114,
+              "height": 0.019346230820547032
+            }
+          ]
+        },
+        {
+          "fieldId": "learner_first_name",
+          "expected": "ELENA",
+          "original": "E|L|E|N|A|||||I|I|||W",
+          "processed": "ELENA",
+          "proposed": "ELENA",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "ELE NA"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.06132075471698113,
+              "y": 0.37958639092728486,
+              "width": 0.5632075471698114,
+              "height": 0.019346230820547032
+            }
+          ]
+        },
+        {
+          "fieldId": "learner_middle_name",
+          "expected": "SANTOS",
+          "original": "S|A|X|R|OLS|||||T||W",
+          "processed": "SANTOS",
+          "proposed": "SANTOS",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "sANTOS"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.06132075471698113,
+              "y": 0.4276184122748499,
+              "width": 0.5632075471698114,
+              "height": 0.0200133422281521
+            }
+          ]
+        },
+        {
+          "fieldId": "birth_date",
+          "expected": "2012-02-29",
+          "original": "o|2/29/2\\0|1|2",
+          "processed": "2012-02-29",
+          "proposed": "2012-02-29",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "0 2",
+            "2 9",
+            "2 0 1 2"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.6679245283018868,
+              "y": 0.3322214809873249,
+              "width": 0.04905660377358491,
+              "height": 0.019346230820547032
+            },
+            {
+              "x": 0.7490566037735849,
+              "y": 0.3322214809873249,
+              "width": 0.04905660377358491,
+              "height": 0.019346230820547032
+            },
+            {
+              "x": 0.8301886792452831,
+              "y": 0.3322214809873249,
+              "width": 0.10283018867924529,
+              "height": 0.019346230820547032
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "asset": "roi-user-clean-page-1.png",
+      "sha256": "b8cdf353ce9ad2c9996473fa1bdbdc145601f3f17cfa01b3927ab308adbdc016",
+      "fields": [
+        {
+          "fieldId": "school_year",
+          "expected": "2024-2025",
+          "original": "2ļo|2|4-2|o|2|5",
+          "processed": "2024-2025",
+          "proposed": "2024-2025",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "202 4",
+            "20 25"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.1877358490566038,
+              "y": 0.15877251501000667,
+              "width": 0.09150943396226414,
+              "height": 0.01801200800533689
+            },
+            {
+              "x": 0.3132075471698113,
+              "y": 0.15877251501000667,
+              "width": 0.09056603773584905,
+              "height": 0.01801200800533689
+            }
+          ]
+        },
+        {
+          "fieldId": "grade_level",
+          "expected": "7",
+          "original": "7",
+          "processed": "7",
+          "proposed": "7",
+          "status": "correct",
+          "warning": null,
+          "validation": null,
+          "oldNativeParts": [
+            "7"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.3132075471698113,
+              "y": 0.20613742494996665,
+              "width": 0.04245283018867924,
+              "height": 0.01734489659773182
+            }
+          ]
+        },
+        {
+          "fieldId": "lrn",
+          "expected": "001234567890",
+          "original": "oļo|1|2|3|4|s\\6|7|8|9ļo",
+          "processed": "001234567890",
+          "proposed": "001234567890",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "0 01 2 3 4567 89 0"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.5792452830188679,
+              "y": 0.1821214142761841,
+              "width": 0.280188679245283,
+              "height": 0.01734489659773182
+            }
+          ]
+        },
+        {
+          "fieldId": "learner_last_name",
+          "expected": "RIVERA",
+          "original": "R|I|V|E|R|A||||I|W|||I",
+          "processed": "RIVERA",
+          "proposed": "RIVERA",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "RI V ERA"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.06132075471698113,
+              "y": 0.3322214809873249,
+              "width": 0.5632075471698114,
+              "height": 0.019346230820547032
+            }
+          ]
+        },
+        {
+          "fieldId": "learner_first_name",
+          "expected": "ELENA",
+          "original": "E|L|E|N|A|||||I|I|||W",
+          "processed": "ELENA",
+          "proposed": "ELENA",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "ELE NA"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.06132075471698113,
+              "y": 0.37958639092728486,
+              "width": 0.5632075471698114,
+              "height": 0.019346230820547032
+            }
+          ]
+        },
+        {
+          "fieldId": "learner_middle_name",
+          "expected": "SANTOS",
+          "original": "S|A|X|R|OLS|||||T||W",
+          "processed": "SANTOS",
+          "proposed": "SANTOS",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "sANTOS"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.06132075471698113,
+              "y": 0.4276184122748499,
+              "width": 0.5632075471698114,
+              "height": 0.0200133422281521
+            }
+          ]
+        },
+        {
+          "fieldId": "birth_date",
+          "expected": "2012-02-29",
+          "original": "o|2/29/2\\0|1|2",
+          "processed": "2012-02-29",
+          "proposed": "2012-02-29",
+          "status": "correct",
+          "warning": "preprocessing_review",
+          "validation": "Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.",
+          "oldNativeParts": [
+            "0 2",
+            "2 9",
+            "2 0 1 2"
+          ],
+          "sourceRegions": [
+            {
+              "x": 0.6679245283018868,
+              "y": 0.3322214809873249,
+              "width": 0.04905660377358491,
+              "height": 0.019346230820547032
+            },
+            {
+              "x": 0.7490566037735849,
+              "y": 0.3322214809873249,
+              "width": 0.04905660377358491,
+              "height": 0.019346230820547032
+            },
+            {
+              "x": 0.8301886792452831,
+              "y": 0.3322214809873249,
+              "width": 0.10283018867924529,
+              "height": 0.019346230820547032
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

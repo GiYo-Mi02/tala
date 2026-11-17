@@ -18,6 +18,15 @@ class TalaOcrModule : Module() {
   private val scanRequest=49371
   override fun definition() = ModuleDefinition {
     Name("TalaOcr")
+    Constants("diagnosticsEnabled" to BuildConfig.DEBUG)
+    AsyncFunction("recognizeField") { uri:String,json:String,promise:Promise ->
+      try {
+        val r=JSONObject(json); val x=r.getInt("x"); val y=r.getInt("y")
+        val request=RoiRequest(r.getString("fieldId"),r.getInt("part"),
+          android.graphics.Rect(x,y,x+r.getInt("width"),y+r.getInt("height")),r.getInt("cells"),r.optBoolean("diagnostics",false))
+        promise.resolve(FieldRoiOcr.read(requireNotNull(appContext.reactContext),uri,request))
+      } catch(_:Exception) { promise.reject("E_FIELD_OCR","This field could not be read from the corrected image. Review it manually or retake.",null) }
+    }.runOnQueue(Queues.DEFAULT)
     AsyncFunction("scanDocument") { config:String,promise:Promise ->
       if(pendingScan!=null) { promise.reject("E_BUSY","A document scan is already open.",null); return@AsyncFunction }
       val activity=appContext.currentActivity

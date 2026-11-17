@@ -37,7 +37,9 @@ export function normalizeOcr(key: FieldKey, raw: string): string {
   return s;
 }
 
-const name = z.string().trim().min(1, 'Required learner field.').max(120, 'Use at most 120 characters.');
+const nameCharacters = /^[\p{L}\p{M} .’'\-]+$/u;
+const hasNameLetters = (v: string) => /[\p{L}]/u.test(v);
+const name = z.string().trim().min(1, 'Required learner field.').max(120, 'Use at most 120 characters.').regex(nameCharacters, 'Review name: use letters, spaces, apostrophes, periods or hyphens.').refine(hasNameLetters, 'Name must contain letters.');
 export const valuesSchema = z.object({
   school_year: z.string().trim().refine(v => {
     const m = /^(\d{4})-(\d{4})$/.exec(v);
@@ -47,7 +49,7 @@ export const valuesSchema = z.object({
   lrn: z.string().trim().refine(v => v === '' || /^\d{12}$/.test(v), 'Leave blank or enter exactly 12 digits.'),
   learner_last_name: name,
   learner_first_name: name,
-  learner_middle_name: z.string().trim().max(120, 'Use at most 120 characters.'),
+  learner_middle_name: z.string().trim().max(120, 'Use at most 120 characters.').refine(v => v === '' || (nameCharacters.test(v) && hasNameLetters(v)), 'Review name: unexpected digits or symbols.'),
   birth_date: z.string().trim().refine(validIsoDate, 'Enter a real date in MM/DD/YYYY order.'),
 }).strict();
 export function validateValues(values: Values): Partial<Record<FieldKey, string>> {

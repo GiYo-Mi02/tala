@@ -45,6 +45,7 @@ import {
   discardCache,
 } from "./repository";
 import { recognizePage } from "./ocr";
+import { SavedOcrDiagnostics } from "./OcrDiagnostics";
 import { Action, Card, colors, styles } from "./ui";
 import { ReadingImage, ReadingStrip } from "./ReadingImage";
 
@@ -565,6 +566,7 @@ function Scanner() {
                   signatures, handwriting, and other fields stay outside
                   extraction. All results need your review.
                 </Text>
+                {draft.pages[1] && <SavedOcrDiagnostics key={draft.pages[1].imageId} page={draft.pages[1]} />}
                 {draft.pages[1] && !isAligned(draft.pages[1]) && <Text style={styles.warning}>
                   Align saved page 1 before running OCR. Check that the green areas cover the answer boxes below the labels.
                 </Text>}
@@ -655,6 +657,7 @@ function Scanner() {
                       {latest?.fields[key].warning === 'label_detected' && <Text style={styles.warning}>
                         A printed field label was read. The proposed value was left blank. Enter the correct value, or confirm an optional blank after checking the page.
                       </Text>}
+                      {!!latest?.fields[key].validation && <Text style={styles.warning}>{latest.fields[key].validation}</Text>}
                       {latest && <Action title="View area read" secondary disabled={busy || missing.includes(1)} onPress={() => setAreaField(key)} />}
                       {stale && (
                         <Text style={styles.warning}>

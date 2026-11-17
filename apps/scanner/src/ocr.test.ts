@@ -1,72 +1,78 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { alignedSize, beefTemplate, fieldKeys, pixelRegion, type Page } from '@tala/core';
-const mocks = vi.hoisted(() => ({ manipulate: vi.fn(), recognize: vi.fn(), discard: vi.fn() }));
-vi.mock('expo-image-manipulator', () => ({ manipulateAsync: mocks.manipulate, SaveFormat: { JPEG: 'jpeg' } }));
+import { alignedSize, beefTemplate, pixelRegion, type Page } from '@tala/core';
+const mocks = vi.hoisted(() => ({ recognize: vi.fn(), discard: vi.fn() }));
 vi.mock('expo-crypto', () => ({ randomUUID: () => 'ocr-id' }));
-vi.mock('../modules/tala-ocr', () => ({ default: { recognize: mocks.recognize } }));
+vi.mock('../modules/tala-ocr', () => ({ default: { recognizeField: mocks.recognize, diagnosticsEnabled: true } }));
 vi.mock('./repository', () => ({ discardCache: mocks.discard }));
 import { recognizePage } from './ocr';
 const page: Page = { page: 1, uri: 'file:///private/page.jpg', ...alignedSize, imageId: 'photo', acceptedAt: 'now',
   alignment: { method: 'four-corner-v1', sourceWidth: 1060, sourceHeight: 1499, corners: [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}] } };
+function response(json: string, original = 'RIVERA', processed = original) {
+  const r = JSON.parse(json);
+  const reading = (text: string) => ({ text, readingText: text, confidence: .8, elements: [{ text, x: 12, y: 4, width: 80, height: 20 }] });
+  return { fieldId: r.fieldId, part: r.part, original: reading(original), processed: reading(processed),
+    sourceWidth: r.width, sourceHeight: r.height, inputWidth: r.width + 64, inputHeight: r.height + 64,
+    verticalLines: [], horizontalLines: [], occupiedCells: [], removedInkFraction: 0, diagnostics: {} };
+}
 beforeEach(() => {
   vi.resetAllMocks();
-  mocks.manipulate.mockImplementation(async (_uri, operations) => ({ uri: 'file:///cache/crop.jpg', width: Math.round(operations[0].crop.width * 128 / operations[0].crop.height), height: 128 }));
-  mocks.recognize.mockResolvedValue({ text: '', elements: [] });
-  mocks.discard.mockResolvedValue(undefined);
+  mocks.recognize.mockImplementation(async (_uri, json) => response(json));
 });
-describe('Scanner extraction orchestration (mocked native recognition)', () => {
-  it('does not apply portrait BEEF regions to a general landscape scan', async () => {
-    const landscape: Page = { ...page, width: 2400, height: 1500, alignment: {
-      method: 'opencv-manual-v1', sourceWidth: 2400, sourceHeight: 1500,
-      corners: [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}],
-    } };
-    await expect(recognizePage(landscape, () => {})).rejects.toThrow(/upright BEEF/);
-    expect(mocks.manipulate).not.toHaveBeenCalled(); expect(mocks.recognize).not.toHaveBeenCalled();
-  });
-  it('blocks unaligned legacy pages before reading or modifying anything', async () => {
+describe('ROI extraction orchestration (mocked native recognition)', () => {
+  it('blocks landscape and unaligned pages', async () => {
+    await expect(recognizePage({ ...page, width: 2400, height: 1500, alignment: { method: 'opencv-manual-v1', sourceWidth: 2400, sourceHeight: 1500, corners: [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}] } }, () => {})).rejects.toThrow(/upright BEEF/);
     await expect(recognizePage({ ...page, alignment: undefined }, () => {})).rejects.toThrow(/Align saved page/);
-    expect(mocks.manipulate).not.toHaveBeenCalled();expect(mocks.recognize).not.toHaveBeenCalled();
-  });
-  it('blocks old full-camera guide photos before cropping or native recognition', async () => {
-    const guided = {
-      ...page,
-      width: 3024,
-      height: 4032,
-      alignment: { method: 'guide-v1' as const, sourceWidth: 3024, sourceHeight: 4032 },
-    };
-    await expect(recognizePage(guided, () => {})).rejects.toThrow(/Align saved page/);
-    expect(mocks.manipulate).not.toHaveBeenCalled();
     expect(mocks.recognize).not.toHaveBeenCalled();
   });
-  it('saves exact rounded crop coordinates and reverses resized OCR coordinates correctly', async () => {
-    mocks.recognize.mockResolvedValue({ text: 'RIVERA', elements: [{ text: 'RIVERA', x: 12, y: 20, width: 80, height: 30 }] });
+  it('sends original corrected file and exact pixel ROI; maps native coordinates without resizing', async () => {
     const { run } = await recognizePage(page, () => {});
-    const index = fieldKeys.slice(0, 3).reduce((n, key) => n + beefTemplate.regions[key].length, 0);
     const crop = pixelRegion(beefTemplate.regions.learner_last_name[0], page.width, page.height);
-    const resizedWidth = Math.round(crop.width * 128 / crop.height);
-    expect(run.fields.learner_last_name.regions).toEqual([{x:crop.originX/page.width,y:crop.originY/page.height,width:crop.width/page.width,height:crop.height/page.height}]);
-    expect(run.fields.learner_last_name.elements[0].x).toBeCloseTo((crop.originX + 12 * crop.width / resizedWidth) / page.width);
-    expect(run.fields.learner_last_name.elements[0].y).toBeCloseTo((crop.originY + 20 * crop.height / 128) / page.height);
-    expect(mocks.manipulate.mock.calls[index][1][0].crop).toEqual(crop);
+    const request = mocks.recognize.mock.calls.find(c => JSON.parse(c[1]).fieldId === 'learner_last_name')!;
+    expect(request[0]).toBe(page.uri);
+    expect(JSON.parse(request[1])).toMatchObject({ x: crop.originX, y: crop.originY, width: crop.width, height: crop.height, cells: 20 });
+    expect(run.fields.learner_last_name.elements[0].x).toBeCloseTo((crop.originX + 12)/page.width);
     expect(run.pageImageId).toBe(page.imageId);
+    expect(run.preprocessing).toBe('native-roi-v3');
   });
-  it('requests larger date-cell preparation only for birth-date crops, preserving other field scales', async () => {
-    const { run } = await recognizePage(page, () => {});
-    const expected = fieldKeys.flatMap(key => beefTemplate.regions[key].map(() => key === 'birth_date'));
-    expect(mocks.recognize.mock.calls.map(call => call[1])).toEqual(expected);
-    expect(run.preprocessing).toBe('grid-lines-v2');
+  it('does not fill uncertain identity fields when original and processed readings disagree', async () => {
+    mocks.recognize.mockImplementation(async (_uri, json) => response(json, 'RIVERA', 'RIVERA X'));
+    const { run, values } = await recognizePage(page, () => {});
+    expect(values.learner_last_name).toBe('');
+    expect(run.fields.learner_last_name.warning).toBe('conflicting_readings');
+    expect(run.fields.learner_last_name.evidence?.[0].originalText).toBe('RIVERA');
+    expect(run.fields.learner_last_name.evidence?.[0].processedText).toBe('RIVERA X');
   });
-  it('preserves raw labels, flags the field, and leaves proposed values blank', async () => {
-    mocks.recognize.mockResolvedValue({ text: 'Last Name', elements: [] });
-    const result = await recognizePage(page, () => {});
-    expect(result.run.fields.learner_last_name.text).toBe('Last Name');
-    expect(result.run.fields.learner_last_name.warning).toBe('label_detected');
-    expect(result.values.learner_last_name).toBe('');
+  it('flags a format-valid processed model reading when grid noise invalidates the original', async () => {
+    mocks.recognize.mockImplementation(async (_uri, json) => response(json, 'R|VERA', 'RIVERA'));
+    const { run, values } = await recognizePage(page, () => {});
+    expect(values.learner_last_name).toBe('RIVERA');
+    expect(run.fields.learner_last_name.warning).toBe('preprocessing_review');
+    expect(run.fields.learner_last_name.validation).toMatch(/uncertain/);
+    expect(run.fields.learner_last_name.evidence?.[0].originalText).toBe('R|VERA');
   });
-  it('cleans the crop on native failure without altering the accepted page', async () => {
-    mocks.recognize.mockRejectedValue(new Error('unreadable'));
-    await expect(recognizePage(page, () => {})).rejects.toThrow('unreadable');
-    expect(mocks.discard).toHaveBeenCalledExactlyOnceWith('file:///cache/crop.jpg');
-    expect(mocks.discard).not.toHaveBeenCalledWith(page.uri);
+  it('preserves raw printed labels and rejects them as proposed values', async () => {
+    mocks.recognize.mockImplementation(async (_uri, json) => response(json, 'Last Name'));
+    const { run, values } = await recognizePage(page, () => {});
+    expect(run.fields.learner_last_name.text).toBe('Last Name');
+    expect(run.fields.learner_last_name.warning).toBe('label_detected');
+    expect(values.learner_last_name).toBe('');
+  });
+  it('keeps unrelated field results when a native field fails; does not leak private exception text', async () => {
+    mocks.recognize.mockImplementation(async (_uri, json) => {
+      if (JSON.parse(json).fieldId === 'learner_last_name') throw new Error('private path');
+      return response(json);
+    });
+    const { run, values } = await recognizePage(page, () => {});
+    expect(values.learner_last_name).toBe('');
+    expect(values.learner_first_name).toBe('RIVERA');
+    expect(run.fields.learner_last_name.warning).toBe('recognition_failed');
+    expect(JSON.stringify(run)).not.toContain('private path');
+  });
+  it('retains diagnostic cache images only with an explicit owner; never serializes URIs into history', async () => {
+    mocks.recognize.mockImplementation(async (_uri, json) => ({ ...response(json), diagnostics: { originalCrop: 'file:///cache/diagnostic.png' } }));
+    const retain = vi.fn(); const { run, diagnostics } = await recognizePage(page, () => {}, retain);
+    expect(retain).toHaveBeenCalledWith('file:///cache/diagnostic.png');
+    expect(diagnostics?.learner_last_name?.[0].diagnostics.originalCrop).toContain('diagnostic');
+    expect(JSON.stringify(run)).not.toContain('file:');
   });
 });

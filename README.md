@@ -4,11 +4,11 @@ Text Acquisition and Local Automation. This repository currently implements **Ph
 
 The Android app captures **both** BEEF pages, automatically detects/captures/crops documents with CameraX and OpenCV, offers optional crop adjustment and independent retake, runs bundled Latin ML Kit OCR on seven mapped page 1 fields, preserves raw OCR separately from edited values, and stores unfinished or ready drafts in SQLite with private image files. It uses an isolated fictional local profile. A ready draft is available for future sync; it is not a Verified enrollment record.
 
-Latest correction: [processing-loop recovery and blank-scan rejection](docs/scanner-recovery-fix.md).
+Latest correction: [native field ROI extraction, diagnostic inputs and same-image OCR comparison](docs/ocr-roi-investigation.md). Earlier [processing-loop recovery and blank-scan rejection](docs/scanner-recovery-fix.md) remain in place.
 
 ## Install and test
 
-Use `output/android/TALA-Phase1-0.2.1.apk` (version code 7). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+Use `output/android/TALA-Phase1-0.2.2.apk` (version code 8). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
 
 The native scanner uses a full-screen portrait preview, a live detected polygon, automatic capture after a stable readable view, and high-resolution OpenCV correction. Successful captures run offline OCR and open **Continue / Retake / Adjust Crop**, without requiring corner placement. See [implementation and dependencies](docs/intelligent-scanner.md) and [criterion-by-criterion acceptance](docs/intelligent-scanner-acceptance.md).
 
@@ -16,13 +16,15 @@ For an existing unaligned legacy photo, optional recovery remains available: ope
 
 Printed BEEF labels are rejected as proposed values and flagged for review; the original text remains visible. Enter the correct value or explicitly confirm an optional blank. This guard does not establish that every other OCR result is correct.
 
-Field preprocessing removes long printed grid rules, adds a white margin, and scales the input before recognition. Matching detections inside an overlapping larger detection are deduplicated using their text and image coordinates. Complete original OCR is retained separately from this reading; proposed names use the BEEF form's capital-letter convention. No dictionary or expected fixture value fills a field.
+Field OCR decodes exact regions from the corrected file without field downscaling. It compares original crops with narrowly grid-cleaned crops, adds white margins and only enlarges small inputs. Disagreement is visible; unresolved alternatives stay blank and changed readings remain uncertain proposals requiring confirmation. Matching detections inside an overlapping larger detection are deduplicated using their text and image coordinates. Complete original OCR is retained separately from this reading; proposed names use the BEEF form's capital-letter convention. No dictionary or expected fixture value fills a field.
 
 Print the three fictional pairs in `output/pdf/` at actual size on A4 paper. The expected values are separate JSON files under `fixtures/expected/`. The two-page clean pair is the first camera test. Names on the forms are fictional; the guardian deliberately differs from the learner.
 
+For development-only inspection, use `output/android/TALA-Phase1-0.2.2-diagnostics.apk` as an update. Open **Development: OCR diagnostics** on scan review, or **Development: inspect saved-page OCR** in a draft. The release APK hides these diagnostics and does not retain diagnostic PNGs. Both variants include the JS bundle and OCR model for offline use. Build the diagnostic variant with `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1 -Diagnostics`.
+
 ## Release version checks
 
-The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.2.1 / code 7**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
+The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.2.2 / code 8**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
 
 ## Development setup on Windows
 

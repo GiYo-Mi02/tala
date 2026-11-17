@@ -6,6 +6,7 @@ import TalaOcr from '../modules/tala-ocr';
 import { Crop } from './Alignment';
 import { ReadingImage } from './ReadingImage';
 import { recognizePage } from './ocr';
+import { FieldResults, OcrDiagnostics } from './OcrDiagnostics';
 import { discardCache } from './repository';
 import { Action, styles } from './ui';
 import { matchesBeefLayout, scanAcceptanceProblem, scannerConfig, stagedPage, type Candidate, type NativeScan, type PreparedScan } from './captureSupport';
@@ -41,24 +42,21 @@ export function Capture({ page, onCancel, onPhoto, onWorkingChange }: {
   async function process(candidate: Candidate, warning?: string) {
     owned.current.add(candidate.uri);
     if (!mounted.current) { await discardCache(candidate.uri); return; }
+    for (const uri of owned.current) if (uri !== candidate.uri && prepared?.extraction?.diagnostics && Object.values(prepared.extraction.diagnostics).flat().some(r => Object.values(r.diagnostics).includes(uri))) { await discardCache(uri).catch(() => {}); owned.current.delete(uri); }
     setPhase('processing'); setProgress('Reading document offline…'); setFailedImage(false); setError('');
     const result: PreparedScan = { uri: candidate.uri, width: candidate.width, height: candidate.height,
       alignment: candidate.alignment, imageId: Crypto.randomUUID(), warning };
+    if (page === 1) {
+      try {
+        result.extraction = await recognizePage(stagedPage(result, page), value => { if (mounted.current) setProgress(value); }, uri => owned.current.add(uri));
+      } catch { result.warning = 'Field reading failed. Check alignment and verify the fields manually.'; }
+    }
     try {
       const full = await TalaOcr.recognizeDocument(candidate.uri);
       result.documentOcr = { ...full, at: new Date().toISOString(), engine: 'mlkit-bundled-latin-16.0.1' };
-      if (!full.text.trim()) result.warning = 'No readable text was found. This photo cannot be accepted.';
-      if (page === 1 && matchesBeefLayout(full.text, candidate.width, candidate.height)) {
-        result.extraction = await recognizePage(stagedPage(result, page), value => { if (mounted.current) setProgress(value); });
-      } else if (page === 1) {
-        result.warning = full.text.trim()
-          ? 'The scan is available, but this page was not identified as the upright BEEF layout. Its text is below; verify the seven BEEF fields manually or retake the matching form.'
-          : 'No text was found. Retake a clearer image before continuing.';
-      }
-    } catch {
-      result.warning = result.documentOcr ? 'Some field values could not be extracted. Review the text and correct the fields.'
-        : 'Text reading failed. Retry reading, adjust the crop, or retake the photo.';
-    }
+      if (page === 1 && !matchesBeefLayout(full.text, candidate.width, candidate.height))
+        result.warning = 'The printed BEEF layout could not be confirmed. Check that the field regions cover the correct answer boxes before continuing.';
+    } catch { result.warning = 'Full-page reference text could not be read. Review the individual field readings.'; }
     if (mounted.current) { setPrepared(result); setError(scanAcceptanceProblem(result) ?? ''); setPhase('review'); }
     else for (const uri of owned.current) await discardCache(uri).catch(() => {});
   }
@@ -134,12 +132,16 @@ export function Capture({ page, onCancel, onPhoto, onWorkingChange }: {
     {failedImage && <Text style={styles.error}>This image could not be opened. Retake it.</Text>}
     {!!scan?.diagnostic && (!!error || !prepared) && <Text style={styles.small}>Scan code: {scan.diagnostic.code}
       {scan.diagnostic.workingWidth && scan.diagnostic.workingHeight ? ` · ${scan.diagnostic.workingWidth} × ${scan.diagnostic.workingHeight}` : ''}</Text>}
+    {prepared?.extraction && <>
+      <FieldResults extraction={prepared.extraction} />
+      <OcrDiagnostics uri={prepared.uri} width={prepared.width} height={prepared.height} extraction={prepared.extraction} />
+    </>}
     <Action title={busy ? 'Saving…' : 'Continue'} disabled={busy || !prepared || !!acceptanceProblem || failedImage} onPress={() => { void accept(); }} />
     <Action title="Retake" secondary disabled={busy} onPress={() => { void openScanner(); }} />
     {scan && scan.allowManual !== false && <Action title="Adjust Crop" secondary disabled={busy} onPress={() => setPhase('manual')} />}
     {!!prepared && !!acceptanceProblem && <Action title="Retry reading" secondary disabled={busy} onPress={() => { void retryReading(); }} />}
     {!!prepared?.documentOcr && <>
-      <Action title={showText ? 'Hide extracted text' : 'View extracted text'} secondary onPress={() => setShowText(value => !value)} />
+      <Action title={showText ? 'Hide whole-page reference text' : 'View whole-page reference text (unstructured)'} secondary onPress={() => setShowText(value => !value)} />
       {showText && <Text selectable style={styles.body}>{prepared.documentOcr.text || 'No readable text found.'}</Text>}
     </>}
     <Action title="Cancel scan" secondary disabled={busy} onPress={onCancel} />

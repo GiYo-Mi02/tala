@@ -1,94 +1,73 @@
-import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
-import * as Crypto from "expo-crypto";
-import {
-  beefTemplate,
-  fieldKeys,
-  extractedValue,
-  isAligned,
-  pixelRegion,
-  type FieldKey,
-  type OcrRun,
-  type Page,
-  type RawField,
-  type Values,
-} from "@tala/core";
-import TalaOcr from "../modules/tala-ocr";
-import { discardCache } from "./repository";
+import * as Crypto from 'expo-crypto';
+import { beefTemplate, fieldKeys, extractedValue, isAligned, pixelRegion, validateValues,
+  type FieldKey, type OcrRun, type Page, type RawField, type Values } from '@tala/core';
+import TalaOcr, { type RoiResult, type RoiReading } from '../modules/tala-ocr';
+import { discardCache } from './repository';
 
-export async function recognizePage(
-  page: Page,
-  onProgress: (value: string) => void,
-): Promise<{ run: OcrRun; values: Values }> {
-  if (page.page !== 1) throw new Error("Only page 1 has extraction mappings.");
-  if (!isAligned(page)) throw new Error("Align saved page 1 before running OCR. Check that the highlighted areas cover the answer boxes.");
-  if (page.width / page.height < 0.56 || page.width / page.height > 0.85)
-    throw new Error("Automatic field extraction supports the upright BEEF layout. Rotate or retake this page; its full OCR text remains available.");
+export type OcrDiagnostics = Partial<Record<FieldKey, RoiResult[]>>;
+export type Extraction = { run: OcrRun; values: Values; diagnostics?: OcrDiagnostics };
+export async function recognizePage(page: Page, onProgress: (value: string) => void,
+  retainDiagnostic?: (uri: string) => void): Promise<Extraction> {
+  if (page.page !== 1) throw new Error('Only page 1 has extraction mappings.');
+  if (!isAligned(page)) throw new Error('Align saved page 1 before running OCR. Check that the highlighted areas cover the answer boxes.');
+  if (page.width / page.height < .56 || page.width / page.height > .85)
+    throw new Error('Automatic field extraction supports the upright BEEF layout. Rotate or retake this page.');
   const fields = {} as Record<FieldKey, RawField>;
   const values = {} as Values;
+  const diagnostics: OcrDiagnostics = {};
   for (const key of fieldKeys) {
-    onProgress(`Reading ${key.replaceAll("_", " ")}...`);
-    const parts: string[] = [];
-    const readingParts: string[] = [];
-    const elements: RawField["elements"] = [];
-    const actualRegions: NonNullable<RawField['regions']> = [];
-    const regions = beefTemplate.regions[key];
-    for (const region of regions) {
-      const crop = pixelRegion(region, page.width, page.height);
-      actualRegions.push({ x: crop.originX / page.width, y: crop.originY / page.height,
-        width: crop.width / page.width, height: crop.height / page.height });
-      // A physical crop confines native recognition to actual inputs, never full-page name searching.
-      const image = await manipulateAsync(
-        page.uri,
-        [{ crop }, { resize: { height: 128 } }],
-        { format: SaveFormat.JPEG, compress: 1 },
-      );
+    onProgress(`Reading ${key.replaceAll('_', ' ')}...`);
+    const regions = beefTemplate.regions[key].map(region => pixelRegion(region, page.width, page.height));
+    const actualRegions = regions.map(r => ({ x: r.originX/page.width, y: r.originY/page.height, width: r.width/page.width, height: r.height/page.height }));
+    const row = actualRegions[0];
+    const separator = key === 'school_year' ? '-' : key === 'birth_date' ? '/' : ' ';
+    const results: RoiResult[] = [];
+    let failed = false;
+    for (const [part, crop] of regions.entries()) {
       try {
-        const result = await TalaOcr.recognize(image.uri, key === 'birth_date');
-        parts.push(result.text);
-        readingParts.push(result.readingText ?? result.text);
-        for (const e of result.elements)
-          elements.push({
-            text: e.text,
-            x: (crop.originX + (e.x * crop.width) / image.width) / page.width,
-            y:
-              (crop.originY + (e.y * crop.height) / image.height) / page.height,
-            width: (e.width * crop.width) / image.width / page.width,
-            height: (e.height * crop.height) / image.height / page.height,
-          });
-      } finally {
-        await discardCache(image.uri);
-      }
+        const result = await TalaOcr.recognizeField(page.uri, JSON.stringify({ fieldId: key, part,
+          x: crop.originX, y: crop.originY, width: crop.width, height: crop.height,
+          cells: beefTemplate.cells[key][part], diagnostics: !!TalaOcr.diagnosticsEnabled && !!retainDiagnostic }));
+        for (const uri of Object.values(result.diagnostics)) if (uri) {
+          if (retainDiagnostic) retainDiagnostic(uri); else await discardCache(uri);
+        }
+        if (result.fieldId !== key || result.part !== part) throw new Error('Field identity mismatch.');
+        results.push(result);
+      } catch { failed = true; }
     }
-    const separator =
-      key === "school_year" ? "-" : key === "birth_date" ? "/" : " ";
-    const raw = parts.map((p) => p.trim()).join(separator);
-    const first = regions[0];
-    const last = regions[regions.length - 1];
-    fields[key] = {
-      text: raw,
-      readingText: readingParts.map(p => p.trim()).join(separator),
-      elements,
-      crop: {
-        x: first.x,
-        y: first.y,
-        width: last.x + last.width - first.x,
-        height: first.height,
-      },
-      regions: actualRegions,
-    };
-    const extracted = extractedValue(key, fields[key], first);
-    values[key] = extracted.value;
-    if (extracted.warning) fields[key].warning = extracted.warning;
+    function raw(variant: 'original' | 'processed'): RawField {
+      const readings: RoiReading[] = results.map(r => r[variant]);
+      return { text: readings.map(r => r.text.trim()).join(separator), readingText: readings.map(r => r.readingText.trim()).join(separator),
+        crop: { ...row, width: actualRegions.at(-1)!.x + actualRegions.at(-1)!.width - row.x }, regions: actualRegions,
+        elements: results.flatMap(r => r[variant].elements.map(e => ({ text: e.text,
+          x: (regions[r.part].originX + e.x)/page.width, y: (regions[r.part].originY + e.y)/page.height,
+          width: e.width/page.width, height: e.height/page.height }))) };
+    }
+    const original = raw('original'); const processed = raw('processed');
+    const before = extractedValue(key, original, row); const after = extractedValue(key, processed, row);
+    const changed = before.value !== after.value;
+    const beforeValid = !before.warning && !validateValues({ ...values, [key]: before.value } as Values)[key];
+    const afterValid = !after.warning && !validateValues({ ...values, [key]: after.value } as Values)[key];
+    // Select an actual model reading only when one variant passes the field format.
+    // Two different valid readings remain unresolved. No character substitution occurs.
+    const conflict = changed && beforeValid === afterValid;
+    const useOriginal = changed && beforeValid && !afterValid;
+    const selected = useOriginal ? original : processed;
+    fields[key] = { ...selected, originalNormalized: before.value, processedNormalized: after.value, evidence: results.map(r => ({ originalText: r.original.text, processedText: r.processed.text,
+      originalReading: r.original.readingText, processedReading: r.processed.readingText,
+      originalConfidence: r.original.confidence, processedConfidence: r.processed.confidence,
+      sourceWidth: r.sourceWidth, sourceHeight: r.sourceHeight, inputWidth: r.inputWidth, inputHeight: r.inputHeight,
+      verticalLines: r.verticalLines, horizontalLines: r.horizontalLines, occupiedCells: r.occupiedCells, removedInkFraction: r.removedInkFraction })),
+      warning: failed ? 'recognition_failed' : conflict ? 'conflicting_readings' : changed ? 'preprocessing_review' : after.warning };
+    values[key] = failed || conflict ? '' : useOriginal ? before.value : after.value;
+    if (TalaOcr.diagnosticsEnabled && retainDiagnostic) diagnostics[key] = results;
   }
-  return {
-    values,
-    run: {
-      id: Crypto.randomUUID(),
-      pageImageId: page.imageId,
-      at: new Date().toISOString(),
-      engine: "mlkit-bundled-latin-16.0.1",
-      preprocessing: 'grid-lines-v2',
-      fields,
-    },
-  };
+  const invalid = validateValues(values);
+  for (const key of fieldKeys) fields[key].validation = fields[key].warning === 'conflicting_readings'
+    ? 'Original and processed crops disagree. Read the image and enter the value manually.'
+    : fields[key].warning === 'preprocessing_review' ? 'Original and cleaned OCR differ. Only one passes the field format; this proposal is uncertain. Check the image before confirming.'
+    : fields[key].warning === 'recognition_failed' ? 'Field reading failed. Verify this field manually.'
+    : fields[key].warning === 'label_detected' ? 'Printed label detected inside answer region. Check alignment.' : invalid[key];
+  return { values, diagnostics, run: { id: Crypto.randomUUID(), pageImageId: page.imageId, at: new Date().toISOString(),
+    engine: 'mlkit-bundled-latin-16.0.1', preprocessing: 'native-roi-v3', fields } };
 }

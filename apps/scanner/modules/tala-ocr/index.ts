@@ -1,7 +1,11 @@
 import { requireNativeModule } from 'expo-modules-core';
 import type { Corners } from '@tala/core';
 type Element = { text: string; x: number; y: number; width: number; height: number };
+export type RoiReading = { text: string; readingText: string; elements: Element[]; confidence: number | null };
+export type RoiResult = { fieldId: string; part: number; x: number; y: number; original: RoiReading; processed: RoiReading; sourceWidth: number; sourceHeight: number; inputWidth: number; inputHeight: number; verticalLines: number[]; horizontalLines: number[]; occupiedCells: number[]; removedInkFraction: number; diagnostics: Partial<Record<'originalCrop' | 'processedCrop' | 'originalInput' | 'processedInput', string>> };
 export default requireNativeModule<{
+  diagnosticsEnabled: boolean;
+  recognizeField(uri: string, request: string): Promise<RoiResult>;
   scanDocument(config: string): Promise<string | null>;
   rectifyDocument(uri: string, corners: Corners): Promise<{ uri: string; width: number; height: number }>;
   recognizeDocument(uri: string): Promise<{ text: string; blocks: { text: string; region: { x: number; y: number; width: number; height: number }; lines: { text: string; region: { x: number; y: number; width: number; height: number } }[] }[] }>;
