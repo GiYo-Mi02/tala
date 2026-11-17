@@ -2,14 +2,21 @@ apply plugin: 'com.android.library'
 apply plugin: 'expo-module-gradle-plugin'
 
 group = 'expo.modules.talaocr'
-version = '0.1.0'
+version = '0.1.1'
 
 android {
   namespace 'expo.modules.talaocr'
-  defaultConfig { versionCode 1; versionName '0.1.0' }
+  defaultConfig {
+    versionCode 2
+    versionName '0.1.1'
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+  }
+  sourceSets.androidTest.assets.srcDirs += ['../../../../../fixtures/images', '../../../../../fixtures/expected']
 }
 
 dependencies {
   // This artifact statically bundles the Latin model. Do not replace with play-services-mlkit.
   implementation 'com.google.mlkit:text-recognition:16.0.1'
+  androidTestImplementation 'androidx.test:runner:1.6.2'
+  androidTestImplementation 'androidx.test.ext:junit:1.2.1'
 }

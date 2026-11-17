@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="expo.modules.talaocr.PerspectiveTest" tests="5" failures="0" errors="0" skipped="0" time="13.603" timestamp="2026-11-14T05:37:53" hostname="localhost">
+  <properties>
+    <property name="device" value="TALA_OCR(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":tala-ocr" />
+  </properties>
+  <testcase name="invalidCornersDoNotCreateAnAlignedFile" classname="expo.modules.talaocr.PerspectiveTest" time="0.057" />
+  <testcase name="bundledMlKitReadsFictionalFixtureInputs" classname="expo.modules.talaocr.PerspectiveTest" time="11.747" />
+  <testcase name="duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry" classname="expo.modules.talaocr.PerspectiveTest" time="0.013" />
+  <testcase name="perspectiveCorrectionPreservesKnownLandmarks" classname="expo.modules.talaocr.PerspectiveTest" time="0.45" />
+  <testcase name="preprocessingPreservesCharacterStrokesAndAddsEmptyMargins" classname="expo.modules.talaocr.PerspectiveTest" time="0.013" />
+</testsuite>

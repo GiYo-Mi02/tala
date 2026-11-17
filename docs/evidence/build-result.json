@@ -1,10 +1,13 @@
 ﻿{
-    "command":  "npm.cmd run build:android",
-    "exitCode":  0,
-    "status":  "Pass",
-    "gradle":  "8.14.3",
-    "appVersion":  "0.1.0",
-    "apkSha256":  "62965c2f32eab2e577b1fdde4451a09a9087ecfe280a2c241f665a8c81b4f5d0",
+    "upgradeSignatureMatches":  true,
+    "apkSha256":  "defcd90e789acc83bed8f5d623353fa1c7bf5efc2874294d73bf75d4e6b08707",
+    "testPhone":  "Samsung Galaxy A53 5G",
+    "appVersion":  "0.1.1",
     "physicalPhoneChecks":  "Not run",
-    "testPhone":  "Samsung Galaxy A53 5G"
+    "command":  "npm.cmd run build:android",
+    "versionCode":  2,
+    "signingCertificateSha256":  "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+    "gradle":  "8.14.3",
+    "exitCode":  0,
+    "status":  "Pass"
 }

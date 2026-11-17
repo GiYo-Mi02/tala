@@ -2,11 +2,17 @@
 
 Text Acquisition and Local Automation. This repository currently implements **Phase 1 only** of [the supplied build prompt](docs/master-build-prompt.md). The desktop portal, API, PostgreSQL, staff authentication, and sync start in later phases, after mandatory acceptance and explicit approval.
 
-The Android app captures **both** BEEF pages, provides independent crop and retake, runs bundled Latin ML Kit OCR on seven mapped page 1 fields, preserves raw OCR separately from edited values, and stores unfinished or ready drafts in SQLite with private image files. It uses an isolated fictional local profile. A ready draft is available for future sync; it is not a Verified enrollment record.
+The Android app captures **both** BEEF pages, provides four-corner perspective alignment and independent retake, runs bundled Latin ML Kit OCR on seven mapped page 1 fields, preserves raw OCR separately from edited values, and stores unfinished or ready drafts in SQLite with private image files. It uses an isolated fictional local profile. A ready draft is available for future sync; it is not a Verified enrollment record.
 
 ## Install and test
 
-Use the locally built APK in `output/android/TALA-Phase1-0.1.0.apk` when present. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Start with a fresh installation and enable airplane mode **before its first launch**, with Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+Use `output/android/TALA-Phase1-0.1.1.apk` (version code 2). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+
+For an existing photo, open its draft and select **Align saved page 1**. Mark the four paper corners, select **Straighten & preview**, and check that the green regions cover the answer boxes below the labels. Accept the page and run OCR again. Previous raw OCR remains saved; realigning page 1 clears confirmations and readiness. Use **View area read** to inspect each result. Legacy results and replaced photos cannot show an exact reading area and explain why.
+
+Printed BEEF labels are rejected as proposed values and flagged for review; the original text remains visible. Enter the correct value or explicitly confirm an optional blank. This guard does not establish that every other OCR result is correct.
+
+Field preprocessing removes long printed grid rules, adds a white margin, and scales the input before recognition. Matching detections inside an overlapping larger detection are deduplicated using their text and image coordinates. Complete original OCR is retained separately from this reading; proposed names use the BEEF form's capital-letter convention. No dictionary or expected fixture value fills a field.
 
 Print the three fictional pairs in `output/pdf/` at actual size on A4 paper. The expected values are separate JSON files under `fixtures/expected/`. The two-page clean pair is the first camera test. Names on the forms are fictional; the guardian deliberately differs from the learner.
 
@@ -26,6 +32,8 @@ npm.cmd run build:android
 The build script runs Expo prebuild, pins the generated wrapper to checksum-verified Gradle 8.14.3, uses the **release** task to embed the JavaScript and reference images, builds ARM64 and ARMv7, and copies the APK into `output/android/`. Keep this Gradle version with the pinned SDK and JDK; avoid IDE upgrades of the generated wrapper. The APK uses the generated Android debug signing identity for this fictional capstone pilot. This is a local build, not a cloud build or a production distribution identity. Do not uninstall or clear app data when preserving drafts.
 
 The local Expo plugin shortens generated CMake paths for Windows Ninja. `npm.cmd run build:android -- -VerboseGradle` records detailed dependency/build diagnostics in `docs/evidence/android-build.log`. The final package inspection compares embedded template image content, since Android renames packaged resources.
+
+Native instrumentation tests live in the local OCR module and include known-landmark perspective correction, invalid selections, and actual bundled ML Kit reading of the three fictional page 1 fixtures. With the native project prepared, one test device connected, airplane mode on and Wi-Fi off, run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-android.ps1`. For an x86_64 emulator, add `-Architectures x86_64`. Reports are under `apps/scanner/modules/tala-ocr/android/build/reports/androidTests/connected/debug/`. Emulator results supplement the mandatory physical-phone tests. Fixture images and labels are included only in the instrumentation APK, never the release app.
 
 After the release build has prepared the native project, `npm.cmd run start:android` uses Expo's Android debug build workflow and starts Metro for a connected phone or emulator. Expo Go cannot load the local OCR module. Use the standalone release APK for acceptance, and rebuild it after changes. No remote OCR, runtime model download, Expo Update, backend, analytics, or automatic upload is implemented.
 
@@ -52,7 +60,7 @@ python scripts/create_fixtures.py
 
 ## Limits and phase gate
 
-Only numeric grades 1-12 and typed English values in the seven mapped fields are extracted. Full-page rectangular crop and manual rotation are supported; perspective correction and automatic document alignment are not. Keep the paper flat, square to the camera, upright, and fully inside the crop. Grid lines, glare, blur, and letter spacing can affect actual OCR; every field needs human comparison and confirmation, including optional blanks. No OCR accuracy claim is made before physical-phone results.
+Only numeric grades 1-12 and typed English values in the seven mapped fields are extracted. Manual four-corner alignment corrects perspective to a 1600 x 2263 image; corner detection is not automatic. Rotate upright before placing corners, keep the paper flat and fully visible, and check the highlighted reading regions before acceptance. Crossed, degenerate, outside, and undersized selections are rejected. Grid lines, glare, blur, and letter spacing can affect actual OCR; every field needs human comparison and confirmation, including optional blanks. Physical-phone accuracy remains subject to acceptance testing.
 
 SQLite and private files provide local persistence, not app-level encryption or protection from a compromised/rooted device. Android backup is disabled for this pilot. Only fictional test data should be used. Raw OCR is retained locally for review and is not written to logs. A retake clears readiness; a page 1 retake also clears field confirmations. Failed file or database writes do not acknowledge success. Unreferenced files left by an interrupted save are cleaned on the next startup.
 

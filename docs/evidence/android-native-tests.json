@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-14",
+  "status": "Pass",
+  "device": {
+    "kind": "emulator",
+    "avd": "TALA_OCR",
+    "androidVersion": "16",
+    "androidBuild": "BP41.250916.009.A1",
+    "abi": "x86_64"
+  },
+  "airplaneMode": true,
+  "wifiEnabled": false,
+  "tests": 5,
+  "failures": 0,
+  "cases": [
+    "invalidCornersDoNotCreateAnAlignedFile",
+    "bundledMlKitReadsFictionalFixtureInputs",
+    "duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry",
+    "perspectiveCorrectionPreservesKnownLandmarks",
+    "preprocessingPreservesCharacterStrokesAndAddsEmptyMargins"
+  ],
+  "fixtureComparison": {
+    "fixtures": [
+      "clean",
+      "optional-blanks",
+      "invalid-required"
+    ],
+    "fieldComparisons": 21,
+    "normalization": "Remove OCR inter-character whitespace for character comparison; uppercase BEEF names. Full original OCR remains unchanged. Host tests separately verify intentional name spaces."
+  },
+  "physicalPhoneAcceptance": "Not run - no physical phone connected",
+  "evidence": "android-native-tests.xml"
+}

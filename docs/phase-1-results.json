@@ -1,26 +1,128 @@
 {
   "phase": 1,
   "phaseStatus": "Awaiting physical-phone acceptance",
-  "app": { "package": "ph.tala.scanner.pilot", "version": "0.1.0", "versionCode": 1 },
-  "phone": { "model": "Samsung Galaxy A53 5G", "androidVersion": null, "androidBuildNumber": null },
+  "app": {
+    "package": "ph.tala.scanner.pilot",
+    "version": "0.1.1",
+    "versionCode": 2
+  },
+  "phone": {
+    "model": "Samsung Galaxy A53 5G",
+    "androidVersion": null,
+    "androidBuildNumber": null
+  },
   "browser": null,
   "apk": {
-    "path": "output/android/TALA-Phase1-0.1.0.apk",
-    "bytes": 64853070,
-    "sha256": "62965c2f32eab2e577b1fdde4451a09a9087ecfe280a2c241f665a8c81b4f5d0",
+    "path": "output/android/TALA-Phase1-0.1.1.apk",
+    "bytes": 64864258,
+    "sha256": "214d970cd4cb1d38abde057e49d3b75f8905e93d12b27c44819f8dbe6a1d423a",
     "build": "Pass",
     "contentChecks": "Pass",
     "signatureVerification": "Pass",
-    "evidence": ["docs/evidence/apk-inspection.json", "docs/evidence/apk-signature.txt", "docs/evidence/apk-badging.txt"]
+    "evidence": [
+      "docs/evidence/apk-inspection.json",
+      "docs/evidence/apk-signature.txt",
+      "docs/evidence/apk-badging.txt"
+    ],
+    "upgradeSignatureMatches": true
   },
   "tests": [
-    { "id": "P1-01", "expected": "First standalone APK launch and bundled template work in airplane mode with Wi-Fi off and no server", "actual": "No physical phone connected", "status": "Not run", "evidence": [], "retest": "docs/phase-1-phone-tests.md#p1-01---first-launch-offline" },
-    { "id": "P1-02", "expected": "Camera denial recovery, both page captures, crop, accepted page replacement and order", "actual": "Implemented; physical camera interactions unverified", "status": "Not run", "evidence": ["apps/scanner/src/Capture.tsx", "packages/core/src/storage.test.ts"], "retest": "docs/phase-1-phone-tests.md#p1-02---permission-crop-and-retake" },
-    { "id": "P1-03", "expected": "Real bundled OCR matches the clean fixture offline and excludes parent names; page 2 viewable", "actual": "Source mapping and autolinking verified; actual phone OCR output unmeasured", "status": "Not run", "evidence": ["docs/evidence/mapping-overlay.png", "docs/evidence/android-autolinking.json"], "retest": "docs/phase-1-phone-tests.md#p1-03---actual-bundled-ocr" },
-    { "id": "P1-04", "expected": "Optional blanks, required errors, leading zeroes, correction updates, and blocked incomplete readiness", "actual": "Host validation checks pass; installed APK workflow unverified", "status": "Not run", "evidence": ["docs/evidence/unit-tests.json"], "retest": "docs/phase-1-phone-tests.md#p1-04---blanks-invalid-values-and-readiness" },
-    { "id": "P1-05", "expected": "Saved UUID, images/order, raw OCR, corrected values, and state survive force-stop and offline reopen", "actual": "No physical force-stop/reopen run", "status": "Not run", "evidence": ["packages/core/src/storage.test.ts"], "retest": "docs/phase-1-phone-tests.md#p1-05---force-stop-and-reopen" },
-    { "id": "P1-06", "expected": "Fixture mapping/validation and injected missing-image/copy/database faults reject unsafe saves", "actual": "60 host tests passed, including all fields, dates, guardian exclusion, readiness, and save faults", "status": "Pass", "evidence": ["docs/evidence/unit-tests.json"], "retest": "npm.cmd test", "limitation": "Port-level fault injection; native Android storage/UI execution remains in pending physical checks" }
+    {
+      "id": "P1-01",
+      "expected": "First standalone APK launch and bundled template work in airplane mode with Wi-Fi off and no server",
+      "actual": "No physical phone connected",
+      "status": "Not run",
+      "evidence": [],
+      "retest": "docs/phase-1-phone-tests.md#p1-01---first-launch-offline"
+    },
+    {
+      "id": "P1-02",
+      "expected": "Camera denial recovery, both page captures, crop, accepted page replacement and order",
+      "actual": "Four-corner perspective alignment and preview implemented; physical camera acceptance pending",
+      "status": "Not run",
+      "evidence": [
+        "apps/scanner/src/Capture.tsx",
+        "packages/core/src/storage.test.ts"
+      ],
+      "retest": "docs/phase-1-phone-tests.md#p1-02---permission-crop-and-retake"
+    },
+    {
+      "id": "P1-03",
+      "expected": "Real bundled OCR matches the clean fixture offline and excludes parent names; page 2 viewable",
+      "actual": "User reported label extraction before this fix. Updated bundled ML Kit passes offline emulator fixture checks; physical-phone clean-fixture retest pending",
+      "status": "Not run",
+      "evidence": [
+        "docs/evidence/mapping-overlay.png",
+        "docs/evidence/android-autolinking.json",
+        "docs/evidence/android-native-tests.json"
+      ],
+      "retest": "docs/phase-1-phone-tests.md#p1-03---actual-bundled-ocr"
+    },
+    {
+      "id": "P1-04",
+      "expected": "Optional blanks, required errors, leading zeroes, correction updates, and blocked incomplete readiness",
+      "actual": "Host validation checks pass; installed APK workflow unverified",
+      "status": "Not run",
+      "evidence": [
+        "docs/evidence/unit-tests.json"
+      ],
+      "retest": "docs/phase-1-phone-tests.md#p1-04---blanks-invalid-values-and-readiness"
+    },
+    {
+      "id": "P1-05",
+      "expected": "Saved UUID, images/order, raw OCR, corrected values, and state survive force-stop and offline reopen",
+      "actual": "No physical force-stop/reopen run",
+      "status": "Not run",
+      "evidence": [
+        "packages/core/src/storage.test.ts"
+      ],
+      "retest": "docs/phase-1-phone-tests.md#p1-05---force-stop-and-reopen"
+    },
+    {
+      "id": "P1-06",
+      "expected": "Fixture mapping/validation and injected missing-image/copy/database faults reject unsafe saves",
+      "actual": "99 host tests passed across seven files: alignment, mapping, label guards, original/derived readings, dates, readiness, legacy data and save rollback",
+      "status": "Pass",
+      "evidence": [
+        "docs/evidence/unit-tests.json"
+      ],
+      "retest": "npm.cmd test",
+      "limitation": "Port-level fault injection; native Android storage/UI execution remains in pending physical checks"
+    }
   ],
   "phase2Started": false,
-  "approvalRequested": false
+  "approvalRequested": false,
+  "supplementaryNativeTests": {
+    "date": "2026-11-14",
+    "status": "Pass",
+    "device": {
+      "kind": "emulator",
+      "avd": "TALA_OCR",
+      "androidVersion": "16",
+      "androidBuild": "BP41.250916.009.A1",
+      "abi": "x86_64"
+    },
+    "airplaneMode": true,
+    "wifiEnabled": false,
+    "tests": 5,
+    "failures": 0,
+    "cases": [
+      "invalidCornersDoNotCreateAnAlignedFile",
+      "bundledMlKitReadsFictionalFixtureInputs",
+      "duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry",
+      "perspectiveCorrectionPreservesKnownLandmarks",
+      "preprocessingPreservesCharacterStrokesAndAddsEmptyMargins"
+    ],
+    "fixtureComparison": {
+      "fixtures": [
+        "clean",
+        "optional-blanks",
+        "invalid-required"
+      ],
+      "fieldComparisons": 21,
+      "normalization": "Remove OCR inter-character whitespace for character comparison; uppercase BEEF names. Full original OCR remains unchanged. Host tests separately verify intentional name spaces."
+    },
+    "physicalPhoneAcceptance": "Not run - no physical phone connected",
+    "evidence": "android-native-tests.xml"
+  }
 }

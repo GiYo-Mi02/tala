@@ -66,4 +66,19 @@ describe('P1-06: local save faults and readiness', () => {
     const replacement=withPage(fixtureDraft(),page(1,'replacement'));
     expect(replacement.confirmed).toEqual({});expect(replacement.state).toBe('editing');
   });
+  it('realigns legacy page 1 without changing values or history, and preserves its old file on failed save',async () => {
+    const mem=memory(), draft=fixtureDraft();
+    const raw={text:'Last Name',crop:{x:0.1,y:0.3,width:0.5,height:0.02},elements:[]};
+    draft.ocrHistory=[{id:'old',pageImageId:'image-1',at:now,engine:'mlkit-bundled-latin-16.0.1',fields:Object.fromEntries(fieldKeys.map(k=>[k,raw])) as never}];
+    await saveDraft(mem.port,draft,now);
+    const replacement: Page={...page(1,'aligned'),width:1600,height:2263,alignment:{method:'four-corner-v1',sourceWidth:1060,sourceHeight:1499,corners:[{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}]}};
+    mem.failWrite=true;
+    await expect(acceptPage(mem.port,draft,replacement,now)).rejects.toThrow('disk full');
+    expect(mem.row).toEqual(draft);expect(mem.files.has(page(1).uri)).toBe(true);
+    mem.failWrite=false;
+    const saved=await acceptPage(mem.port,draft,replacement,now);
+    expect(saved.pages[1]?.alignment).toEqual(replacement.alignment);
+    expect(saved.values).toEqual(draft.values);expect(saved.ocrHistory).toEqual(draft.ocrHistory);
+    expect(saved.confirmed).toEqual({});expect(saved.state).toBe('editing');
+  });
 });

@@ -1,10 +1,12 @@
 import { emptyValues, fieldKeys, type FieldKey, type Values, validateValues } from './fields';
+import type { Alignment } from './alignment';
+import type { Region } from './template';
 
 export const TEST_PROFILE = 'fictional-local-profile-v1' as const;
 export type PageNumber = 1 | 2;
-export type Page = { page: PageNumber; uri: string; width: number; height: number; acceptedAt: string; imageId: string };
-export type RawField = { text: string; crop: { x: number; y: number; width: number; height: number }; elements: { text: string; x: number; y: number; width: number; height: number }[] };
-export type OcrRun = { id: string; pageImageId: string; at: string; engine: 'mlkit-bundled-latin-16.0.1'; fields: Record<FieldKey, RawField> };
+export type Page = { page: PageNumber; uri: string; width: number; height: number; acceptedAt: string; imageId: string; alignment?: Alignment };
+export type RawField = { text: string; readingText?: string; crop: Region; regions?: Region[]; warning?: 'label_detected'; elements: (Region & { text: string })[] };
+export type OcrRun = { id: string; pageImageId: string; at: string; engine: 'mlkit-bundled-latin-16.0.1'; preprocessing?: 'grid-lines-v1'; fields: Record<FieldKey, RawField> };
 export type Draft = {
   id: string; profileId: typeof TEST_PROFILE; templateId: 'beef-sy-2024-2025'; templateVersion: 1;
   createdAt: string; updatedAt: string; pages: Partial<Record<PageNumber, Page>>; values: Values;

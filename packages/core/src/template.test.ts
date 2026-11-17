@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import fixture from '../../../fixtures/expected/mapping.json';
+import nativeRegions from '../../../fixtures/expected/ocr-regions.json';
 import { beefTemplate, mapElements, pixelRegion } from './template';
 import { fieldKeys } from './fields';
 describe('P1-06: source-measured mapping', () => {
+  it('keeps native real-recognition test crops identical to the runtime mapping', () => {
+    expect(nativeRegions).toEqual(beefTemplate.regions);
+  });
   it('maps every learner input and excludes labels and the different guardian', () => {
     const { width, height } = fixture.image;
     const mapped = mapElements(fixture.elements.map(e => ({ text: e.text, x: e.x/width, y: e.y/height, width: e.width/width, height: e.height/height })));

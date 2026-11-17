@@ -2,7 +2,8 @@
 from pathlib import Path
 import hashlib, json, re, sys, zipfile, struct, zlib
 root = Path(__file__).resolve().parents[1]
-apk = Path(sys.argv[1]) if len(sys.argv)>1 else root / 'output/android/TALA-Phase1-0.1.0.apk'
+version = json.loads((root / 'apps/scanner/app.json').read_text(encoding='utf-8'))['expo']['version']
+apk = Path(sys.argv[1]).resolve() if len(sys.argv)>1 else root / f'output/android/TALA-Phase1-{version}.apk'
 def png_content_hash(blob):
     if blob[:8] != b'\x89PNG\r\n\x1a\n': raise ValueError('Not a PNG')
     offset=8; critical={}; image_data=[]
@@ -29,8 +30,11 @@ with zipfile.ZipFile(apk) as archive:
     pages.sort(key=lambda p:p['page'])
     models = [n for n in names if 'mlkit' in n.lower() and ('latin' in n.lower() or 'latn' in n.lower())]
     ocr_class = any(b'TalaOcrModule' in archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n))
+    alignment_class = any(b'expo/modules/talaocr/Perspective' in archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n))
+    preprocessing_class = any(b'expo/modules/talaocr/FieldImage' in archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n))
+    dedup_class = any(b'expo/modules/talaocr/ReadingResult' in archive.read(n) for n in names if re.fullmatch(r'classes\d*\.dex',n))
     abis = sorted({n.split('/')[1] for n in names if n.startswith('lib/') and n.endswith('.so')})
-    checks = {'embedded_android_bundle':bool(bundle),'both_beef_pages':[p['page'] for p in pages]==[1,2],'bundled_latin_model_assets':bool(models),'local_ocr_module_in_dex':ocr_class,'arm64_native_libraries':'arm64-v8a' in abis}
+    checks = {'embedded_android_bundle':bool(bundle),'both_beef_pages':[p['page'] for p in pages]==[1,2],'bundled_latin_model_assets':bool(models),'local_ocr_module_in_dex':ocr_class,'perspective_module_in_dex':alignment_class,'field_preprocessing_in_dex':preprocessing_class,'geometry_dedup_in_dex':dedup_class,'arm64_native_libraries':'arm64-v8a' in abis,'no_instrumentation_fixtures':not any(n.endswith(('clean-page-1.png','clean.json','ocr-regions.json')) for n in names)}
     result = {'apk':str(apk.relative_to(root)), 'sha256':hashlib.sha256(apk.read_bytes()).hexdigest(), 'bytes':apk.stat().st_size,
               'checks':checks,'bundle':bundle,'template_images':pages,'latin_model_assets':models,'abis':abis,
               'physical_phone_acceptance':'Not run - Samsung Galaxy A53 5G designated; Android version and build pending'}

@@ -2,6 +2,13 @@ param([string]$JdkPath = $env:TALA_JAVA_HOME, [string]$SdkPath = $env:ANDROID_HO
 $ErrorActionPreference = 'Stop'
 $repoPath = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 Set-Location -LiteralPath $repoPath
+$appConfig = (Get-Content -LiteralPath 'apps/scanner/app.json' -Raw | ConvertFrom-Json).expo
+$apkPath = Join-Path $repoPath ('output/android/TALA-Phase1-' + $appConfig.version + '.apk')
+# Refuse a signing change rather than suggesting an uninstall that would erase drafts.
+$previousSignature = Get-Content -LiteralPath 'docs/evidence/apk-signature.txt' -Raw
+$certificatePattern = 'Signer #1 certificate SHA-256 digest: ([a-fA-F0-9]+)'
+$expectedCertificate = [regex]::Match($previousSignature, $certificatePattern).Groups[1].Value
+if (-not $expectedCertificate) { throw 'The previous signing certificate evidence is missing. Verify it before building an upgrade.' }
 if (-not $JdkPath) {
   $cachedJdk = Join-Path $env:USERPROFILE '.gradle\jdks\eclipse_adoptium-21-amd64-windows.2'
   if (Test-Path -LiteralPath (Join-Path $cachedJdk 'bin\java.exe')) { $JdkPath = $cachedJdk } else { $JdkPath = $env:JAVA_HOME }
@@ -42,7 +49,27 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Android build failed.' }
 } finally { Pop-Location }
 New-Item -ItemType Directory -Force 'output/android' | Out-Null
-Copy-Item -LiteralPath 'apps/scanner/android/app/build/outputs/apk/release/app-release.apk' -Destination 'output/android/TALA-Phase1-0.1.0.apk' -Force
-Get-FileHash -LiteralPath 'output/android/TALA-Phase1-0.1.0.apk' -Algorithm SHA256 | Format-List
-& python 'scripts/inspect_apk.py'
+Copy-Item -LiteralPath 'apps/scanner/android/app/build/outputs/apk/release/app-release.apk' -Destination $apkPath -Force
+$apkHash = (Get-FileHash -LiteralPath $apkPath -Algorithm SHA256).Hash.ToLowerInvariant()
+$signature = & (Join-Path $SdkPath 'build-tools/36.0.0/apksigner.bat') verify --verbose --print-certs $apkPath
+if ($LASTEXITCODE -ne 0) { throw 'APK signature verification failed.' }
+$actualCertificate = [regex]::Match(($signature -join "`n"), $certificatePattern).Groups[1].Value
+if (-not $actualCertificate -or $actualCertificate -ne $expectedCertificate) { throw 'The signing certificate changed. Do not uninstall the existing app; recover the original signing identity.' }
+$signature | Set-Content -LiteralPath 'docs/evidence/apk-signature.txt' -Encoding UTF8
+$badging = & (Join-Path $SdkPath 'build-tools/36.0.0/aapt.exe') dump badging $apkPath
+if ($LASTEXITCODE -ne 0) { throw 'APK identity inspection failed.' }
+$identity = $badging | Select-Object -First 1
+if ($identity -notmatch ([regex]::Escape("name='$($appConfig.android.package)'")) -or
+    $identity -notmatch ([regex]::Escape("versionCode='$($appConfig.android.versionCode)'")) -or
+    $identity -notmatch ([regex]::Escape("versionName='$($appConfig.version)'"))) { throw 'APK package/version differs from app.json.' }
+$badging | Set-Content -LiteralPath 'docs/evidence/apk-badging.txt' -Encoding UTF8
+& python 'scripts/inspect_apk.py' $apkPath
 if ($LASTEXITCODE -ne 0) { throw 'APK content verification failed.' }
+@{
+  command = 'npm.cmd run build:android'; exitCode = 0; status = 'Pass'; gradle = $toolchain.gradle
+  appVersion = $appConfig.version; versionCode = $appConfig.android.versionCode; apkSha256 = $apkHash
+  signingCertificateSha256 = $actualCertificate; upgradeSignatureMatches = $true
+  physicalPhoneChecks = 'Not run'; testPhone = 'Samsung Galaxy A53 5G'
+} | ConvertTo-Json | Set-Content -LiteralPath 'docs/evidence/build-result.json' -Encoding UTF8
+Write-Output "APK: $apkPath"
+Write-Output "SHA-256: $apkHash"
