@@ -1,7 +1,7 @@
 {
-  "apk": "output\\android\\TALA-Phase1-0.1.1.apk",
-  "sha256": "defcd90e789acc83bed8f5d623353fa1c7bf5efc2874294d73bf75d4e6b08707",
-  "bytes": 64864282,
+  "apk": "output\\android\\TALA-Phase1-0.1.2.apk",
+  "sha256": "154c3e3141eb796c06ca743fe62f7b0852c55082d39dd02b41b32a2955966b64",
+  "bytes": 64865654,
   "checks": {
     "embedded_android_bundle": true,
     "both_beef_pages": true,

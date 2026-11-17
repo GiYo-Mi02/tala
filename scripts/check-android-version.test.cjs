@@ -1,0 +1,10 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { validateRelease } = require('./check-android-version.cjs');
+const release = () => ({ version: '0.1.2', versionCode: 3, packageVersions: ['0.1.2', '0.1.2'], lockVersions: ['0.1.2', '0.1.2', '0.1.2'], previous: { appVersion: '0.1.1', versionCode: 2 }, sourceFingerprint: 'new-source' });
+test('accepts a patch update with an increased Android code', () => assert.equal(validateRelease(release()), 'new-release'));
+test('rejects a stale version code after source changes', () => assert.throws(() => validateRelease({ ...release(), previous: { appVersion: '0.1.2', versionCode: 3, sourceFingerprint: 'old-source' } }), /already built/));
+test('allows an unchanged rebuild', () => assert.equal(validateRelease({ ...release(), previous: { appVersion: '0.1.2', versionCode: 3, sourceFingerprint: 'new-source' } }), 'rebuild'));
+test('rejects mismatched package and lock versions', () => assert.throws(() => validateRelease({ ...release(), lockVersions: ['0.1.1'] }), /must match/));
+test('rejects a version name downgrade even with a larger code', () => assert.throws(() => validateRelease({ ...release(), previous: { appVersion: '0.2.0', versionCode: 2 } }), /increase the app version/));
+test('rejects a lower Android code', () => assert.throws(() => validateRelease({ ...release(), versionCode: 1 }), /cannot decrease/));

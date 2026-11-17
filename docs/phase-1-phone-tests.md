@@ -1,10 +1,10 @@
 # Phase 1 physical-phone acceptance
 
-Record the phone manufacturer/model, Android version, Android build number, T.A.L.A. version (`0.1.1`, Android version code `2`), APK SHA-256, tester, and date. Physical-phone results are required. Emulator or host tests do not replace these checks. No browser is used in Phase 1.
+Record the phone manufacturer/model, Android version, Android build number, T.A.L.A. version (`0.1.2`, Android version code `3`), APK SHA-256, tester, and date. Physical-phone results are required. Emulator or host tests do not replace these checks. No browser is used in Phase 1.
 
-Designated phone: Samsung Galaxy A53 5G. Obtain its Android version and build number from Settings → About phone → Software information. The current APK SHA-256 is `214d970cd4cb1d38abde057e49d3b75f8905e93d12b27c44819f8dbe6a1d423a`.
+Designated phone: Samsung Galaxy A53 5G. Obtain its Android version and build number from Settings → About phone → Software information. The current APK SHA-256 is `154c3e3141eb796c06ca743fe62f7b0852c55082d39dd02b41b32a2955966b64`.
 
-Use fictional data only. Download/transfer `output/android/TALA-Phase1-0.1.1.apk` and print each two-page PDF from `output/pdf/` at **actual size on A4 paper**. Retain every paper edge while cropping. The clean learner is ELENA SANTOS RIVERA, LRN `001234567890`, grade `7`, school year `2024-2025`, birthdate `02/29/2012`. The legal guardian is MARCELA TORRES, deliberately different.
+Use fictional data only. Download/transfer `output/android/TALA-Phase1-0.1.2.apk` and print each two-page PDF from `output/pdf/` at **actual size on A4 paper**. Retain every paper edge while cropping. The clean learner is ELENA SANTOS RIVERA, LRN `001234567890`, grade `7`, school year `2024-2025`, birthdate `02/29/2012`. The legal guardian is MARCELA TORRES, deliberately different.
 
 ## P1-01 - first launch offline
 

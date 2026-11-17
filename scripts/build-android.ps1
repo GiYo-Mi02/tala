@@ -2,6 +2,10 @@ param([string]$JdkPath = $env:TALA_JAVA_HOME, [string]$SdkPath = $env:ANDROID_HO
 $ErrorActionPreference = 'Stop'
 $repoPath = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 Set-Location -LiteralPath $repoPath
+$versionCheck = & node 'scripts/check-android-version.cjs'
+if ($LASTEXITCODE -ne 0) { throw 'Android release version validation failed.' }
+$releaseVersion = $versionCheck | ConvertFrom-Json
+Write-Output "Version checked: $($releaseVersion.version) (Android code $($releaseVersion.versionCode), $($releaseVersion.mode))"
 $appConfig = (Get-Content -LiteralPath 'apps/scanner/app.json' -Raw | ConvertFrom-Json).expo
 $apkPath = Join-Path $repoPath ('output/android/TALA-Phase1-' + $appConfig.version + '.apk')
 # Refuse a signing change rather than suggesting an uninstall that would erase drafts.
@@ -65,10 +69,15 @@ if ($identity -notmatch ([regex]::Escape("name='$($appConfig.android.package)'")
 $badging | Set-Content -LiteralPath 'docs/evidence/apk-badging.txt' -Encoding UTF8
 & python 'scripts/inspect_apk.py' $apkPath
 if ($LASTEXITCODE -ne 0) { throw 'APK content verification failed.' }
+$finalVersionCheck = & node 'scripts/check-android-version.cjs'
+if ($LASTEXITCODE -ne 0) { throw 'Post-build version validation failed.' }
+$finalVersion = $finalVersionCheck | ConvertFrom-Json
+if ($finalVersion.sourceFingerprint -ne $releaseVersion.sourceFingerprint) { throw 'Application source changed during the build. Rebuild before distributing this APK.' }
 @{
   command = 'npm.cmd run build:android'; exitCode = 0; status = 'Pass'; gradle = $toolchain.gradle
   appVersion = $appConfig.version; versionCode = $appConfig.android.versionCode; apkSha256 = $apkHash
   signingCertificateSha256 = $actualCertificate; upgradeSignatureMatches = $true
+  sourceFingerprint = $releaseVersion.sourceFingerprint
   physicalPhoneChecks = 'Not run'; testPhone = 'Samsung Galaxy A53 5G'
 } | ConvertTo-Json | Set-Content -LiteralPath 'docs/evidence/build-result.json' -Encoding UTF8
 Write-Output "APK: $apkPath"

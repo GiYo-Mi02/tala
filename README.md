@@ -6,7 +6,7 @@ The Android app captures **both** BEEF pages, provides four-corner perspective a
 
 ## Install and test
 
-Use `output/android/TALA-Phase1-0.1.1.apk` (version code 2). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+Use `output/android/TALA-Phase1-0.1.2.apk` (version code 3). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
 
 For an existing photo, open its draft and select **Align saved page 1**. Mark the four paper corners, select **Straighten & preview**, and check that the green regions cover the answer boxes below the labels. Accept the page and run OCR again. Previous raw OCR remains saved; realigning page 1 clears confirmations and readiness. Use **View area read** to inspect each result. Legacy results and replaced photos cannot show an exact reading area and explain why.
 
@@ -15,6 +15,10 @@ Printed BEEF labels are rejected as proposed values and flagged for review; the 
 Field preprocessing removes long printed grid rules, adds a white margin, and scales the input before recognition. Matching detections inside an overlapping larger detection are deduplicated using their text and image coordinates. Complete original OCR is retained separately from this reading; proposed names use the BEEF form's capital-letter convention. No dictionary or expected fixture value fills a field.
 
 Print the three fictional pairs in `output/pdf/` at actual size on A4 paper. The expected values are separate JSON files under `fixtures/expected/`. The two-page clean pair is the first camera test. Names on the forms are fictional; the guardian deliberately differs from the learner.
+
+## Release version checks
+
+The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.1.2 / code 3**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
 
 ## Development setup on Windows
 

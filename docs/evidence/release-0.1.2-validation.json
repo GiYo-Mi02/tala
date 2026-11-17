@@ -1,0 +1,22 @@
+{
+  "appVersion": "0.1.2",
+  "versionCode": 3,
+  "previousVersion": "0.1.1",
+  "previousVersionCode": 2,
+  "typecheck": "Pass",
+  "hostTests": {
+    "passed": 101,
+    "files": 7,
+    "evidence": "release-0.1.2-tests.json"
+  },
+  "versionGuardTests": {
+    "passed": 6,
+    "command": "node --test scripts/check-android-version.test.cjs"
+  },
+  "build": "Pass",
+  "apkIdentity": "Pass",
+  "upgradeSignatureMatches": true,
+  "sourceFingerprint": "5a95f29f407b349d1cc96a1e0dad6906c608355b99bdffca03884199e2426e31",
+  "apkSha256": "154c3e3141eb796c06ca743fe62f7b0852c55082d39dd02b41b32a2955966b64",
+  "physicalPhoneChecks": "Not run"
+}
