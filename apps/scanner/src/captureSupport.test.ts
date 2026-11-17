@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { newDraft, type OcrRun } from '@tala/core';
-import { draftWithScan, matchesBeefLayout, stagedPage, type PreparedScan } from './captureSupport';
+import { draftWithScan, matchesBeefLayout, scanAcceptanceProblem, stagedPage, type PreparedScan } from './captureSupport';
 
 const run = { id: 'new-ocr', pageImageId: 'new-image', fields: {}, engine: 'mlkit-bundled-latin-16.0.1', at: 'now' } as OcrRun;
 const scan: PreparedScan = { uri: 'file:///cache/processed.jpg', imageId: 'new-image', width: 1800, height: 2545,
@@ -8,6 +8,16 @@ const scan: PreparedScan = { uri: 'file:///cache/processed.jpg', imageId: 'new-i
   documentOcr: { text: 'First line\nSecond line', at: 'now', engine: 'mlkit-bundled-latin-16.0.1', blocks: [] } };
 
 describe('Automatic scan review and template boundary', () => {
+  it('blocks empty, missing and noise-only OCR instead of accepting a warning as success', () => {
+    const aligned: PreparedScan = { ...scan, alignment: { method: 'opencv-manual-v1', sourceWidth: 2000, sourceHeight: 3000,
+      corners: [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}] } };
+    expect(scanAcceptanceProblem(aligned)).toBeUndefined();
+    expect(scanAcceptanceProblem({ ...aligned, documentOcr: undefined })).toMatch(/did not finish/);
+    for (const text of ['', '  \n ', '...', 'I']) {
+      expect(scanAcceptanceProblem({ ...aligned, documentOcr: { ...aligned.documentOcr!, text }, warning: 'OCR finished' })).toMatch(/No readable/);
+    }
+    expect(scanAcceptanceProblem({ ...aligned, alignment: undefined })).toMatch(/no reliable/);
+  });
   it.each(['Basic Education Enrollment Form', 'SCHOOL YEAR\nLearner information\nBirthdate'])('identifies BEEF from labels, never from expected learner values (%s)', text => {
     expect(matchesBeefLayout(text, 1800, 2545)).toBe(true);
   });

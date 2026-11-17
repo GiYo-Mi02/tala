@@ -1,5 +1,7 @@
 # Intelligent document scanner - 0.2.0 / Android code 6
 
+Current update: **0.2.1 / code 7**. The user subsequently reported failures on both capture paths; see [processing recovery and retest status](scanner-recovery-fix.md). The 0.2.0 emulator evidence below is historical and does not close that phone failure.
+
 The mobile scanner now detects paper boundaries with OpenCV, captures a stable readable document through CameraX, corrects it automatically, and runs bundled offline OCR before review. The successful path opens **Continue / Retake / Adjust Crop**, without requiring manual corner placement. Adjust Crop remains an explicit fallback.
 
 ## Existing-project assessment

@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-18",
+  "status": "PASS",
+  "device": {
+    "kind": "emulator",
+    "avd": "TALA_OCR",
+    "model": "sdk_gphone64_x86_64",
+    "androidVersion": "16",
+    "androidBuild": "BP41.250916.009.A1",
+    "abi": "x86_64",
+    "camera": "virtualscene"
+  },
+  "airplaneMode": true,
+  "wifiEnabled": false,
+  "tests": 17,
+  "failures": 0,
+  "skipped": 0,
+  "executionTimeSeconds": 37.093,
+  "cases": [
+    {
+      "class": "expo.modules.talaocr.DocumentRecoveryTest",
+      "name": "uniformAndDarkRectangularFramesCannotMasqueradeAsReadableDocuments"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentRecoveryTest",
+      "name": "smallDetectedPaperReturnsTheOriginalForRecoveryInsteadOfThrowing"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentRecoveryTest",
+      "name": "fullResolutionPhotoUsesBoundedWorkingPixelsAndKeepsTheOriginal"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentRecoveryTest",
+      "name": "coveredCameraCannotProduceAnAcceptableScan"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "perspectiveCorrectionPreservesLandscapeProportionsAndPrivateImageBounds"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "cameraOpensManualCaptureRemainsAvailableAndTheScannerCanReopen"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "openCvWarpKeepsTiltedContentLandmarksInTheirCorrectPositions"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "detectsExteriorPaperAcrossRepresentativeScenarios"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "uprightAnalysisPointsReturnToTheCorrectRawBufferCoordinates"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "stabilityRequiresSustainedQualityAndNeverCapturesTwice"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "refusesPartialLowContrastAndBlurryPagesWithoutInventingCorners"
+    },
+    {
+      "class": "expo.modules.talaocr.DocumentScannerTest",
+      "name": "automaticDetectionWarpAndBundledOcrReadTheUnchangedBeefFixture"
+    },
+    {
+      "class": "expo.modules.talaocr.PerspectiveTest",
+      "name": "invalidCornersDoNotCreateAnAlignedFile"
+    },
+    {
+      "class": "expo.modules.talaocr.PerspectiveTest",
+      "name": "bundledMlKitReadsFictionalFixtureInputs"
+    },
+    {
+      "class": "expo.modules.talaocr.PerspectiveTest",
+      "name": "duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry"
+    },
+    {
+      "class": "expo.modules.talaocr.PerspectiveTest",
+      "name": "perspectiveCorrectionPreservesKnownLandmarks"
+    },
+    {
+      "class": "expo.modules.talaocr.PerspectiveTest",
+      "name": "preprocessingPreservesCharacterStrokesAndAddsEmptyMargins"
+    }
+  ],
+  "cameraChecks": {
+    "previewStreamAndReopenCycles": 2,
+    "manualImageCapture": "PASS",
+    "liveDocumentAutoShutter": "NOT TESTED",
+    "physicalPhone": "NOT TESTED"
+  },
+  "fixtureComparison": {
+    "fieldComparisons": 35,
+    "existingPerspectiveFixtures": 28,
+    "newAutomaticDetectionWarpFixture": 7,
+    "normalization": "Remove OCR inter-character whitespace for comparison and uppercase names. Original OCR is retained; intentional spaces are tested separately on the host."
+  },
+  "scenarios": [
+    "flat",
+    "clockwise",
+    "counterclockwise",
+    "perspective",
+    "simple-clutter",
+    "light-shadow",
+    "uneven-light",
+    "partial-boundary-fallback",
+    "low-contrast-fallback",
+    "blur-fallback",
+    "movement-and-frame-gap-state",
+    "small-printed-BEEF-text-and-tables"
+  ],
+  "baseline": {
+    "sourceCommit": "a19c3fa8d0261849de6c8c9e8b2ca058580ac614",
+    "sourceFile": "fixtures/images/clean-page-1.png",
+    "testAsset": "apps/scanner/modules/tala-ocr/android/src/androidTest/assets/ocr-baseline-clean-page-1.png",
+    "sha256": "084192eca588e7be362c096a1923ab619d2a9dd3d05d54becd1a88b64d44a7ac",
+    "reason": "Preserve the user-modified working fixture; compare unchanged committed fictional text against its matching expected labels."
+  },
+  "physicalAcceptance": "Galaxy A53 5G reported both auto/manual processing failures on the previous handoff; 0.2.1 physical retest pending",
+  "evidence": "release-0.2.1-native-tests.xml",
+  "recoveryChecks": [
+    "covered-camera rejection",
+    "uniform white/gray rejection",
+    "dark rectangular false-positive rejection",
+    "small crop returns original instead of throwing",
+    "3024x4032 input corrected with bounded working pixels and original retained"
+  ]
+}

@@ -58,6 +58,7 @@ class DocumentScannerActivity : ComponentActivity() {
   private var torchEnabled=false
   private var lastAnalyzed=0L
   private var delivered=false
+  private var retryRequired=false
   @Volatile private var active=false
   private val owned=java.util.Collections.synchronizedSet(mutableSetOf<File>())
   private lateinit var config:ScannerConfig
@@ -109,11 +110,16 @@ class DocumentScannerActivity : ComponentActivity() {
     controls.addView(View(this),LinearLayout.LayoutParams(1,0,1f))
     val hint=TextView(this).apply { text="Point at the whole document and hold steady."; setTextColor(Color.WHITE); gravity=Gravity.CENTER; textSize=14f; setPadding(0,dp(8),0,dp(8)) }
     controls.addView(hint)
-    captureButton=button("Capture") { capture(false) }.apply { isEnabled=false }
+    captureButton=button("Capture") {
+      if(retryRequired) {
+        retryRequired=false; captureButton.text="Capture"; autoButton.isEnabled=true
+        if(camera==null)startCamera() else { captureButton.isEnabled=preview.previewStreamState.value==PreviewView.StreamState.STREAMING; lightButton.isEnabled=camera?.cameraInfo?.hasFlashUnit()==true; status.text="Searching for document" }
+      } else capture(false)
+    }.apply { isEnabled=false }
     controls.addView(captureButton,LinearLayout.LayoutParams(-1,dp(64)))
     root.addView(controls,FrameLayout.LayoutParams(-1,-1)); setContentView(root)
     preview.previewStreamState.observe(this) { state ->
-      if(active && !processing.get()) {
+      if(active && !processing.get() && !retryRequired) {
         captureButton.isEnabled=state==PreviewView.StreamState.STREAMING
         if(state==PreviewView.StreamState.STREAMING)status.text="Searching for document"
       }
@@ -128,7 +134,8 @@ class DocumentScannerActivity : ComponentActivity() {
   }
   override fun onResume() {
     super.onResume(); active=true; if(::stability.isInitialized)stability.reset()
-    if(::preview.isInitialized && ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED && camera==null && !processing.get())preview.post { startCamera() }
+    if(retryRequired && ::captureButton.isInitialized)captureButton.isEnabled=true
+    if(::preview.isInitialized && ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED && camera==null && !processing.get() && !retryRequired)preview.post { startCamera() }
   }
   override fun onPause() {
     active=false; stability.reset(); camera?.cameraControl?.enableTorch(false); torchEnabled=false
@@ -161,6 +168,7 @@ class DocumentScannerActivity : ComponentActivity() {
                 .setResolutionStrategy(ResolutionStrategy(Size(640,480),ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER)).build()).build()
             val still=ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
               .setResolutionSelector(ResolutionSelector.Builder().setAspectRatioStrategy(aspect)
+                .setAllowedResolutionMode(ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE)
                 .setResolutionStrategy(ResolutionStrategy(Size(4032,3024),ResolutionStrategy.FALLBACK_RULE_CLOSEST_LOWER_THEN_HIGHER)).build()).build()
             val viewport=preview.viewPort
             if(viewport==null) { opening.set(false); preview.post { camera=null; startCamera() }; return@addListener }
@@ -236,7 +244,12 @@ class DocumentScannerActivity : ComponentActivity() {
     captureButton.isEnabled=false; autoButton.isEnabled=false; lightButton.isEnabled=false; status.text=if(automatic)"Ready · capturing…" else "Capturing…"
     val raw=DocumentImages.newFile(this); owned.add(raw)
     still.takePicture(ImageCapture.OutputFileOptions.Builder(raw).build(),ContextCompat.getMainExecutor(this),object:ImageCapture.OnImageSavedCallback {
-      override fun onError(exception:ImageCaptureException) { raw.delete(); failCapture("Capture failed. Hold steady and try again.") }
+      override fun onError(exception:ImageCaptureException) {
+        raw.delete()
+        failCapture(if(exception.imageCaptureError==ImageCapture.ERROR_FILE_IO)
+          "The photo could not be saved. Free some phone storage, then tap Retake. [CAPTURE_STORAGE]"
+          else "Capture failed. Tap Retake and try again. [CAPTURE_CAMERA]")
+      }
       override fun onImageSaved(output:ImageCapture.OutputFileResults) {
         status.text="Straightening document…"; analyzer?.clearAnalyzer(); provider?.unbindAll(); camera=null
         worker.execute {
@@ -250,7 +263,16 @@ class DocumentScannerActivity : ComponentActivity() {
               if(isFinishing || isDestroyed) { cleanup(); return@runOnUiThread }
               delivered=true; setResult(Activity.RESULT_OK,Intent().putExtra("resultPath",metadata.path)); finish()
             }
-          } catch(_:Throwable) { runOnUiThread { failCapture("Image processing failed. Retake or close the scanner.") } }
+          } catch(error:Throwable) {
+            val code=when(error) { is OutOfMemoryError -> "CAPTURE_MEMORY"; is java.io.IOException -> "CAPTURE_STORAGE"; else -> "CAPTURE_DECODE" }
+            android.util.Log.w("TalaScanner","code=$code stage=normalize kind=${error.javaClass.simpleName}")
+            val message=when(code) {
+              "CAPTURE_MEMORY" -> "There is not enough memory to open this photo. Close other apps, then tap Retake."
+              "CAPTURE_STORAGE" -> "The photo could not be saved. Free some phone storage, then tap Retake."
+              else -> "The photo could not be opened. Tap Retake to try again."
+            }
+            runOnUiThread { failCapture("$message [$code]") }
+          }
         }
       }
     })
@@ -258,8 +280,10 @@ class DocumentScannerActivity : ComponentActivity() {
   private fun failCapture(message:String) {
     if(isDestroyed)return
     cleanup(); processing.set(false); stability.reset(); autoEnabled=false
-    autoButton.text="Auto: Off"; autoButton.isEnabled=true; status.text=message
-    if(camera==null)startCamera() else { captureButton.isEnabled=true; lightButton.isEnabled=camera?.cameraInfo?.hasFlashUnit()==true }
+    retryRequired=true
+    autoButton.text="Auto: Off"; autoButton.isEnabled=false; status.text=message
+    captureButton.text="Retake"; captureButton.isEnabled=true
+    lightButton.isEnabled=false
   }
   private fun cleanup() { synchronized(owned) { owned.forEach { it.delete() }; owned.clear() } }
   private fun cancelScan() { if(processing.get())return; setResult(Activity.RESULT_CANCELED); finish() }

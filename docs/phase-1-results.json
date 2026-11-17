@@ -1,10 +1,10 @@
 {
   "phase": 1,
-  "phaseStatus": "Intelligent scanner built; awaiting physical-phone acceptance",
+  "phaseStatus": "Processing/blank-scan recovery built; physical retest pending",
   "app": {
     "package": "ph.tala.scanner.pilot",
-    "version": "0.2.0",
-    "versionCode": 6
+    "version": "0.2.1",
+    "versionCode": 7
   },
   "phone": {
     "model": "Samsung Galaxy A53 5G",
@@ -13,9 +13,9 @@
   },
   "browser": null,
   "apk": {
-    "path": "output/android/TALA-Phase1-0.2.0.apk",
-    "bytes": 94766181,
-    "sha256": "0a9254d38c6735641dfe05b857814c538d16387dcc5a69a581eee377a6d18041",
+    "path": "output/android/TALA-Phase1-0.2.1.apk",
+    "bytes": 94767753,
+    "sha256": "010779fa35323e3c2c2072a63da8b1a0fda2fd2c9017162e75d13ed035b6b4f6",
     "build": "Pass",
     "contentChecks": "Pass",
     "signatureVerification": "Pass",
@@ -25,7 +25,7 @@
       "docs/evidence/apk-badging.txt"
     ],
     "upgradeSignatureMatches": true,
-    "sourceFingerprint": "2b0802f84f8db14e625c8e289f77ac7709d722e68cf38ea9cb3f9f99a5a66043"
+    "sourceFingerprint": "08df671185d76c5dc402b3d9af8d714eff5743efb6f328b1915bae0b6075e2b4"
   },
   "tests": [
     {
@@ -39,12 +39,11 @@
     {
       "id": "P1-02",
       "expected": "Camera denial recovery, both page captures, crop, accepted page replacement and order",
-      "actual": "User reported earlier camera/reading failures. Version 0.2.0 implements native CameraX/OpenCV automatic scanning and optional adjustment; updated physical-phone retest pending.",
+      "actual": "User confirmed processing failure on both automatic and manual captures, with covered-camera false acceptance. Version 0.2.1 adds recovery, content/acceptance gates and diagnostics; physical retest pending.",
       "status": "Fail",
       "evidence": [
-        "docs/intelligent-scanner.md",
-        "docs/evidence/release-0.2.0-native-tests.json",
-        "docs/evidence/release-0.2.0-tests.json"
+        "docs/scanner-recovery-fix.md",
+        "docs/evidence/release-0.2.1-validation.json"
       ],
       "retest": "docs/phase-1-phone-tests.md#p1-02---permission-crop-and-retake",
       "limitation": "Reported installed version and Android OS/build were not independently recorded; emulator success does not close the physical failure."
@@ -52,12 +51,11 @@
     {
       "id": "P1-03",
       "expected": "Real bundled OCR matches the clean fixture offline and excludes parent names; page 2 viewable",
-      "actual": "User reported earlier camera/reading failures. Version 0.2.0 implements native CameraX/OpenCV automatic scanning and optional adjustment; updated physical-phone retest pending.",
+      "actual": "User confirmed processing failure on both automatic and manual captures, with covered-camera false acceptance. Version 0.2.1 adds recovery, content/acceptance gates and diagnostics; physical retest pending.",
       "status": "Fail",
       "evidence": [
-        "docs/intelligent-scanner.md",
-        "docs/evidence/release-0.2.0-native-tests.json",
-        "docs/evidence/release-0.2.0-tests.json"
+        "docs/scanner-recovery-fix.md",
+        "docs/evidence/release-0.2.1-validation.json"
       ],
       "retest": "docs/phase-1-phone-tests.md#p1-03---actual-bundled-ocr",
       "limitation": "Reported installed version and Android OS/build were not independently recorded; emulator success does not close the physical failure."
@@ -85,11 +83,11 @@
     {
       "id": "P1-06",
       "expected": "Fixture mapping/validation and injected missing-image/copy/database faults reject unsafe saves",
-      "actual": "115 host tests across eight files pass; six version-guard tests and 13 offline native emulator tests pass, including 35 OCR comparisons. Physical acceptance remains pending.",
+      "actual": "116 host tests across eight files pass; six release-version guard tests and 17 offline native checks pass, including 35 OCR comparisons.",
       "status": "Pass",
       "evidence": [
-        "docs/evidence/release-0.2.0-tests.json",
-        "docs/evidence/release-0.2.0-validation.json"
+        "docs/evidence/release-0.2.1-tests.json",
+        "docs/evidence/release-0.2.1-validation.json"
       ],
       "retest": "npm.cmd test",
       "limitation": "Port-level fault injection; native Android storage/UI execution remains in pending physical checks"
@@ -111,11 +109,27 @@
     },
     "airplaneMode": true,
     "wifiEnabled": false,
-    "tests": 13,
+    "tests": 17,
     "failures": 0,
     "skipped": 0,
-    "executionTimeSeconds": 39.631,
+    "executionTimeSeconds": 37.093,
     "cases": [
+      {
+        "class": "expo.modules.talaocr.DocumentRecoveryTest",
+        "name": "uniformAndDarkRectangularFramesCannotMasqueradeAsReadableDocuments"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentRecoveryTest",
+        "name": "smallDetectedPaperReturnsTheOriginalForRecoveryInsteadOfThrowing"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentRecoveryTest",
+        "name": "fullResolutionPhotoUsesBoundedWorkingPixelsAndKeepsTheOriginal"
+      },
+      {
+        "class": "expo.modules.talaocr.DocumentRecoveryTest",
+        "name": "coveredCameraCannotProduceAnAcceptableScan"
+      },
       {
         "class": "expo.modules.talaocr.DocumentScannerTest",
         "name": "perspectiveCorrectionPreservesLandscapeProportionsAndPrivateImageBounds"
@@ -202,7 +216,14 @@
       "sha256": "084192eca588e7be362c096a1923ab619d2a9dd3d05d54becd1a88b64d44a7ac",
       "reason": "Preserve the user-modified working fixture; compare unchanged committed fictional text against its matching expected labels."
     },
-    "physicalAcceptance": "Samsung Galaxy A53 5G not tested on this version; Android OS/build not recorded",
-    "evidence": "release-0.2.0-native-tests.xml"
+    "physicalAcceptance": "Galaxy A53 5G reported both auto/manual processing failures on the previous handoff; 0.2.1 physical retest pending",
+    "evidence": "release-0.2.1-native-tests.xml",
+    "recoveryChecks": [
+      "covered-camera rejection",
+      "uniform white/gray rejection",
+      "dark rectangular false-positive rejection",
+      "small crop returns original instead of throwing",
+      "3024x4032 input corrected with bounded working pixels and original retained"
+    ]
   }
 }

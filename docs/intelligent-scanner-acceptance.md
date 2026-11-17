@@ -1,5 +1,7 @@
 # Intelligent scanner acceptance - 0.2.0 / code 6
 
+Current update: **0.2.1 / code 7**. The user subsequently reported failures on both capture paths; see [processing recovery and retest status](scanner-recovery-fix.md). The 0.2.0 emulator evidence below is historical and does not close that phone failure.
+
 The following statuses describe the specified verification scope. An emulator pass is not a Samsung Galaxy A53 5G pass. Physical Android version/build are not recorded yet. Machine-readable results and APK identity are in [release validation](evidence/release-0.2.0-validation.json).
 
 ## Functional criteria

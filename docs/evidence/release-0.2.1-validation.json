@@ -1,0 +1,44 @@
+{
+  "appVersion": "0.2.1",
+  "versionCode": 7,
+  "previousVersion": "0.2.0",
+  "previousVersionCode": 6,
+  "typecheck": "PASS",
+  "hostTests": {
+    "passed": 116,
+    "files": 8,
+    "evidence": "release-0.2.1-tests.json"
+  },
+  "nativeTests": {
+    "passed": 17,
+    "fieldComparisons": 35,
+    "evidence": "release-0.2.1-native-tests.json"
+  },
+  "versionGuardTests": {
+    "passed": 6,
+    "command": "node --test scripts/check-android-version.test.cjs"
+  },
+  "build": "PASS",
+  "apkIdentity": "PASS",
+  "upgradeSignatureMatches": true,
+  "sourceFingerprint": "08df671185d76c5dc402b3d9af8d714eff5743efb6f328b1915bae0b6075e2b4",
+  "apkSha256": "010779fa35323e3c2c2072a63da8b1a0fda2fd2c9017162e75d13ed035b6b4f6",
+  "physicalReport": {
+    "date": "2026-11-18",
+    "model": "Samsung Galaxy A53 5G",
+    "capturePaths": [
+      "automatic",
+      "manual"
+    ],
+    "reported": "Image processing failed loop on document; covered-camera capture appeared accepted",
+    "installedVersionIndependentlyRead": false,
+    "exactDeviceExceptionRetrieved": false,
+    "newApkRetest": "NOT TESTED"
+  },
+  "beforeFixRegression": "recovery-before-fix.xml",
+  "phase2Started": false,
+  "preservedWorkingFiles": {
+    "docs/evidence/unit-tests.json": "b10380b01549b0ab3b05ea9fb96b5803c2a6c8934aa7100bcfe19757e98983dc",
+    "fixtures/images/clean-page-1.png": "b8cdf353ce9ad2c9996473fa1bdbdc145601f3f17cfa01b3927ab308adbdc016"
+  }
+}

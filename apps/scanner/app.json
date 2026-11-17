@@ -2,7 +2,7 @@
   "expo": {
     "name": "T.A.L.A. Pilot",
     "slug": "tala-scanner",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "platforms": [
@@ -11,7 +11,7 @@
     "newArchEnabled": true,
     "android": {
       "package": "ph.tala.scanner.pilot",
-      "versionCode": 6,
+      "versionCode": 7,
       "allowBackup": false,
       "permissions": [
         "android.permission.CAMERA"

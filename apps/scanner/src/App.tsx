@@ -35,7 +35,7 @@ import {
   type PageNumber,
 } from "@tala/core";
 import { Capture, Crop, type Candidate } from "./Capture";
-import { draftWithScan, stagedPage, type PreparedScan } from './captureSupport';
+import { draftWithScan, scanAcceptanceProblem, stagedPage, type PreparedScan } from './captureSupport';
 import {
   initializeRepository,
   listDrafts,
@@ -260,6 +260,8 @@ function Scanner() {
   }
   async function acceptScan(scan: PreparedScan, page: PageNumber) {
     if (!draft) throw new Error('No draft is open. Return to the editor.');
+    const problem = scanAcceptanceProblem(scan);
+    if (problem) throw new Error(problem);
     let replace = true;
     if (page === 1 && scan.extraction && (draft.ocrHistory.length || fieldKeys.some(key => draft.values[key] || draft.confirmed[key]))) {
       const choice = await new Promise<'keep' | 'replace' | 'cancel'>(resolve => Alert.alert(

@@ -8,7 +8,8 @@ internal data class ScannerConfig(
   val minArea: Double = 0.20, val maxArea: Double = 0.94, val edgeMargin: Double = 0.015,
   val minConfidence: Double = 0.72, val minSharpness: Double = 45.0,
   val minBrightness: Double = 45.0, val maxBrightness: Double = 245.0, val maxGlare: Double = 0.20,
-  val analysisIntervalMs: Long = 140, val detectionLongEdge: Int = 960
+  val analysisIntervalMs: Long = 140, val detectionLongEdge: Int = 960,
+  val hardMinBrightness: Double = 25.0, val minImageVariation: Double = 3.0
 )
 internal data class DocumentDetection(
   val corners: List<ScanPoint>, val confidence: Double, val area: Double,

@@ -1,6 +1,8 @@
 # Phase 1 physical-phone acceptance - intelligent scanner
 
-Install **0.2.0 / Android code 6** from `output/android/TALA-Phase1-0.2.0.apk` as an update to preserve drafts. SHA-256: `0a9254d38c6735641dfe05b857814c538d16387dcc5a69a581eee377a6d18041`. Record tester/date, Samsung Galaxy A53 5G model, Android version/build (Settings > About phone > Software information), installed app version and each result. An emulator result is not a phone pass.
+**First repeat the [processing/blank-scan regression checks](scanner-recovery-fix.md#phone-retest).** Covered/empty/no-text captures must not Continue. Crop failures should keep the original and show a code instead of reopening the camera on their own.
+
+Install **0.2.1 / Android code 7** from `output/android/TALA-Phase1-0.2.1.apk` as an update to preserve drafts. SHA-256: `010779fa35323e3c2c2072a63da8b1a0fda2fd2c9017162e75d13ed035b6b4f6`. Record tester/date, Samsung Galaxy A53 5G model, Android version/build (Settings > About phone > Software information), installed app version and each result. An emulator result is not a phone pass.
 
 Use fictional printed forms only. Print `output/pdf/` at actual size on A4 for the registered BEEF tests. Auto detection/cropping also supports other document proportions, but automatic structured fields are limited to BEEF. Other layouts expose full OCR text rather than inventing field mappings.
 
@@ -41,6 +43,6 @@ Use fictional printed forms only. Print `output/pdf/` at actual size on A4 for t
 
 ## P1-06 - automated faults
 
-Run `npm.cmd test`; the current saved report is [release-0.2.0-tests.json](evidence/release-0.2.0-tests.json). Missing accepted files, failed copies and failed writes must not acknowledge a save or delete the previous accepted file. These host tests do not prove native SQLite persistence.
+Run `npm.cmd test`; the current saved report is [release-0.2.1-tests.json](evidence/release-0.2.1-tests.json). Missing accepted files, failed copies and failed writes must not acknowledge a save or delete the previous accepted file. These host tests do not prove native SQLite persistence.
 
 Report Pass/Fail for P1-01 through P1-05, the twelve scenario results and phone OS/build. Include pre-correction values for reading failures and a fictional-form screenshot/video of a displaced overlay or crop. Keep Phase 1 active until failures are resolved and retested; no backend Phase 2 approval is being requested yet.
