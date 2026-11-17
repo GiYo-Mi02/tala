@@ -4,13 +4,13 @@
     "exitCode":  0,
     "offlineEmbeddedBundle":  true,
     "testPhone":  "Samsung Galaxy A53 5G",
-    "appVersion":  "0.2.2",
-    "sourceFingerprint":  "1007f8f3960896b67bf767e28cd8462525b54a094e686f657b9e2cdf47195cd0",
-    "apkSha256":  "1e283799270281bf1163a6932a4419fa39bf3c3ee025dc0573a6e140f58f73c6",
+    "appVersion":  "0.3.0",
+    "sourceFingerprint":  "0bacb1852cff49f2ea7b467a12bcab1d304e2df70feb7bf8a62507f241842f94",
+    "apkSha256":  "a4247720cbbdf26e7b6fac810c24cd2772efc0e2adc7232551105fcb6ea6f54f",
     "physicalPhoneChecks":  "Not run",
     "status":  "Pass",
     "command":  "npm.cmd run build:android",
-    "versionCode":  8,
+    "versionCode":  9,
     "upgradeSignatureMatches":  true,
     "signingCertificateSha256":  "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c"
 }

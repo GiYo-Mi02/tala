@@ -42,7 +42,7 @@ export function Crop({
   showReadingRegions = true,
 }: {
   photo: Candidate;
-  page: PageNumber;
+  page: PageNumber | 3;
   busy: boolean;
   savedPhoto?: boolean;
   onCancel: () => void;

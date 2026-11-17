@@ -48,6 +48,7 @@ import { recognizePage } from "./ocr";
 import { SavedOcrDiagnostics } from "./OcrDiagnostics";
 import { Action, Card, colors, styles } from "./ui";
 import { ReadingImage, ReadingStrip } from "./ReadingImage";
+import { FixedFormWorkspace } from './FixedFormWorkspace';
 
 type Route =
   | { name: "home" | "editor" }
@@ -63,7 +64,7 @@ const userMessage = (e: unknown) =>
     ? e.message
     : "Could not save to private storage. Your changes are still on screen. Free storage and retry.";
 
-function Scanner() {
+function Scanner({onSss}:{onSss:()=>void}) {
   const [route, setRoute] = useState<Route>({ name: "home" });
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -367,15 +368,15 @@ function Scanner() {
                 Paper today.{"\n"}Ready for review.
               </Text>
               <Text style={styles.body}>
-                Capture two pages, read typed fields, and keep your work safely
-                on this phone. Capture and OCR work without a connection.
+                Choose BEEF or SSS E-1, capture the applicable pages, and review
+                typed fields on this phone. Capture and OCR work offline.
               </Text>
               <View
                 style={{ ...styles.row, justifyContent: "flex-start", gap: 24 }}
               >
                 <View>
                   <Text style={styles.title}>{drafts.length}</Text>
-                  <Text style={styles.small}>Local drafts</Text>
+                  <Text style={styles.small}>BEEF local drafts</Text>
                 </View>
                 <View>
                   <Text style={{ ...styles.title, color: colors.teal }}>
@@ -391,6 +392,7 @@ function Scanner() {
                   void create();
                 }}
               />
+              <Action title="SSS E-1 · template and local drafts" secondary disabled={busy} onPress={onSss} />
               <Card>
                 <Text style={styles.eyebrow}>BUNDLED TEMPLATE · VERSION 1</Text>
                 <Text style={styles.heading}>
@@ -874,9 +876,10 @@ function PageViewer({
   );
 }
 export default function App() {
+  const [sssOpen,setSssOpen]=useState(false);
   return (
     <SafeAreaProvider>
-      <Scanner />
+      {sssOpen?<FixedFormWorkspace onClose={()=>setSssOpen(false)}/>:<Scanner onSss={()=>setSssOpen(true)}/>}
     </SafeAreaProvider>
   );
 }

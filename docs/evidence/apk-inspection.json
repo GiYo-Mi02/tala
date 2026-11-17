@@ -1,7 +1,7 @@
 {
-  "apk": "output\\android\\TALA-Phase1-0.2.2.apk",
-  "sha256": "daba01ba1ee9f90a5eec31c5f9c812d51baa3e9ab2e6585424106dc1834214b0",
-  "bytes": 94826605,
+  "apk": "output\\android\\TALA-Phase1-0.3.0.apk",
+  "sha256": "7dd28f3ac9e7932b79238d1da5bd26e178ac3e02807e6f26c8180b6ea3345c16",
+  "bytes": 95351033,
   "checks": {
     "embedded_android_bundle": true,
     "both_beef_pages": true,
@@ -15,7 +15,9 @@
     "no_instrumentation_fixtures": true,
     "native_scanner_in_dex": true,
     "bundled_opencv_all_abis": true,
-    "arm_only_release": true
+    "arm_only_release": true,
+    "all_sss_reference_pages": true,
+    "no_sss_test_fixtures": true
   },
   "bundle": [
     "assets/index.android.bundle"
@@ -24,14 +26,32 @@
     {
       "page": 1,
       "resource": "res/ZV.png",
-      "image_content_sha256": "6423df07bcdda58af00b24bcfe00e51f1c9c1751e3f000792c924d47d2a8664c"
+      "image_content_sha256": "28f82aa5c087786a3048b0f61249d4580e48b4d67ca8d9e631e51545340537d2"
     },
     {
       "page": 2,
       "resource": "res/HQ.png",
-      "image_content_sha256": "b237b7e282d2d4ca8552ec89a8a746a499bb1b4a90245f9b14341831f64f7229"
+      "image_content_sha256": "cbf9602065de5f7f78ae5f2ec69cb6ea1433209f4ba3ec635ee6c15bd65a9083"
     }
   ],
+  "sss_reference_images": [
+    {
+      "page": 1,
+      "resource": "res/Tf.png",
+      "image_content_sha256": "b1f8c4d099facfaba6568b8dfa12499ab1012e3dc17be088459bb0a1f9f06b00"
+    },
+    {
+      "page": 2,
+      "resource": "res/pJ.png",
+      "image_content_sha256": "b4f18e95f110f4e9f6a92b4cbb975e361d3df410e1a115f4b8d848b5d441d2b4"
+    },
+    {
+      "page": 3,
+      "resource": "res/cz.png",
+      "image_content_sha256": "f8ebe35e19ae11ef94f961e432d08a1f166ebbb773eca74b5f33defdccbee54e"
+    }
+  ],
+  "image_hash_scheme": "decoded-rgba-v1",
   "latin_model_assets": [
     "assets/mlkit-google-ocr-models/gocr/gocr_models/line_recognition_legacy_mobile/Latn_ctc/optical/assets.extra/LabelMap.pb",
     "assets/mlkit-google-ocr-models/gocr/gocr_models/line_recognition_legacy_mobile/Latn_ctc/optical/conv_model.fb",

@@ -1,0 +1,3067 @@
+{
+  "templateId": "sss-e1-cov01214-09-2015",
+  "templateVersion": 1,
+  "fields": [
+    {
+      "id": "sss_ss_number",
+      "label": "SS number (if already assigned)",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "identifier",
+      "required": false,
+      "mode": "ocr",
+      "digits": [
+        10
+      ],
+      "region": {
+        "x": 0.7058823529411765,
+        "y": 0.045454545454545456,
+        "width": 0.26143790849673204,
+        "height": 0.026515151515151516
+      },
+      "points": [
+        432,
+        36,
+        160,
+        21
+      ]
+    },
+    {
+      "id": "sss_registrant_last_name",
+      "label": "Registrant - last name",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "name",
+      "required": true,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.029411764705882353,
+        "y": 0.16666666666666666,
+        "width": 0.2581699346405229,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        18,
+        132,
+        158,
+        11
+      ]
+    },
+    {
+      "id": "sss_registrant_first_name",
+      "label": "Registrant - first name",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "name",
+      "required": true,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.29411764705882354,
+        "y": 0.16666666666666666,
+        "width": 0.20098039215686275,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        180,
+        132,
+        123,
+        11
+      ]
+    },
+    {
+      "id": "sss_registrant_middle_name",
+      "label": "Registrant - middle name",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.5016339869281046,
+        "y": 0.16666666666666666,
+        "width": 0.19934640522875818,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        307,
+        132,
+        122,
+        11
+      ]
+    },
+    {
+      "id": "sss_registrant_suffix",
+      "label": "Registrant - suffix",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.7058823529411765,
+        "y": 0.16666666666666666,
+        "width": 0.06372549019607843,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        432,
+        132,
+        39,
+        11
+      ]
+    },
+    {
+      "id": "sss_birth_date",
+      "label": "Registrant date of birth (MMDDYYYY)",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "date",
+      "required": true,
+      "mode": "ocr",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.1691919191919192,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        134,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_sex",
+      "label": "Sex - check the original box",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "choice",
+      "required": true,
+      "mode": "manual",
+      "options": [
+        "Male",
+        "Female"
+      ],
+      "reviewRegion": {
+        "x": 0.026143790849673203,
+        "y": 0.18434343434343434,
+        "width": 0.14705882352941177,
+        "height": 0.030303030303030304
+      }
+    },
+    {
+      "id": "sss_civil_status",
+      "label": "Civil status - check the original box",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "choice",
+      "required": true,
+      "mode": "manual",
+      "options": [
+        "Single",
+        "Married",
+        "Widowed",
+        "Legally Separated",
+        "Others"
+      ],
+      "reviewRegion": {
+        "x": 0.17647058823529413,
+        "y": 0.18434343434343434,
+        "width": 0.5718954248366013,
+        "height": 0.030303030303030304
+      }
+    },
+    {
+      "id": "sss_civil_status_other",
+      "label": "Other civil status (as written)",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_civil_status",
+        "values": [
+          "Others"
+        ]
+      },
+      "region": {
+        "x": 0.630718954248366,
+        "y": 0.20202020202020202,
+        "width": 0.11764705882352941,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        386,
+        160,
+        72,
+        9
+      ]
+    },
+    {
+      "id": "sss_tin",
+      "label": "Tax identification number (if any)",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "identifier",
+      "required": false,
+      "mode": "ocr",
+      "digits": [
+        9
+      ],
+      "cells": 9,
+      "grid": true,
+      "region": {
+        "x": 0.7504901960784314,
+        "y": 0.1994949494949495,
+        "width": 0.22483660130718952,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        459.3,
+        158,
+        137.6,
+        11
+      ]
+    },
+    {
+      "id": "sss_nationality",
+      "label": "Nationality",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "text",
+      "required": true,
+      "mode": "ocr",
+      "region": {
+        "x": 0.029411764705882353,
+        "y": 0.22853535353535354,
+        "width": 0.14052287581699346,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        18,
+        181,
+        86,
+        11
+      ]
+    },
+    {
+      "id": "sss_religion",
+      "label": "Religion",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.17973856209150327,
+        "y": 0.22853535353535354,
+        "width": 0.24183006535947713,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        110,
+        181,
+        148,
+        11
+      ]
+    },
+    {
+      "id": "sss_place_of_birth",
+      "label": "Place of birth (city/municipality, province; country if abroad)",
+      "section": "A. Registrant",
+      "page": 1,
+      "type": "text",
+      "required": true,
+      "mode": "ocr",
+      "region": {
+        "x": 0.43137254901960786,
+        "y": 0.22853535353535354,
+        "width": 0.5392156862745098,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        264,
+        181,
+        330,
+        11
+      ]
+    },
+    {
+      "id": "sss_address_unit_building",
+      "label": "Room/floor/unit and building",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.029411764705882353,
+        "y": 0.25757575757575757,
+        "width": 0.3839869281045752,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        18,
+        204,
+        235,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_house_lot",
+      "label": "House/lot and block",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.41830065359477125,
+        "y": 0.25757575757575757,
+        "width": 0.17647058823529413,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        256,
+        204,
+        108,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_street",
+      "label": "Street",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.6013071895424836,
+        "y": 0.25757575757575757,
+        "width": 0.17973856209150327,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        368,
+        204,
+        110,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_subdivision",
+      "label": "Subdivision",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.7875816993464052,
+        "y": 0.25757575757575757,
+        "width": 0.1830065359477124,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        482,
+        204,
+        112,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_barangay",
+      "label": "Barangay/district/locality",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.029411764705882353,
+        "y": 0.2840909090909091,
+        "width": 0.23039215686274508,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        18,
+        225,
+        141,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_city",
+      "label": "City/municipality",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.26633986928104575,
+        "y": 0.2840909090909091,
+        "width": 0.238562091503268,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        163,
+        225,
+        146,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_province",
+      "label": "Province",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.511437908496732,
+        "y": 0.2840909090909091,
+        "width": 0.184640522875817,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        313,
+        225,
+        113,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_country",
+      "label": "Country",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.7026143790849673,
+        "y": 0.2840909090909091,
+        "width": 0.1650326797385621,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        430,
+        225,
+        101,
+        9
+      ]
+    },
+    {
+      "id": "sss_address_zip",
+      "label": "ZIP code",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "identifier",
+      "required": false,
+      "mode": "ocr",
+      "digits": [
+        4
+      ],
+      "region": {
+        "x": 0.8774509803921569,
+        "y": 0.2840909090909091,
+        "width": 0.09313725490196079,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        537,
+        225,
+        57,
+        9
+      ]
+    },
+    {
+      "id": "sss_mobile",
+      "label": "Mobile/cellphone number",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "phone",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.029411764705882353,
+        "y": 0.30934343434343436,
+        "width": 0.2679738562091503,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        18,
+        245,
+        164,
+        9
+      ]
+    },
+    {
+      "id": "sss_email",
+      "label": "Email address",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "email",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.30718954248366015,
+        "y": 0.30934343434343436,
+        "width": 0.33986928104575165,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        188,
+        245,
+        208,
+        9
+      ]
+    },
+    {
+      "id": "sss_telephone",
+      "label": "Telephone (country + area code + number)",
+      "section": "A. Address and contact",
+      "page": 1,
+      "type": "phone",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.6568627450980392,
+        "y": 0.30934343434343436,
+        "width": 0.3137254901960784,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        402,
+        245,
+        192,
+        9
+      ]
+    },
+    {
+      "id": "sss_father_last_name",
+      "label": "Father - last name",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.16830065359477125,
+        "y": 0.3345959595959596,
+        "width": 0.238562091503268,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        103,
+        265,
+        146,
+        11
+      ]
+    },
+    {
+      "id": "sss_father_first_name",
+      "label": "Father - first name",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.4133986928104575,
+        "y": 0.3345959595959596,
+        "width": 0.1895424836601307,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        253,
+        265,
+        116,
+        11
+      ]
+    },
+    {
+      "id": "sss_father_middle_name",
+      "label": "Father - middle name",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.6094771241830066,
+        "y": 0.3345959595959596,
+        "width": 0.18790849673202614,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        373,
+        265,
+        115,
+        11
+      ]
+    },
+    {
+      "id": "sss_father_suffix",
+      "label": "Father - suffix",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.803921568627451,
+        "y": 0.3345959595959596,
+        "width": 0.16666666666666666,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        492,
+        265,
+        102,
+        11
+      ]
+    },
+    {
+      "id": "sss_mother_last_name",
+      "label": "Mother (maiden name) - last name",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.16830065359477125,
+        "y": 0.3611111111111111,
+        "width": 0.238562091503268,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        103,
+        286,
+        146,
+        11
+      ]
+    },
+    {
+      "id": "sss_mother_first_name",
+      "label": "Mother (maiden name) - first name",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.4133986928104575,
+        "y": 0.3611111111111111,
+        "width": 0.1895424836601307,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        253,
+        286,
+        116,
+        11
+      ]
+    },
+    {
+      "id": "sss_mother_middle_name",
+      "label": "Mother (maiden name) - middle name",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.6094771241830066,
+        "y": 0.3611111111111111,
+        "width": 0.18790849673202614,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        373,
+        286,
+        115,
+        11
+      ]
+    },
+    {
+      "id": "sss_mother_suffix",
+      "label": "Mother (maiden name) - suffix",
+      "section": "A. Parents",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.803921568627451,
+        "y": 0.3611111111111111,
+        "width": 0.16666666666666666,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        492,
+        286,
+        102,
+        11
+      ]
+    },
+    {
+      "id": "sss_spouse_last_name",
+      "label": "Spouse - last name",
+      "section": "B. Spouse",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "spouse",
+      "region": {
+        "x": 0.0784313725490196,
+        "y": 0.4015151515151515,
+        "width": 0.2434640522875817,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        48,
+        318,
+        149,
+        11
+      ]
+    },
+    {
+      "id": "sss_spouse_first_name",
+      "label": "Spouse - first name",
+      "section": "B. Spouse",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "spouse",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.4015151515151515,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        318,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_spouse_middle_name",
+      "label": "Spouse - middle name",
+      "section": "B. Spouse",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "spouse",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.4015151515151515,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        318,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_spouse_suffix",
+      "label": "Spouse - suffix",
+      "section": "B. Spouse",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "spouse",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.4015151515151515,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        318,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_spouse_birth_date",
+      "label": "Spouse date of birth",
+      "section": "B. Spouse",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "spouse",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.40404040404040403,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        320,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_sheet_used",
+      "label": "Additional sheet checkbox - check the original",
+      "section": "B. Additional sheet",
+      "page": 1,
+      "type": "choice",
+      "required": true,
+      "mode": "manual",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "reviewRegion": {
+        "x": 0.7271241830065359,
+        "y": 0.375,
+        "width": 0.2434640522875817,
+        "height": 0.012626262626262626
+      }
+    },
+    {
+      "id": "sss_child_1_last_name",
+      "label": "Child 1 - last name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_1",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.432550505050505,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        342.58,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_1_first_name",
+      "label": "Child 1 - first name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_1",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.432550505050505,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        342.58,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_1_middle_name",
+      "label": "Child 1 - middle name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_1",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.432550505050505,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        342.58,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_1_suffix",
+      "label": "Child 1 - suffix",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_1",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.432550505050505,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        342.58,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_1_birth_date",
+      "label": "Child 1 - date of birth",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_1",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.43469696969696964,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        344.28,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_child_2_last_name",
+      "label": "Child 2 - last name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_2",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.45482323232323235,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        360.22,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_2_first_name",
+      "label": "Child 2 - first name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_2",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.45482323232323235,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        360.22,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_2_middle_name",
+      "label": "Child 2 - middle name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_2",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.45482323232323235,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        360.22,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_2_suffix",
+      "label": "Child 2 - suffix",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_2",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.45482323232323235,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        360.22,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_2_birth_date",
+      "label": "Child 2 - date of birth",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_2",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.45696969696969697,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        361.92,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_child_3_last_name",
+      "label": "Child 3 - last name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_3",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.47694444444444445,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        377.74,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_3_first_name",
+      "label": "Child 3 - first name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_3",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.47694444444444445,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        377.74,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_3_middle_name",
+      "label": "Child 3 - middle name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_3",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.47694444444444445,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        377.74,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_3_suffix",
+      "label": "Child 3 - suffix",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_3",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.47694444444444445,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        377.74,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_3_birth_date",
+      "label": "Child 3 - date of birth",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_3",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.47909090909090907,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        379.44,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_child_4_last_name",
+      "label": "Child 4 - last name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_4",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.4992171717171717,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        395.38,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_4_first_name",
+      "label": "Child 4 - first name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_4",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.4992171717171717,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        395.38,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_4_middle_name",
+      "label": "Child 4 - middle name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_4",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.4992171717171717,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        395.38,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_4_suffix",
+      "label": "Child 4 - suffix",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_4",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.4992171717171717,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        395.38,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_4_birth_date",
+      "label": "Child 4 - date of birth",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_4",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.5013636363636363,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        397.08,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_child_5_last_name",
+      "label": "Child 5 - last name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_5",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.521489898989899,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        413.02,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_5_first_name",
+      "label": "Child 5 - first name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_5",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.521489898989899,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        413.02,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_5_middle_name",
+      "label": "Child 5 - middle name",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_5",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.521489898989899,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        413.02,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_5_suffix",
+      "label": "Child 5 - suffix",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_5",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.521489898989899,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        413.02,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_child_5_birth_date",
+      "label": "Child 5 - date of birth",
+      "section": "B. Children (five rows)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "child_5",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.5236363636363636,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        414.71999999999997,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_beneficiary_1_last_name",
+      "label": "Beneficiary 1 - last name",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_1",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.5615151515151515,
+        "width": 0.13398692810457516,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        444.72,
+        82,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_1_first_name",
+      "label": "Beneficiary 1 - first name",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_1",
+      "region": {
+        "x": 0.19117647058823528,
+        "y": 0.5615151515151515,
+        "width": 0.119281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        117,
+        444.72,
+        73,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_1_middle_name",
+      "label": "Beneficiary 1 - middle name",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_1",
+      "region": {
+        "x": 0.31699346405228757,
+        "y": 0.5615151515151515,
+        "width": 0.1454248366013072,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        194,
+        444.72,
+        89,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_1_suffix",
+      "label": "Beneficiary 1 - suffix",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_1",
+      "region": {
+        "x": 0.46895424836601307,
+        "y": 0.5615151515151515,
+        "width": 0.10294117647058823,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        287,
+        444.72,
+        63,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_1_relationship",
+      "label": "Beneficiary 1 - relationship",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_1",
+      "region": {
+        "x": 0.5784313725490197,
+        "y": 0.5615151515151515,
+        "width": 0.19117647058823528,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        354,
+        444.72,
+        117,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_1_birth_date",
+      "label": "Beneficiary 1 - date of birth",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_1",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.5630303030303031,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        445.92,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_beneficiary_2_last_name",
+      "label": "Beneficiary 2 - last name",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_2",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.5831818181818181,
+        "width": 0.13398692810457516,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        461.88,
+        82,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_2_first_name",
+      "label": "Beneficiary 2 - first name",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_2",
+      "region": {
+        "x": 0.19117647058823528,
+        "y": 0.5831818181818181,
+        "width": 0.119281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        117,
+        461.88,
+        73,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_2_middle_name",
+      "label": "Beneficiary 2 - middle name",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_2",
+      "region": {
+        "x": 0.31699346405228757,
+        "y": 0.5831818181818181,
+        "width": 0.1454248366013072,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        194,
+        461.88,
+        89,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_2_suffix",
+      "label": "Beneficiary 2 - suffix",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_2",
+      "region": {
+        "x": 0.46895424836601307,
+        "y": 0.5831818181818181,
+        "width": 0.10294117647058823,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        287,
+        461.88,
+        63,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_2_relationship",
+      "label": "Beneficiary 2 - relationship",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_2",
+      "region": {
+        "x": 0.5784313725490197,
+        "y": 0.5831818181818181,
+        "width": 0.19117647058823528,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        354,
+        461.88,
+        117,
+        11
+      ]
+    },
+    {
+      "id": "sss_beneficiary_2_birth_date",
+      "label": "Beneficiary 2 - date of birth",
+      "section": "B. Other beneficiaries (when applicable)",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "beneficiary_2",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7753267973856209,
+        "y": 0.5846969696969697,
+        "width": 0.2,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        474.5,
+        463.08,
+        122.4,
+        10
+      ]
+    },
+    {
+      "id": "sss_employment_section",
+      "label": "Section C to review (choose applicability; not OCR)",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "choice",
+      "required": true,
+      "mode": "manual",
+      "options": [
+        "Not applicable",
+        "Self-employed",
+        "OFW",
+        "Non-working spouse"
+      ],
+      "reviewRegion": {
+        "x": 0.026143790849673203,
+        "y": 0.6136363636363636,
+        "width": 0.9444444444444444,
+        "height": 0.10353535353535354
+      }
+    },
+    {
+      "id": "sss_se_profession",
+      "label": "Self-employed - profession/business",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Self-employed"
+        ]
+      },
+      "region": {
+        "x": 0.05228758169934641,
+        "y": 0.6426767676767676,
+        "width": 0.1895424836601307,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        32,
+        509,
+        116,
+        9
+      ]
+    },
+    {
+      "id": "sss_se_started",
+      "label": "Self-employed - year business started",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "year",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Self-employed"
+        ]
+      },
+      "region": {
+        "x": 0.05228758169934641,
+        "y": 0.672979797979798,
+        "width": 0.1895424836601307,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        32,
+        533,
+        116,
+        9
+      ]
+    },
+    {
+      "id": "sss_se_earnings",
+      "label": "Self-employed - monthly earnings (PHP)",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "amount",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Self-employed"
+        ]
+      },
+      "region": {
+        "x": 0.06535947712418301,
+        "y": 0.702020202020202,
+        "width": 0.17647058823529413,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        40,
+        556,
+        108,
+        11
+      ]
+    },
+    {
+      "id": "sss_ofw_address_line_1",
+      "label": "OFW - foreign address line 1",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "OFW"
+        ]
+      },
+      "region": {
+        "x": 0.3758169934640523,
+        "y": 0.6287878787878788,
+        "width": 0.27124183006535946,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        230,
+        498,
+        166,
+        9
+      ]
+    },
+    {
+      "id": "sss_ofw_address_line_2",
+      "label": "OFW - foreign address line 2",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "OFW"
+        ]
+      },
+      "region": {
+        "x": 0.28104575163398693,
+        "y": 0.6426767676767676,
+        "width": 0.3660130718954248,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        172,
+        509,
+        224,
+        9
+      ]
+    },
+    {
+      "id": "sss_ofw_earnings",
+      "label": "OFW - monthly earnings (PHP)",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "amount",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "OFW"
+        ]
+      },
+      "region": {
+        "x": 0.29411764705882354,
+        "y": 0.702020202020202,
+        "width": 0.14705882352941177,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        180,
+        556,
+        90,
+        11
+      ]
+    },
+    {
+      "id": "sss_ofw_flexi_fund",
+      "label": "OFW - Flexi-Fund checkbox",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "choice",
+      "required": false,
+      "mode": "manual",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "OFW"
+        ]
+      },
+      "reviewRegion": {
+        "x": 0.4526143790849673,
+        "y": 0.6717171717171717,
+        "width": 0.19607843137254902,
+        "height": 0.04419191919191919
+      }
+    },
+    {
+      "id": "sss_working_spouse_number",
+      "label": "Working spouse SS number / CRN",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "identifier",
+      "required": false,
+      "mode": "ocr",
+      "digits": [
+        10,
+        12
+      ],
+      "cells": 12,
+      "grid": true,
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Non-working spouse"
+        ]
+      },
+      "region": {
+        "x": 0.684640522875817,
+        "y": 0.6414141414141414,
+        "width": 0.28594771241830064,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        419,
+        508,
+        175,
+        10
+      ]
+    },
+    {
+      "id": "sss_working_spouse_income",
+      "label": "Working spouse monthly income (PHP)",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "amount",
+      "required": false,
+      "mode": "ocr",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Non-working spouse"
+        ]
+      },
+      "region": {
+        "x": 0.8741830065359477,
+        "y": 0.6590909090909091,
+        "width": 0.09640522875816994,
+        "height": 0.011363636363636364
+      },
+      "points": [
+        535,
+        522,
+        59,
+        9
+      ]
+    },
+    {
+      "id": "sss_working_spouse_printed_name",
+      "label": "Working spouse printed name (manual; signature shares this area)",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "manual",
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Non-working spouse"
+        ]
+      },
+      "reviewRegion": {
+        "x": 0.6797385620915033,
+        "y": 0.6843434343434344,
+        "width": 0.2908496732026144,
+        "height": 0.030303030303030304
+      }
+    },
+    {
+      "id": "sss_working_spouse_consent_review",
+      "label": "Working spouse consent/signature - visual review",
+      "section": "C. Employment (when applicable)",
+      "page": 1,
+      "type": "choice",
+      "required": false,
+      "mode": "manual",
+      "options": [
+        "Reviewed on image",
+        "Needs correction",
+        "Not applicable"
+      ],
+      "when": {
+        "field": "sss_employment_section",
+        "values": [
+          "Non-working spouse"
+        ]
+      },
+      "reviewRegion": {
+        "x": 0.6797385620915033,
+        "y": 0.6717171717171717,
+        "width": 0.2908496732026144,
+        "height": 0.04292929292929293
+      }
+    },
+    {
+      "id": "sss_certification_printed_name",
+      "label": "Registrant printed name",
+      "section": "D. Certification",
+      "page": 1,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.05228758169934641,
+        "y": 0.8055555555555556,
+        "width": 0.2238562091503268,
+        "height": 0.016414141414141416
+      },
+      "points": [
+        32,
+        638,
+        137,
+        13
+      ]
+    },
+    {
+      "id": "sss_certification_date",
+      "label": "Certification date (MMDDYYYY)",
+      "section": "D. Certification",
+      "page": 1,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.5130718954248366,
+        "y": 0.8055555555555556,
+        "width": 0.11274509803921569,
+        "height": 0.016414141414141416
+      },
+      "points": [
+        314,
+        638,
+        69,
+        13
+      ]
+    },
+    {
+      "id": "sss_certification_review",
+      "label": "Certification/signature/fingerprint areas - visual review",
+      "section": "D. Certification",
+      "page": 1,
+      "type": "choice",
+      "required": true,
+      "mode": "manual",
+      "options": [
+        "Reviewed on image",
+        "Needs correction"
+      ],
+      "requiredValue": "Reviewed on image",
+      "reviewRegion": {
+        "x": 0.026143790849673203,
+        "y": 0.7323232323232324,
+        "width": 0.9444444444444444,
+        "height": 0.10101010101010101
+      }
+    },
+    {
+      "id": "sss_additional_ss_number",
+      "label": "Additional sheet SS number (if assigned)",
+      "section": "Additional sheet - registrant",
+      "page": 3,
+      "type": "identifier",
+      "required": false,
+      "mode": "ocr",
+      "digits": [
+        10
+      ],
+      "region": {
+        "x": 0.7058823529411765,
+        "y": 0.04040404040404041,
+        "width": 0.26143790849673204,
+        "height": 0.026515151515151516
+      },
+      "points": [
+        432,
+        32,
+        160,
+        21
+      ]
+    },
+    {
+      "id": "sss_additional_registrant_last_name",
+      "label": "Registrant on additional sheet - last name",
+      "section": "Additional sheet - registrant",
+      "page": 3,
+      "type": "name",
+      "required": true,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.07352941176470588,
+        "y": 0.13383838383838384,
+        "width": 0.2565359477124183,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        45,
+        106,
+        157,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_registrant_first_name",
+      "label": "Registrant on additional sheet - first name",
+      "section": "Additional sheet - registrant",
+      "page": 3,
+      "type": "name",
+      "required": true,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.3382352941176471,
+        "y": 0.13383838383838384,
+        "width": 0.19934640522875818,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        207,
+        106,
+        122,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_registrant_middle_name",
+      "label": "Registrant on additional sheet - middle name",
+      "section": "Additional sheet - registrant",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.545751633986928,
+        "y": 0.13383838383838384,
+        "width": 0.19934640522875818,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        334,
+        106,
+        122,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_registrant_suffix",
+      "label": "Registrant on additional sheet - suffix",
+      "section": "Additional sheet - registrant",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": null,
+      "region": {
+        "x": 0.7532679738562091,
+        "y": 0.13383838383838384,
+        "width": 0.21568627450980393,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        461,
+        106,
+        132,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_1_last_name",
+      "label": "Child 1 - last name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_1",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.17573232323232324,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        139.18,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_1_first_name",
+      "label": "Child 1 - first name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_1",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.17573232323232324,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        139.18,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_1_middle_name",
+      "label": "Child 1 - middle name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_1",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.17573232323232324,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        139.18,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_1_suffix",
+      "label": "Child 1 - suffix",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_1",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.17573232323232324,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        139.18,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_1_birth_date",
+      "label": "Child 1 - date of birth",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_1",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.1778787878787879,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        140.88,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_child_2_last_name",
+      "label": "Child 2 - last name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_2",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.1980050505050505,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        156.82,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_2_first_name",
+      "label": "Child 2 - first name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_2",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.1980050505050505,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        156.82,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_2_middle_name",
+      "label": "Child 2 - middle name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_2",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.1980050505050505,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        156.82,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_2_suffix",
+      "label": "Child 2 - suffix",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_2",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.1980050505050505,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        156.82,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_2_birth_date",
+      "label": "Child 2 - date of birth",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_2",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.20015151515151514,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        158.51999999999998,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_child_3_last_name",
+      "label": "Child 3 - last name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_3",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.2202777777777778,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        174.46,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_3_first_name",
+      "label": "Child 3 - first name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_3",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.2202777777777778,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        174.46,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_3_middle_name",
+      "label": "Child 3 - middle name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_3",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.2202777777777778,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        174.46,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_3_suffix",
+      "label": "Child 3 - suffix",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_3",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.2202777777777778,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        174.46,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_3_birth_date",
+      "label": "Child 3 - date of birth",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_3",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.2224242424242424,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        176.16,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_child_4_last_name",
+      "label": "Child 4 - last name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_4",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.24255050505050504,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        192.1,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_4_first_name",
+      "label": "Child 4 - first name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_4",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.24255050505050504,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        192.1,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_4_middle_name",
+      "label": "Child 4 - middle name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_4",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.24255050505050504,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        192.1,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_4_suffix",
+      "label": "Child 4 - suffix",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_4",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.24255050505050504,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        192.1,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_4_birth_date",
+      "label": "Child 4 - date of birth",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_4",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.24469696969696966,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        193.79999999999998,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_child_5_last_name",
+      "label": "Child 5 - last name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_5",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.26482323232323235,
+        "width": 0.27124183006535946,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        209.74,
+        166,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_5_first_name",
+      "label": "Child 5 - first name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_5",
+      "region": {
+        "x": 0.3284313725490196,
+        "y": 0.26482323232323235,
+        "width": 0.16993464052287582,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        201,
+        209.74,
+        104,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_5_middle_name",
+      "label": "Child 5 - middle name",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_5",
+      "region": {
+        "x": 0.5049019607843137,
+        "y": 0.26482323232323235,
+        "width": 0.14869281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        309,
+        209.74,
+        91,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_5_suffix",
+      "label": "Child 5 - suffix",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_5",
+      "region": {
+        "x": 0.6617647058823529,
+        "y": 0.26482323232323235,
+        "width": 0.10947712418300654,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        405,
+        209.74,
+        67,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_child_5_birth_date",
+      "label": "Child 5 - date of birth",
+      "section": "Additional sheet - children (five rows)",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_child_5",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.26696969696969697,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        211.44,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_1_last_name",
+      "label": "Beneficiary 1 - last name",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_1",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.30484848484848487,
+        "width": 0.13398692810457516,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        241.44,
+        82,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_1_first_name",
+      "label": "Beneficiary 1 - first name",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_1",
+      "region": {
+        "x": 0.19117647058823528,
+        "y": 0.30484848484848487,
+        "width": 0.119281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        117,
+        241.44,
+        73,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_1_middle_name",
+      "label": "Beneficiary 1 - middle name",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_1",
+      "region": {
+        "x": 0.31699346405228757,
+        "y": 0.30484848484848487,
+        "width": 0.1454248366013072,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        194,
+        241.44,
+        89,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_1_suffix",
+      "label": "Beneficiary 1 - suffix",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_1",
+      "region": {
+        "x": 0.46895424836601307,
+        "y": 0.30484848484848487,
+        "width": 0.10294117647058823,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        287,
+        241.44,
+        63,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_1_relationship",
+      "label": "Beneficiary 1 - relationship",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_1",
+      "region": {
+        "x": 0.5784313725490197,
+        "y": 0.30484848484848487,
+        "width": 0.19117647058823528,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        354,
+        241.44,
+        117,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_1_birth_date",
+      "label": "Beneficiary 1 - date of birth",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_1",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.30636363636363634,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        242.64,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_2_last_name",
+      "label": "Beneficiary 2 - last name",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_2",
+      "region": {
+        "x": 0.05065359477124183,
+        "y": 0.3271212121212121,
+        "width": 0.13398692810457516,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        31,
+        259.08,
+        82,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_2_first_name",
+      "label": "Beneficiary 2 - first name",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_2",
+      "region": {
+        "x": 0.19117647058823528,
+        "y": 0.3271212121212121,
+        "width": 0.119281045751634,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        117,
+        259.08,
+        73,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_2_middle_name",
+      "label": "Beneficiary 2 - middle name",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_2",
+      "region": {
+        "x": 0.31699346405228757,
+        "y": 0.3271212121212121,
+        "width": 0.1454248366013072,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        194,
+        259.08,
+        89,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_2_suffix",
+      "label": "Beneficiary 2 - suffix",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_2",
+      "region": {
+        "x": 0.46895424836601307,
+        "y": 0.3271212121212121,
+        "width": 0.10294117647058823,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        287,
+        259.08,
+        63,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_2_relationship",
+      "label": "Beneficiary 2 - relationship",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "text",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_2",
+      "region": {
+        "x": 0.5784313725490197,
+        "y": 0.3271212121212121,
+        "width": 0.19117647058823528,
+        "height": 0.013888888888888888
+      },
+      "points": [
+        354,
+        259.08,
+        117,
+        11
+      ]
+    },
+    {
+      "id": "sss_additional_beneficiary_2_birth_date",
+      "label": "Beneficiary 2 - date of birth",
+      "section": "Additional sheet - other beneficiaries",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "row": "additional_beneficiary_2",
+      "cells": 8,
+      "grid": true,
+      "region": {
+        "x": 0.7733660130718955,
+        "y": 0.3286363636363636,
+        "width": 0.2019607843137255,
+        "height": 0.012626262626262626
+      },
+      "points": [
+        473.3,
+        260.28,
+        123.6,
+        10
+      ]
+    },
+    {
+      "id": "sss_additional_printed_name",
+      "label": "Additional sheet printed name",
+      "section": "Additional sheet - certification",
+      "page": 3,
+      "type": "name",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.05228758169934641,
+        "y": 0.35984848484848486,
+        "width": 0.29411764705882354,
+        "height": 0.015151515151515152
+      },
+      "points": [
+        32,
+        285,
+        180,
+        12
+      ]
+    },
+    {
+      "id": "sss_additional_date",
+      "label": "Additional sheet certification date (MMDDYYYY)",
+      "section": "Additional sheet - certification",
+      "page": 3,
+      "type": "date",
+      "required": false,
+      "mode": "ocr",
+      "region": {
+        "x": 0.8186274509803921,
+        "y": 0.35984848484848486,
+        "width": 0.12581699346405228,
+        "height": 0.015151515151515152
+      },
+      "points": [
+        501,
+        285,
+        77,
+        12
+      ]
+    },
+    {
+      "id": "sss_additional_certification_review",
+      "label": "Additional sheet signature - visual review",
+      "section": "Additional sheet - certification",
+      "page": 3,
+      "type": "choice",
+      "required": true,
+      "mode": "manual",
+      "options": [
+        "Reviewed on image",
+        "Needs correction"
+      ],
+      "requiredValue": "Reviewed on image",
+      "reviewRegion": {
+        "x": 0.026143790849673203,
+        "y": 0.3472222222222222,
+        "width": 0.9444444444444444,
+        "height": 0.047979797979797977
+      }
+    }
+  ]
+}

@@ -5,3 +5,4 @@ export * from './template';
 export * from './boxed-name';
 export * from './alignment';
 export * from './extraction';
+export * from './fixed-forms';

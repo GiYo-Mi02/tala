@@ -1,0 +1,40 @@
+{
+  "allUnchanged": true,
+  "fixtures": [
+    {
+      "file": "sss-additional-page-1.png",
+      "sha256": "1d0ff8580862954460c755f19f9203468b979dbfd69c0e536c705acb591376a2",
+      "baselineSha256": "1d0ff8580862954460c755f19f9203468b979dbfd69c0e536c705acb591376a2"
+    },
+    {
+      "file": "sss-additional-page-3.png",
+      "sha256": "6471d8cb2b6faff1906e5b95668852658d07fd253e5824ea86713a92010864a9",
+      "baselineSha256": "6471d8cb2b6faff1906e5b95668852658d07fd253e5824ea86713a92010864a9"
+    },
+    {
+      "file": "sss-beneficiaries-page-1.png",
+      "sha256": "89a0089577d373d152a4cefe180526ff4e78205d04960307338a04c14b428826",
+      "baselineSha256": "89a0089577d373d152a4cefe180526ff4e78205d04960307338a04c14b428826"
+    },
+    {
+      "file": "sss-beneficiaries-page-3.png",
+      "sha256": "f553156d81c7ad7fd1d671b71609f4307b8db1eedb55f0369e3a07e17c48f03d",
+      "baselineSha256": "f553156d81c7ad7fd1d671b71609f4307b8db1eedb55f0369e3a07e17c48f03d"
+    },
+    {
+      "file": "sss-clean-page-1.png",
+      "sha256": "84a320fbc8237f674d89a9bb909e5bdcc549bf742247c7ffcffb27798a7cdaef",
+      "baselineSha256": "84a320fbc8237f674d89a9bb909e5bdcc549bf742247c7ffcffb27798a7cdaef"
+    },
+    {
+      "file": "sss-invalid-page-1.png",
+      "sha256": "d72fc5650edd8b45675cb11937b397194904ca939934615401904d9aa08a90e3",
+      "baselineSha256": "d72fc5650edd8b45675cb11937b397194904ca939934615401904d9aa08a90e3"
+    },
+    {
+      "file": "sss-nws-page-1.png",
+      "sha256": "299eec0a5bcb1b785deb4f746076ba99ee6bc1b91033196e341cc6e959f83096",
+      "baselineSha256": "299eec0a5bcb1b785deb4f746076ba99ee6bc1b91033196e341cc6e959f83096"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "device": "API 36 x86_64 test emulator",
+  "testOnly": true,
+  "physicalA53": "Not run",
+  "airplaneMode": true,
+  "wifiOff": true,
+  "beefHomeRetained": true,
+  "instructionsReferenceAndZoomOffline": true,
+  "draftId": "a8e8576b-41ad-4f5b-8e31-10999212af60",
+  "additionalSheetConditional": true,
+  "savedFictionalNameWithSpaces": true,
+  "incompleteNotMarkedReady": true,
+  "offlineForceStopRecovery": true,
+  "legacyBeefDraftRetainedAfterSssSave": true
+}

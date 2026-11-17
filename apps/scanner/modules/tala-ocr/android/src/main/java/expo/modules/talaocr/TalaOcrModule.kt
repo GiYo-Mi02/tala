@@ -23,7 +23,8 @@ class TalaOcrModule : Module() {
       try {
         val r=JSONObject(json); val x=r.getInt("x"); val y=r.getInt("y")
         val request=RoiRequest(r.getString("fieldId"),r.getInt("part"),
-          android.graphics.Rect(x,y,x+r.getInt("width"),y+r.getInt("height")),r.getInt("cells"),r.optBoolean("diagnostics",false))
+          android.graphics.Rect(x,y,x+r.getInt("width"),y+r.getInt("height")),r.getInt("cells"),r.optBoolean("diagnostics",false),
+          r.optString("templateId","beef-sy-2024-2025"),r.optString("kind",""),r.optBoolean("grid",true))
         promise.resolve(FieldRoiOcr.read(requireNotNull(appContext.reactContext),uri,request))
       } catch(_:Exception) { promise.reject("E_FIELD_OCR","This field could not be read from the corrected image. Review it manually or retake.",null) }
     }.runOnQueue(Queues.DEFAULT)

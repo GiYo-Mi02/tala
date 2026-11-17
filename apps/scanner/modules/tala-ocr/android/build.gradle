@@ -13,6 +13,7 @@ android {
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
   sourceSets.androidTest.assets.srcDirs += ['../../../../../fixtures/images', '../../../../../fixtures/expected']
+  sourceSets.androidTest.assets.srcDirs += ['../../../../../fixtures/sss']
   packagingOptions {
     jniLibs { pickFirsts += ['**/libc++_shared.so'] }
   }

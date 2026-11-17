@@ -2,7 +2,7 @@ import { requireNativeModule } from 'expo-modules-core';
 import type { Corners } from '@tala/core';
 type Element = { text: string; x: number; y: number; width: number; height: number };
 export type RoiReading = { text: string; readingText: string; elements: Element[]; confidence: number | null };
-export type RoiResult = { fieldId: string; part: number; x: number; y: number; original: RoiReading; processed: RoiReading; sourceWidth: number; sourceHeight: number; inputWidth: number; inputHeight: number; verticalLines: number[]; horizontalLines: number[]; occupiedCells: number[]; removedInkFraction: number; diagnostics: Partial<Record<'originalCrop' | 'processedCrop' | 'originalInput' | 'processedInput', string>> };
+export type RoiResult = { fieldId: string; part: number; x: number; y: number; original: RoiReading; processed: RoiReading; sourceWidth: number; sourceHeight: number; inputWidth: number; inputHeight: number; verticalLines: number[]; horizontalLines: number[]; occupiedCells: number[]; removedInkFraction: number; segmented?: RoiReading | null; segments?: (RoiReading & { startCell: number; cells: number })[]; diagnostics: Partial<Record<string, string>> };
 export default requireNativeModule<{
   diagnosticsEnabled: boolean;
   recognizeField(uri: string, request: string): Promise<RoiResult>;
