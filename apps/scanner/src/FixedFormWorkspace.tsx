@@ -11,9 +11,10 @@ import {discardCache} from './repository';
 import {FixedFormCapture} from './FixedFormCapture';
 import {ReadingImage,ReadingStrip} from './ReadingImage';
 import {Action,Card,colors,styles} from './ui';
+import {DraftSyncControls,DraftSyncStatus} from './SyncPanel';
 
 const references:Record<number,ImageSourcePropType>={1:require('../assets/sss-e1-page-1.png'),2:require('../assets/sss-e1-page-2.png'),3:require('../assets/sss-e1-page-3.png')};
-export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
+export function FixedFormWorkspace({onClose,onSync}:{onClose:()=>void;onSync:()=>void}) {
   const [drafts,setDrafts]=useState<FixedDraft[]>([]);const [draft,setDraft]=useState<FixedDraft>();
   const [loading,setLoading]=useState(true);const [busy,setBusy]=useState(false);const [progress,setProgress]=useState('');
   const [error,setError]=useState('');const [notice,setNotice]=useState('');const [dirty,setDirty]=useState(false);
@@ -48,7 +49,7 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
     if(!draft || operation.current)return;
     const problems=ready?fixedReadiness(draft):[];if(problems.length){setError(problems.slice(0,6).join('\n'));scroll.current?.scrollTo({y:0,animated:false});return;}
     operation.current=true;setBusy(true);setError('');
-    try{remember(await persistFixedDraft({...draft,state:ready?'ready':'editing'}),ready?'Ready locally for future sync. No upload was made.':'SSS changes saved on this phone.');setMissing(await missingFixedPages(draft));}
+    try{remember(await persistFixedDraft({...draft,state:ready?'ready':'editing'}),ready?'Reviewed SSS draft saved on this phone.':'SSS changes saved on this phone.');setMissing(await missingFixedPages(draft));}
     catch(e){setError(e instanceof Error?e.message:'The draft could not be saved. Your edits remain on screen.');}
     finally{operation.current=false;if(mounted.current)setBusy(false);}
   }
@@ -92,9 +93,11 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
       <View style={{gap:8}}>{sssTemplate.pages.map(p=><Action key={p.number} title={`Reference ${p.number}: ${p.label}`} secondary disabled={busy} onPress={()=>setViewer({page:p.number,reference:true})}/>)}</View>
       {!draft?<>
         <Action title="+ New SSS E-1 draft" disabled={loading||busy} onPress={()=>{void create();}}/>
+        <Action title="Submission history and sign-in" secondary onPress={onSync}/>
         <Text style={styles.heading}>Saved SSS drafts · {drafts.length}</Text>
         {drafts.map(d=><Card key={d.id}><Text style={styles.heading}>{[d.values.sss_registrant_first_name,d.values.sss_registrant_last_name].filter(Boolean).join(' ')||'Untitled SSS draft'}</Text>
-          <Text style={styles.small}>{d.state==='ready'?'Ready for future sync':'Unfinished'} · {d.templateId} v{d.templateVersion}{'\n'}{d.id}</Text>
+          <DraftSyncStatus id={d.id} ready={d.state==='ready'}/>
+          <Text style={styles.small}>{d.templateId} v{d.templateVersion}{'\n'}{d.id}</Text>
           <Action title="Open SSS draft" secondary onPress={()=>{void openDraft(d);}}/></Card>)}
       </>:<>
         <Text selectable style={styles.small}>Draft {draft.id} · {draft.state==='ready'?'Ready locally':'Unfinished'}{dirty?' · Unsaved changes':''}</Text>
@@ -146,8 +149,8 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
         })}
         <Text style={styles.small}>{draft.history.length} OCR runs retained with field, template, page and image IDs. Manual entries remain separate from raw OCR.</Text>
         <Action title="Save unfinished SSS draft" disabled={busy} onPress={()=>{void save(false);}}/>
-        <Action title="Check and mark ready locally" disabled={busy} onPress={()=>{void save(true);}}/>
-        <Text style={styles.small}>Ready locally is not SSS approval. Mobile-to-web synchronization has not started.</Text>
+        <Action title="Save reviewed SSS draft" disabled={busy} onPress={()=>{void save(true);}}/>
+        <DraftSyncControls key={draft.id} draft={draft} disabled={busy||dirty||missing.length>0} onOpen={onSync}/>
       </>}
     </ScrollView>
     {!!viewer && <Modal onRequestClose={()=>setViewer(undefined)}><SafeAreaView style={styles.screen}><ScrollView contentContainerStyle={styles.content}>

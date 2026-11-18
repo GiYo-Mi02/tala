@@ -49,6 +49,7 @@ import { SavedOcrDiagnostics } from "./OcrDiagnostics";
 import { Action, Card, colors, styles } from "./ui";
 import { ReadingImage, ReadingStrip } from "./ReadingImage";
 import { FixedFormWorkspace } from './FixedFormWorkspace';
+import { DraftSyncControls, DraftSyncStatus, SyncPanel, SyncProvider } from './SyncPanel';
 
 type Route =
   | { name: "home" | "editor" }
@@ -64,7 +65,7 @@ const userMessage = (e: unknown) =>
     ? e.message
     : "Could not save to private storage. Your changes are still on screen. Free storage and retry.";
 
-function Scanner({onSss}:{onSss:()=>void}) {
+function Scanner({onSss,onSync}:{onSss:()=>void;onSync:()=>void}) {
   const [route, setRoute] = useState<Route>({ name: "home" });
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -249,7 +250,7 @@ function Scanner({onSss}:{onSss:()=>void}) {
       await save(
         { ...draft, state: ready ? "ready" : "editing" },
         ready
-          ? "Ready for future sync. Saved locally; nothing has been uploaded."
+          ? "Reviewed draft saved on this phone."
           : "Unfinished draft saved on this phone.",
       );
     } catch (e) {
@@ -382,7 +383,7 @@ function Scanner({onSss}:{onSss:()=>void}) {
                   <Text style={{ ...styles.title, color: colors.teal }}>
                     {readyCount}
                   </Text>
-                  <Text style={styles.small}>Ready for future sync</Text>
+                  <Text style={styles.small}>Reviewed BEEF drafts</Text>
                 </View>
               </View>
               <Action
@@ -393,6 +394,7 @@ function Scanner({onSss}:{onSss:()=>void}) {
                 }}
               />
               <Action title="SSS E-1 · template and local drafts" secondary disabled={busy} onPress={onSss} />
+              <Action title="Submission history and sign-in" secondary onPress={onSync} />
               <Card>
                 <Text style={styles.eyebrow}>BUNDLED TEMPLATE · VERSION 1</Text>
                 <Text style={styles.heading}>
@@ -433,19 +435,9 @@ function Scanner({onSss}:{onSss:()=>void}) {
                       <Text style={styles.eyebrow}>
                         BEEF · V{item.templateVersion}
                       </Text>
-                      <Text
-                        style={
-                          integrity[item.id]?.length
-                            ? styles.error
-                            : styles.small
-                        }
-                      >
-                        {integrity[item.id]?.length
-                          ? "Image missing"
-                          : item.state === "ready"
-                            ? "Ready for future sync"
-                            : "Unfinished"}
-                      </Text>
+                      {integrity[item.id]?.length
+                        ? <Text style={styles.error}>Image missing</Text>
+                        : <DraftSyncStatus id={item.id} ready={item.state === "ready"} />}
                     </View>
                     <Text style={styles.heading}>
                       {[
@@ -465,11 +457,6 @@ function Scanner({onSss}:{onSss:()=>void}) {
                   </Card>
                 </Pressable>
               ))}
-              <Text style={styles.small}>
-                Fictional local test profile · Phase 1{"\n"}No sign-in or upload
-                in this phase. This app does not approve enrollment or
-                authenticate documents.
-              </Text>
             </>
           ) : (
             draft && (
@@ -497,7 +484,7 @@ function Scanner({onSss}:{onSss:()=>void}) {
                   {dirty
                     ? "Unsaved edits - tap Save draft."
                     : draft.state === "ready" && !missing.length
-                      ? "Ready for future sync - saved locally."
+                      ? "Reviewed draft saved on this phone."
                       : "Unfinished - saved changes can be resumed offline."}
                 </Text>
                 {!!missing.length && (
@@ -727,7 +714,7 @@ function Scanner({onSss}:{onSss:()=>void}) {
                   }}
                 />
                 <Action
-                  title="Save as ready for future sync"
+                  title="Save reviewed draft"
                   disabled={busy || problems.length > 0 || missing.length > 0}
                   onPress={() => {
                     void saveButton(true);
@@ -739,11 +726,7 @@ function Scanner({onSss}:{onSss:()=>void}) {
                   </Text>
                 )}
                 {!!error && <Text style={styles.error}>{error}</Text>}
-                <Text style={styles.small}>
-                  Ready means this local draft is complete. Verification by a
-                  staff reviewer belongs to a later phase. Nothing is uploaded
-                  automatically.
-                </Text>
+                <DraftSyncControls key={draft.id} draft={draft} disabled={busy || dirty || missing.length > 0} onOpen={onSync} />
               </>
             )
           )}
@@ -877,9 +860,15 @@ function PageViewer({
 }
 export default function App() {
   const [sssOpen,setSssOpen]=useState(false);
+  const [syncOpen,setSyncOpen]=useState(false);
+  const openSync=()=>setSyncOpen(true);
   return (
     <SafeAreaProvider>
-      {sssOpen?<FixedFormWorkspace onClose={()=>setSssOpen(false)}/>:<Scanner onSss={()=>setSssOpen(true)}/>}
+      <SyncProvider open={syncOpen}>
+        {sssOpen ? <FixedFormWorkspace onClose={()=>setSssOpen(false)} onSync={openSync}/>
+          : <Scanner onSss={()=>setSssOpen(true)} onSync={openSync}/>}
+        <SyncPanel visible={syncOpen} onClose={()=>setSyncOpen(false)} />
+      </SyncProvider>
     </SafeAreaProvider>
   );
 }

@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+apply plugin: 'expo-module-gradle-plugin'
+
+group = 'expo.modules.talasync'
+version = '0.1.0'
+
+android {
+  namespace 'expo.modules.talasync'
+  defaultConfig {
+    versionName '0.1.0'
+    // WorkManager must be able to instantiate the worker by class name after an app update.
+    consumerProguardFiles 'consumer-rules.pro'
+  }
+}
+
+dependencies {
+  implementation 'androidx.work:work-runtime-ktx:2.10.5'
+  implementation 'androidx.room:room-runtime:2.7.2'
+  annotationProcessor 'androidx.room:room-compiler:2.7.2'
+  implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}

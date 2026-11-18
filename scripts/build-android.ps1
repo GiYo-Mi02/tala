@@ -11,7 +11,7 @@ $variant = if ($Diagnostics) { 'debug' } else { 'release' }
 $taskVariant = if ($Diagnostics) { 'Debug' } else { 'Release' }
 $suffix = if ($Diagnostics) { '-diagnostics' } else { '' }
 $evidencePrefix = if ($Diagnostics) { 'diagnostics-' } else { '' }
-$apkPath = Join-Path $repoPath ('output/android/TALA-Phase1-' + $appConfig.version + $suffix + '.apk')
+$apkPath = Join-Path $repoPath ('output/android/TALA-' + $appConfig.version + $suffix + '.apk')
 # Refuse a signing change rather than suggesting an uninstall that would erase drafts.
 $previousSignature = Get-Content -LiteralPath 'docs/evidence/apk-signature.txt' -Raw
 $certificatePattern = 'Signer #1 certificate SHA-256 digest: ([a-fA-F0-9]+)'

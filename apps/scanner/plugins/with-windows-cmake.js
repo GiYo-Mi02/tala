@@ -1,7 +1,9 @@
-const { withAppBuildGradle } = require('@expo/config-plugins');
+const { withAppBuildGradle, withAndroidManifest, AndroidConfig, withDangerousMod } = require('@expo/config-plugins');
+const fs = require('node:fs');
+const path = require('node:path');
 
 module.exports = function withWindowsCmake(config) {
-  return withAppBuildGradle(config, config => {
+  config = withAppBuildGradle(config, config => {
     if (config.modResults.language !== 'groovy') throw new Error('T.A.L.A. expects the pinned Expo Groovy Android template.');
     let source = config.modResults.contents;
     if (!source.includes('// TALA short native paths')) {
@@ -42,4 +44,27 @@ module.exports = function withWindowsCmake(config) {
     config.modResults.contents = source;
     return config;
   });
+  config = withAndroidManifest(config, config => {
+    const application = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
+    application.$['android:networkSecurityConfig'] = '@xml/tala_network_security';
+    return config;
+  });
+  return withDangerousMod(config, [
+    'android',
+    async config => {
+      const xmlDirectory = path.join(config.modRequest.platformProjectRoot, 'app', 'src', 'main', 'res', 'xml');
+      fs.mkdirSync(xmlDirectory, { recursive: true });
+      fs.writeFileSync(path.join(xmlDirectory, 'tala_network_security.xml'), `<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <base-config cleartextTrafficPermitted="false">
+    <trust-anchors>
+      <certificates src="system" />
+      <certificates src="user" />
+    </trust-anchors>
+  </base-config>
+</network-security-config>
+`);
+      return config;
+    },
+  ]);
 };

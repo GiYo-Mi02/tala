@@ -1,0 +1,9 @@
+# Phase 2.1 investigation
+
+The Android scanner is Expo 54 and React Native with a local Expo module for CameraX, OpenCV, and bundled ML Kit. Its repositories persist BEEF and SSS E-1 drafts as JSON bodies in separate SQLite tables. Accepted images are private app files. Draft, page image, and OCR run identifiers are UUIDs. There is no current authentication, backend, PostgreSQL schema, or sync implementation in this checkout. A locally ready draft has passed mobile review, but has no server receipt.
+
+`packages/core` supplies BEEF version 1 with seven fields and required pages 1 and 2. SSS E-1 version 1 has 136 typed and manual controls, required page 1, reference-only page 2, and conditional capture page 3. Both models retain edited values and confirmations separately from historical OCR runs. BEEF uses split crop metadata and SSS uses its per-field evidence and alternative readings.
+
+The server contract keeps the mobile draft UUID as `clientSubmissionId` and assigns a separate server UUID. Authenticated accounts own submissions, independently of the old fictional local profile. The latest OCR run that matches the accepted image supplies canonical raw evidence. Corrections are transferred separately, with absent OCR represented by null. The API accepts image bytes and image UUID, never the private phone URI. It uses explicit stage requests and a durable completion receipt. SSS page 3 and active fields are determined by the confirmed mobile choices. See the integration guide for the full mapping.
+
+The master build prompt is present. The separate charter, requirements, and user stories were unavailable in the workspace. The Phase 2.1 brief specifies private file storage and allows a secure token design. The backend uses a filesystem storage adapter and opaque, rotating sessions. PostgreSQL stores the references, checksums, receipts, and workflow state.
