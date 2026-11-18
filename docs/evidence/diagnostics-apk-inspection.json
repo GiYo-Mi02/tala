@@ -1,7 +1,7 @@
 {
-  "apk": "output\\android\\TALA-Phase1-0.3.0-diagnostics.apk",
-  "sha256": "a4247720cbbdf26e7b6fac810c24cd2772efc0e2adc7232551105fcb6ea6f54f",
-  "bytes": 122455974,
+  "apk": "output\\android\\TALA-Phase1-0.3.1-diagnostics.apk",
+  "sha256": "468c519dacd276a38c93183b7c7fa391f373f3597f8bdb392b84cdec7060fc7d",
+  "bytes": 122475770,
   "checks": {
     "embedded_android_bundle": true,
     "both_beef_pages": true,

@@ -19,6 +19,12 @@ class TalaOcrModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("TalaOcr")
     Constants("diagnosticsEnabled" to BuildConfig.DEBUG)
+    AsyncFunction("registerSssPage") { uri: String, page: Int ->
+      SssRegistration.automatic(requireNotNull(appContext.reactContext), uri, page)
+    }.runOnQueue(Queues.DEFAULT)
+    AsyncFunction("rectifySssFrame") { uri: String, page: Int, corners: List<Map<String, Double>> ->
+      SssRegistration.manual(requireNotNull(appContext.reactContext), uri, page, DocumentImages.points(corners))
+    }.runOnQueue(Queues.DEFAULT)
     AsyncFunction("recognizeField") { uri:String,json:String,promise:Promise ->
       try {
         val r=JSONObject(json); val x=r.getInt("x"); val y=r.getInt("y")

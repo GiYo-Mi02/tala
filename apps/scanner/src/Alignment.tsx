@@ -40,6 +40,7 @@ export function Crop({
   transferAccepted = false,
   suggestedCorners,
   showReadingRegions = true,
+  printedFrame,
 }: {
   photo: Candidate;
   page: PageNumber | 3;
@@ -52,6 +53,7 @@ export function Crop({
   transferAccepted?: boolean;
   suggestedCorners?: Corners;
   showReadingRegions?: boolean;
+  printedFrame?: { description: string; rectify: (uri: string, points: Corners) => Promise<{ uri: string; width: number; height: number }> };
 }) {
   const [image, setImage] = useState(photo);
   const [corners, setCorners] = useState<Corners>(() => suggestedCorners ?? initialCorners());
@@ -131,9 +133,9 @@ export function Crop({
   async function straighten() {
     if (!start()) return;
     try {
-      const problem = alignmentProblem(corners, image.width, image.height, 600);
+      const problem = alignmentProblem(corners, image.width, image.height, printedFrame ? 160 : 600);
       if (problem) throw new Error(problem);
-      const result = await TalaOcr.rectifyDocument(image.uri, corners);
+      const result = printedFrame ? await printedFrame.rectify(image.uri, corners) : await TalaOcr.rectifyDocument(image.uri, corners);
       if (!mounted.current) {
         await discardCache(result.uri);
         return;
@@ -185,14 +187,14 @@ export function Crop({
       <Text style={styles.heading}>
         {preview
           ? "Check the straightened page"
-          : "Mark all four paper corners"}
+          : printedFrame ? "Mark the printed frame corners" : "Mark all four paper corners"}
       </Text>
       <Text style={styles.body}>
         {preview
           ? page === 1 && showReadingRegions
             ? "The green areas must cover the answer boxes, below the printed labels. Adjust the corners if they do not. This pilot reads only the supplied BEEF layout."
             : "Check that the whole page is upright and no content is cut off."
-          : "Rotate until upright. Choose each corner below, then tap that paper corner in the photo. Use the arrow buttons to fine-tune it. Keep the whole paper visible."}
+          : printedFrame?.description ?? "Rotate until upright. Choose each corner below, then tap that paper corner in the photo. Use the arrow buttons to fine-tune it. Keep the whole paper visible."}
       </Text>
       {preview ? (
         <>

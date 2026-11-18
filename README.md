@@ -8,9 +8,11 @@ New fixed template: [SSS E-1 implementation, coverage, tests and phone checks](d
 
 Earlier [native field ROI extraction](docs/ocr-roi-investigation.md) and [processing-loop recovery](docs/scanner-recovery-fix.md) remain in place.
 
+See the [E-1 print alignment fix](docs/sss-e1-alignment-fix.md) for saved-photo recovery, review zoom, and camera retests.
+
 ## Install and test
 
-Use `output/android/TALA-Phase1-0.3.0.apk` (version code 9). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
+Use `output/android/TALA-Phase1-0.3.1.apk` (version code 10). Install it **as an update** to preserve drafts; do not uninstall or clear storage. The build checks that its signing certificate matches the earlier APK. Follow [the phone acceptance instructions](docs/phase-1-phone-tests.md). Use a separate disposable installation for the fresh first-launch test, with airplane mode enabled **before its first launch** and Wi-Fi off. Expo Go and a Metro-connected development build do not qualify for P1-01.
 
 The native scanner uses a full-screen portrait preview, a live detected polygon, automatic capture after a stable readable view, and high-resolution OpenCV correction. Successful captures run offline OCR and open **Continue / Retake / Adjust Crop**, without requiring corner placement. See [implementation and dependencies](docs/intelligent-scanner.md) and [criterion-by-criterion acceptance](docs/intelligent-scanner-acceptance.md).
 
@@ -24,11 +26,11 @@ Print the three fictional pairs in `output/pdf/` at actual size on A4 paper. The
 
 For SSS physical tests, print the fictional files `output/pdf/SSS-E1-*-fictional.pdf` on **US Letter at actual size**. Page 2 of the supplied original is instructions; the optional additional sheet keeps source page ID 3. These are local review drafts, not agency submissions.
 
-For development-only inspection, use `output/android/TALA-Phase1-0.3.0-diagnostics.apk` as an update. Open **Development: OCR diagnostics** on scan review, or **Development: inspect saved-page OCR** in a draft. The release APK hides these diagnostics and does not retain diagnostic PNGs. Both variants include the JS bundle and OCR model for offline use. Build the diagnostic variant with `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1 -Diagnostics`.
+For development-only inspection, use `output/android/TALA-Phase1-0.3.1-diagnostics.apk` as an update. Open **Development: OCR diagnostics** on scan review, or **Development: inspect saved-page OCR** in a draft. The release APK hides these diagnostics and does not retain diagnostic PNGs. Both variants include the JS bundle and OCR model for offline use. Build the diagnostic variant with `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1 -Diagnostics`.
 
 ## Release version checks
 
-The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.3.0 / code 9**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
+The build validates `app.json`, the root/scanner package versions, and the lockfile before Gradle runs. For changed app source, increment the app version and Android `versionCode`; this release is **0.3.1 / code 10**. Rebuilding an already recorded version is allowed only when the authored source fingerprint is unchanged. The build checks the packaged identity and upgrade signing certificate, then confirms source did not change during packaging. Run `node scripts/check-android-version.cjs` to check without building, and `node --test scripts/check-android-version.test.cjs` to test the guard.
 
 ## Development setup on Windows
 

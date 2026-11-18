@@ -1,5 +1,5 @@
 import * as Crypto from 'expo-crypto';
-import { fixedTemplate, normalizeFixed, fixedFieldError, containsPrintedLabel, isAligned, pixelRegion,
+import { fixedTemplate, normalizeFixed, fixedFieldError, containsPrintedLabel, pixelRegion,
   type FixedDraft, type FixedPage, type FixedRun, type FixedReading, type FixedField } from '@tala/core';
 import TalaOcr, { type RoiResult } from '../modules/tala-ocr';
 import { discardCache } from './repository';
@@ -9,8 +9,10 @@ export async function recognizeFixedPage(draft:FixedDraft,page:FixedPage,progres
   retain?:(uri:string)=>void):Promise<FixedExtraction> {
   const template=fixedTemplate(draft.templateId,draft.templateVersion);
   const slot=template.pages.find(p=>p.number===page.page && p.capture);
-  if(!slot || !isAligned(page))throw new Error('Align the correct SSS page before reading fields.');
-  if(Math.abs(page.width/page.height-slot.width/slot.height)>.045)throw new Error('This crop does not match the upright SSS page proportions. Check all four paper corners.');
+  if(!slot || page.layout !== 'sss-print-v1')throw new Error('Align the printed E-1 layout before reading fields.');
+  if(!Number.isFinite(page.width) || !Number.isFinite(page.height) || page.width < 478 || page.height < 600 ||
+    Math.abs(page.width/page.height-slot.width/slot.height)>.005)
+    throw new Error('The aligned E-1 image has invalid dimensions. Align the saved photo again.');
   const fields:Record<string,FixedReading>={};const diagnostics:Record<string,RoiResult>={};
   const mapped=template.fields.filter(f=>f.page===page.page && f.mode==='ocr' && f.region);
   for(const [index,field] of mapped.entries()) {

@@ -7,7 +7,7 @@ vi.mock('./repository',()=>({discardCache:vi.fn(async()=>{})}));
 import {recognizeFixedPage,fixedReading} from './fixedOcr';
 import type {RoiResult} from '../modules/tala-ocr';
 const page:FixedPage={page:1,imageId:'new-image',uri:'file:///private/sss.jpg',width:1600,height:2071,acceptedAt:'now',
-  alignment:{method:'opencv-manual-v1',sourceWidth:1600,sourceHeight:2071,corners:[{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}]}};
+  alignment:{method:'guide-v1',sourceWidth:1600,sourceHeight:2263},layout:'sss-print-v1'};
 function result(id:string,before:string,after=before):RoiResult {
   const reading=(text:string)=>({text,readingText:text,confidence:.7,elements:[]});
   return {fieldId:id,part:0,x:10,y:10,sourceWidth:100,sourceHeight:20,inputWidth:300,inputHeight:116,
@@ -28,7 +28,14 @@ describe('SSS native ROI orchestration',()=>{
   });
   it('blocks reference-only pages and a crop with the wrong paper proportions',async()=>{
     await expect(recognizeFixedPage(newFixedDraft('draft','now'),{...page,page:2},()=>{})).rejects.toThrow(/Align/);
-    await expect(recognizeFixedPage(newFixedDraft('draft','now'),{...page,width:1600,height:2263},()=>{})).rejects.toThrow(/proportions/);
+    await expect(recognizeFixedPage(newFixedDraft('draft','now'),{...page,width:1600,height:2263},()=>{})).rejects.toThrow(/dimensions/);
+  });
+  it('does not read a saved photo without E-1 registration even if its paper ratio matches',async()=>{
+    const oldImage = {...page, layout:undefined,
+      alignment:{method:'opencv-auto-v1',sourceWidth:1800,sourceHeight:2400,confidence:.92,
+        corners:[{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:0,y:1}]} as FixedPage['alignment']};
+    await expect(recognizeFixedPage(newFixedDraft('draft','now'),oldImage,()=>{})).rejects.toThrow(/printed E-1 layout/);
+    expect(mock).not.toHaveBeenCalled();
   });
   it('keeps both identity alternatives and leaves different valid names unresolved',()=>{
     const f=sssTemplate.fields.find(f=>f.id==='sss_registrant_last_name')!;

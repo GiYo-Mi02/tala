@@ -14,6 +14,7 @@ android {
   }
   sourceSets.androidTest.assets.srcDirs += ['../../../../../fixtures/images', '../../../../../fixtures/expected']
   sourceSets.androidTest.assets.srcDirs += ['../../../../../fixtures/sss']
+  sourceSets.androidTest.assets.srcDirs += ['../../../assets']
   packagingOptions {
     jniLibs { pickFirsts += ['**/libc++_shared.so'] }
   }

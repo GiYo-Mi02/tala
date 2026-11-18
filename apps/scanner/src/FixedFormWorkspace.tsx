@@ -18,6 +18,7 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
   const [loading,setLoading]=useState(true);const [busy,setBusy]=useState(false);const [progress,setProgress]=useState('');
   const [error,setError]=useState('');const [notice,setNotice]=useState('');const [dirty,setDirty]=useState(false);
   const [capture,setCapture]=useState<1|3>();const [expanded,setExpanded]=useState<string>();const [viewer,setViewer]=useState<{page:number;reference:boolean}>();
+  const [savedPhoto,setSavedPhoto]=useState<FixedPage>();
   const [viewerZoom,setViewerZoom]=useState(1);const [fieldZoom,setFieldZoom]=useState(1);
   const [fieldView,setFieldView]=useState<FixedField>();const [missing,setMissing]=useState<number[]>([]);
   const scroll=useRef<ScrollView>(null);
@@ -57,13 +58,16 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
     return new Promise(resolve=>Alert.alert('Use new SSS OCR values?','The page and raw readings will be saved. Choose whether to replace editable values; confirmations for this page will reset.',[
       {text:'Cancel',style:'cancel',onPress:()=>resolve(null)},{text:'Keep edited values',onPress:()=>resolve(false)},{text:'Use new OCR',onPress:()=>resolve(true)}],{cancelable:false}));
   }
-  async function accept(page:FixedPage){
+  async function accept(page:FixedPage, readFields:boolean){
     if(!draft || operation.current)return;
-    const replace=await replaceChoice(draft,page.page);if(replace===null)throw new Error('Saving canceled. The previous page is unchanged.');
+    const replace=readFields ? await replaceChoice(draft,page.page) : false;
+    if(replace===null)throw new Error('Saving canceled. The previous page is unchanged.');
     operation.current=true;setBusy(true);setError('');
     try{
-      const extraction=await recognizeFixedPage(draft,page,value=>{if(mounted.current)setProgress(value);});
-      const next=await persistFixedPage(draft,page,extraction.run,replace);remember(next,'Page and raw SSS readings saved locally. Compare, correct and confirm each active field.');setMissing(await missingFixedPages(next));setCapture(undefined);
+      const extraction=readFields ? await recognizeFixedPage(draft,page,value=>{if(mounted.current)setProgress(value);}) : undefined;
+      const next=await persistFixedPage(draft,page,extraction?.run,replace);
+      remember(next,readFields ? 'Page and field readings saved. Compare and confirm the extracted values.' : 'Photo saved. Enter or check the fields against the image.');
+      setMissing(await missingFixedPages(next));setCapture(undefined);setSavedPhoto(undefined);
     }finally{operation.current=false;if(mounted.current){setBusy(false);setProgress('');}}
   }
   async function readSaved(page:FixedPage){
@@ -73,7 +77,8 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
     catch(e){setError(e instanceof Error?e.message:'OCR did not finish. Existing readings were retained.');}
     finally{operation.current=false;if(mounted.current){setBusy(false);setProgress('');}}
   }
-  if(capture)return <FixedFormCapture template={sssTemplate} pageNumber={capture} onAccept={accept} onCancel={()=>setCapture(undefined)}/>;
+  if(capture)return <FixedFormCapture template={sssTemplate} pageNumber={capture} savedPage={savedPhoto} onAccept={accept}
+    onCancel={()=>{setCapture(undefined);setSavedPhoto(undefined);}}/>;
   const fields=draft?activeFixedFields(draft):[];const errors=draft?fixedErrors(draft):{};
   const sections=[...new Set(fields.map(f=>f.section))];
   return <SafeAreaView style={styles.screen}>
@@ -102,8 +107,10 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
             {p.number===3 && <ChoiceControl field={sssTemplate.fields.find(f=>f.id==='sss_additional_sheet_used')!} value={draft.values.sss_additional_sheet_used} disabled={busy} onChange={value=>edit(sssTemplate.fields.find(f=>f.id==='sss_additional_sheet_used')!,value)}/>}
             <Action title={page?`Retake page ${p.number}`:`Capture page ${p.number}`} disabled={busy||!enabled} onPress={()=>setCapture(p.number as 1|3)}/>
             {page && <><Action title={`View saved page ${p.number}`} secondary disabled={busy||missing.includes(p.number)} onPress={()=>setViewer({page:p.number,reference:false})}/>
-              <Action title={`Read page ${p.number} fields again`} secondary disabled={busy||!enabled||missing.includes(p.number)} onPress={()=>{void readSaved(page);}}/>
-              {TalaOcr.diagnosticsEnabled && enabled && <FixedDiagnostics key={page.imageId} draft={draft} page={page}/>}</>}
+              {page.layout === 'sss-print-v1' && <Action title={`Read page ${p.number} fields again`} secondary disabled={busy||!enabled||missing.includes(p.number)} onPress={()=>{void readSaved(page);}}/>}
+              <Action title="Align saved photo" secondary disabled={busy||!enabled||missing.includes(p.number)}
+                onPress={()=>{setSavedPhoto(page);setCapture(p.number as 1|3);}}/>
+              {TalaOcr.diagnosticsEnabled && enabled && page.layout === 'sss-print-v1' && <FixedDiagnostics key={page.imageId} draft={draft} page={page}/>}</>}
           </Card>;
         })}
         <Text style={styles.heading}>2. Review every active field</Text>
@@ -152,8 +159,15 @@ export function FixedFormWorkspace({onClose}:{onClose:()=>void}) {
     {fieldView && draft && <Modal onRequestClose={()=>setFieldView(undefined)}><SafeAreaView style={styles.screen}><ScrollView contentContainerStyle={styles.content}>
       <Action title="Close source area" onPress={()=>setFieldView(undefined)}/><Text style={styles.heading}>{fieldView.label}</Text>
       <ZoomActions zoom={fieldZoom} onChange={setFieldZoom}/>
-      {draft.pages[fieldView.page] && <><ScrollView horizontal>{(fieldView.region??fieldView.reviewRegion) && <ReadingStrip uri={draft.pages[fieldView.page]!.uri} region={(fieldView.region??fieldView.reviewRegion)!} width={width*fieldZoom} imageWidth={draft.pages[fieldView.page]!.width} imageHeight={draft.pages[fieldView.page]!.height}/>}</ScrollView>
-        <ScrollView horizontal><ReadingImage uri={draft.pages[fieldView.page]!.uri} width={width*fieldZoom} height={width*fieldZoom*draft.pages[fieldView.page]!.height/draft.pages[fieldView.page]!.width} regions={(fieldView.region??fieldView.reviewRegion)?[(fieldView.region??fieldView.reviewRegion)!]:[]}/></ScrollView></>}
+      {draft.pages[fieldView.page] && (() => {
+        const photo = draft.pages[fieldView.page]!;
+        const region = photo.layout === 'sss-print-v1' ? fieldView.region ?? fieldView.reviewRegion : undefined;
+        return <>
+          {region && <ScrollView horizontal><ReadingStrip uri={photo.uri} region={region} width={width * fieldZoom} imageWidth={photo.width} imageHeight={photo.height}/></ScrollView>}
+          <ScrollView horizontal><ReadingImage uri={photo.uri} width={width * fieldZoom} height={width * fieldZoom * photo.height / photo.width}
+            regions={region ? [region] : []}/></ScrollView>
+        </>;
+      })()}
     </ScrollView></SafeAreaView></Modal>}
   </SafeAreaView>;
 }

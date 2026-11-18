@@ -20,7 +20,8 @@ export function fixedTemplate(id: string, version: number): FixedTemplate {
   if (!match) throw new Error('Unsupported template version. The original draft is retained.');
   return match;
 }
-export type FixedPage = { page: number; imageId: string; uri: string; width: number; height: number; acceptedAt: string; alignment: Alignment };
+export type FixedPage = { page: number; imageId: string; uri: string; width: number; height: number; acceptedAt: string; alignment: Alignment;
+  layout?: 'sss-print-v1' };
 export type FixedReading = { fieldId: string; pageImageId: string; text: string; originalText: string; processedText: string;
   originalNormalized: string; processedNormalized: string; segmentedText?: string; segmentedNormalized?: string; normalized: string; confidence: number | null;
   warning?: string; region: Region; error?: string };

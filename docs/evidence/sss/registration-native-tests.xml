@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="expo.modules.talaocr.DocumentRecoveryTest" tests="22" failures="1" errors="0" skipped="0" time="179.217" timestamp="2026-11-18T00:47:46" hostname="localhost">
+  <properties>
+    <property name="device" value="TALA_OCR(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":tala-ocr" />
+  </properties>
+  <testcase name="uniformAndDarkRectangularFramesCannotMasqueradeAsReadableDocuments" classname="expo.modules.talaocr.DocumentRecoveryTest" time="2.296" />
+  <testcase name="smallDetectedPaperReturnsTheOriginalForRecoveryInsteadOfThrowing" classname="expo.modules.talaocr.DocumentRecoveryTest" time="0.425" />
+  <testcase name="fullResolutionPhotoUsesBoundedWorkingPixelsAndKeepsTheOriginal" classname="expo.modules.talaocr.DocumentRecoveryTest" time="2.177" />
+  <testcase name="coveredCameraCannotProduceAnAcceptableScan" classname="expo.modules.talaocr.DocumentRecoveryTest" time="0.091" />
+  <testcase name="perspectiveCorrectionPreservesLandscapeProportionsAndPrivateImageBounds" classname="expo.modules.talaocr.DocumentScannerTest" time="0.33" />
+  <testcase name="cameraOpensManualCaptureRemainsAvailableAndTheScannerCanReopen" classname="expo.modules.talaocr.DocumentScannerTest" time="22.521">
+    <failure>java.lang.AssertionError: CameraX must open and expose manual capture (cycle 0)
+at org.junit.Assert.fail(Assert.java:89)
+at org.junit.Assert.assertTrue(Assert.java:42)
+at expo.modules.talaocr.DocumentScannerTest.cameraOpensManualCaptureRemainsAvailableAndTheScannerCanReopen(DocumentScannerTest.kt:89)
+</failure>
+  </testcase>
+  <testcase name="openCvWarpKeepsTiltedContentLandmarksInTheirCorrectPositions" classname="expo.modules.talaocr.DocumentScannerTest" time="0.318" />
+  <testcase name="detectsExteriorPaperAcrossRepresentativeScenarios" classname="expo.modules.talaocr.DocumentScannerTest" time="1.364" />
+  <testcase name="uprightAnalysisPointsReturnToTheCorrectRawBufferCoordinates" classname="expo.modules.talaocr.DocumentScannerTest" time="0.01" />
+  <testcase name="stabilityRequiresSustainedQualityAndNeverCapturesTwice" classname="expo.modules.talaocr.DocumentScannerTest" time="0.009" />
+  <testcase name="refusesPartialLowContrastAndBlurryPagesWithoutInventingCorners" classname="expo.modules.talaocr.DocumentScannerTest" time="0.362" />
+  <testcase name="automaticDetectionWarpAndBundledOcrReadTheUnchangedBeefFixture" classname="expo.modules.talaocr.DocumentScannerTest" time="8.333" />
+  <testcase name="doesNotEraseTallGlyphsAwayFromRegisteredRules" classname="expo.modules.talaocr.FieldRoiTest" time="0.03" />
+  <testcase name="compareSameEnrollmentDocumentsWithoutChangingGroundTruth" classname="expo.modules.talaocr.FieldRoiTest" time="8.97" />
+  <testcase name="invalidCornersDoNotCreateAnAlignedFile" classname="expo.modules.talaocr.PerspectiveTest" time="0.032" />
+  <testcase name="bundledMlKitReadsFictionalFixtureInputs" classname="expo.modules.talaocr.PerspectiveTest" time="7.059" />
+  <testcase name="duplicateGlyphLinesAreRemovedOnlyWithMatchingTextAndGeometry" classname="expo.modules.talaocr.PerspectiveTest" time="0.004" />
+  <testcase name="perspectiveCorrectionPreservesKnownLandmarks" classname="expo.modules.talaocr.PerspectiveTest" time="0.292" />
+  <testcase name="preprocessingPreservesCharacterStrokesAndAddsEmptyMargins" classname="expo.modules.talaocr.PerspectiveTest" time="0.005" />
+  <testcase name="blankPageCannotRegister" classname="expo.modules.talaocr.SssRegistrationTest" time="0.924" />
+  <testcase name="registersPrintedFieldsOnLetterAndA4WithExtraMargins" classname="expo.modules.talaocr.SssRegistrationTest" time="5.089" />
+  <testcase name="actualOfflineMlKitReadsFixedSssFieldsWithoutUsingParentValues" classname="expo.modules.talaocr.SssTemplateTest" time="116.608" />
+</testsuite>
